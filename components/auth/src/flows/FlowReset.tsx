@@ -7,13 +7,13 @@ import { useTranslation } from "@revolt/i18n";
 import { setFlowCheckEmail } from "./FlowCheck";
 
 /**
- * Flow for resending email verification
+ * Flow for sending password reset
  */
-export default function FlowResend() {
+export default function FlowReset() {
   const t = useTranslation();
   const navigate = useNavigate();
 
-  async function resend(data: FormData) {
+  async function reset(data: FormData) {
     const email = data.get("email") as string;
     const captcha = data.get("captcha") as string;
 
@@ -31,7 +31,7 @@ export default function FlowResend() {
   return (
     <>
       <FlowTitle>{t("login.reset")}</FlowTitle>
-      <Form onSubmit={resend} captcha={import.meta.env.VITE_HCAPTCHA_SITEKEY}>
+      <Form onSubmit={reset} captcha={import.meta.env.VITE_HCAPTCHA_SITEKEY}>
         <Fields fields={["email"]} />
         <Button type="submit">{t("login.reset")}</Button>
       </Form>
