@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2025-03-24 19:46+0000\n"
+"POT-Creation-Date: 2025-03-31 16:15+0100\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -13,6 +13,31 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
+#. js-lingui-explicit-id
+#: components/i18n/dayjs.tsx:45
+msgid "[Yesterday at] LT"
+msgstr "[Yesterday at] LT"
+
+#. js-lingui-explicit-id
+#: components/i18n/dayjs.tsx:46
+msgid "[Today at] LT"
+msgstr "[Today at] LT"
+
+#. js-lingui-explicit-id
+#: components/i18n/dayjs.tsx:47
+msgid "[Tomorrow at] LT"
+msgstr "[Tomorrow at] LT"
+
+#. js-lingui-explicit-id
+#: components/i18n/dayjs.tsx:48
+msgid "[Last] dddd [at] LT"
+msgstr "[Last] dddd [at] LT"
+
+#. js-lingui-explicit-id
+#: components/i18n/dayjs.tsx:49
+msgid "dddd [at] LT"
+msgstr "dddd [at] LT"
+
 #. placeholder {0}: props.count
 #: components/ui/components/design/atoms/indicators/BlockedMessage.tsx:45
 msgid "{0, plural, one {# blocked message} other {# blocked messages}}"
@@ -22,14 +47,6 @@ msgstr "{0, plural, one {# blocked message} other {# blocked messages}}"
 #: components/ui/components/navigation/channels/HomeSidebar.tsx:329
 msgid "{0, plural, one {# Member} other {# Members}}"
 msgstr "{0, plural, one {# Member} other {# Members}}"
-
-#: components/ui/components/design/atoms/indicators/BlockedMessage.tsx:45
-#~ msgid "{0, plural, one {1 blocked message} other {# blocked messages}}"
-#~ msgstr "{0, plural, one {1 blocked message} other {# blocked messages}}"
-
-#: components/ui/components/navigation/channels/HomeSidebar.tsx:329
-#~ msgid "{0, plural, one {1 Member} other {# Members}}"
-#~ msgstr "{0, plural, one {1 Member} other {# Members}}"
 
 #. placeholder {0}: items().length
 #: components/ui/components/tools/files/FileDropAnywhereCollector.tsx:188
@@ -108,11 +125,11 @@ msgstr "<0/>updated the group name to <1>{0}</1>"
 msgid "1 person reacted"
 msgstr "1 person reacted"
 
-#: components/app/interface/settings/user/Language.tsx:193
+#: components/app/interface/settings/user/Language.tsx:204
 msgid "12 hours"
 msgstr "12 hours"
 
-#: components/app/interface/settings/user/Language.tsx:183
+#: components/app/interface/settings/user/Language.tsx:194
 msgid "24 hours"
 msgstr "24 hours"
 
@@ -147,7 +164,7 @@ msgstr "Admin Panel"
 msgid "Allow others to add your bot to their servers from Discover"
 msgstr "Allow others to add your bot to their servers from Discover"
 
-#: components/app/interface/settings/user/Language.tsx:149
+#: components/app/interface/settings/user/Language.tsx:158
 msgid "American (MM/DD/YYYY)"
 msgstr "American (MM/DD/YYYY)"
 
@@ -232,7 +249,7 @@ msgstr "Block user"
 msgid "Blocked User"
 msgstr "Blocked User"
 
-#: components/app/interface/channels/text/Message.tsx:168
+#: components/app/interface/channels/text/Message.tsx:169
 msgid "Bot"
 msgstr "Bot"
 
@@ -310,7 +327,7 @@ msgstr "Change your profile per-server"
 msgid "Change your username"
 msgstr "Change your username"
 
-#: components/modal/modals/Changelog.tsx:45
+#: components/modal/modals/Changelog.tsx:47
 msgid "Changelog"
 msgstr "Changelog"
 
@@ -349,7 +366,7 @@ msgid "Client Settings"
 msgstr "Client Settings"
 
 #: components/modal/modals/DeleteChannel.tsx:52
-#: components/modal/modals/Changelog.tsx:60
+#: components/modal/modals/Changelog.tsx:62
 msgid "Close"
 msgstr "Close"
 
@@ -391,7 +408,7 @@ msgstr "Continue"
 msgid "Continue to app"
 msgstr "Continue to app"
 
-#: components/app/interface/settings/user/Language.tsx:250
+#: components/app/interface/settings/user/Language.tsx:261
 msgid "Contribute a language"
 msgstr "Contribute a language"
 
@@ -624,10 +641,6 @@ msgstr "Enable authenticator app"
 msgid "Enable Desktop Notifications"
 msgstr "Enable Desktop Notifications"
 
-#: components/app/interface/settings/user/Language.tsx:218
-msgid "Enable RTL layout"
-msgstr "Enable RTL layout"
-
 #: components/modal/modals/RenameSession.tsx:24
 msgid "Enter a new name for this session"
 msgstr "Enter a new name for this session"
@@ -690,19 +703,11 @@ msgstr "Find a community based on your hobbies or interests."
 msgid "Find your com<0/>munity,<1/>connect with the world."
 msgstr "Find your com<0/>munity,<1/>connect with the world."
 
-#: components/app/interface/settings/user/Language.tsx:214
-msgid "Flip the user interface right to left"
-msgstr "Flip the user interface right to left"
-
 #: src/interface/channels/text/MemberSidebar.tsx:403
 #: components/ui/components/navigation/channels/HomeSidebar.tsx:254
 #: components/ui/components/floating/UserCard.tsx:178
 msgid "Focus"
 msgstr "Focus"
-
-#: components/app/interface/settings/user/Language.tsx:229
-msgid "Force LTR layout"
-msgstr "Force LTR layout"
 
 #: components/ui/components/navigation/channels/HomeSidebar.tsx:99
 msgid "Friends"
@@ -761,7 +766,7 @@ msgstr "Harassment or cyberbullying"
 msgid "Hello!"
 msgstr "Hello!"
 
-#: components/app/interface/settings/user/Language.tsx:247
+#: components/app/interface/settings/user/Language.tsx:258
 msgid "Help contribute to an existing or new language"
 msgstr "Help contribute to an existing or new language"
 
@@ -813,9 +818,9 @@ msgstr "Invite Bot"
 msgid "Invites"
 msgstr "Invites"
 
-#: components/app/interface/settings/user/Language.tsx:159
-msgid "ISO8601 (YYYY/MM/DD)"
-msgstr "ISO8601 (YYYY/MM/DD)"
+#: components/app/interface/settings/user/Language.tsx:168
+msgid "ISO Standard (YYYY-MM-DD)"
+msgstr "ISO Standard (YYYY-MM-DD)"
 
 #: components/app/interface/settings/user/Feedback.tsx:90
 msgid "Join the Revolt Lounge"
@@ -825,13 +830,9 @@ msgstr "Join the Revolt Lounge"
 msgid "Jump to present"
 msgstr "Jump to present"
 
-#: components/ui/components/messaging/indicators/NewMessages.tsx:54
+#: components/ui/components/messaging/indicators/NewMessages.tsx:55
 msgid "Jump to the beginning"
 msgstr "Jump to the beginning"
-
-#: components/app/interface/settings/user/Language.tsx:225
-msgid "Keep the user interface left to right"
-msgstr "Keep the user interface left to right"
 
 #: components/modal/modals/KickMember.tsx:33
 msgid "Kick"
@@ -964,7 +965,7 @@ msgstr "Message Received"
 msgid "Message Sent"
 msgstr "Message Sent"
 
-#: components/app/interface/channels/text/Message.tsx:156
+#: components/app/interface/channels/text/Message.tsx:157
 msgid "Message was sent on another platform"
 msgstr "Message was sent on another platform"
 
@@ -985,7 +986,7 @@ msgid "Name"
 msgstr "Name"
 
 #. placeholder {0}: dayjs(decodeTime(props.lastId()!)).fromNow()
-#: components/ui/components/messaging/indicators/NewMessages.tsx:49
+#: components/ui/components/messaging/indicators/NewMessages.tsx:50
 msgid "New messages since {0}"
 msgstr "New messages since {0}"
 
@@ -993,11 +994,11 @@ msgstr "New messages since {0}"
 msgid "New Password"
 msgstr "New Password"
 
-#: components/app/interface/channels/text/Message.tsx:189
+#: components/app/interface/channels/text/Message.tsx:190
 msgid "New to Revolt"
 msgstr "New to Revolt"
 
-#: components/app/interface/channels/text/Message.tsx:201
+#: components/app/interface/channels/text/Message.tsx:202
 msgid "New to the server"
 msgstr "New to the server"
 
@@ -1013,7 +1014,7 @@ msgstr "Not of minimum age to use the platform"
 msgid "Off"
 msgstr "Off"
 
-#: components/app/interface/channels/text/Message.tsx:163
+#: components/app/interface/channels/text/Message.tsx:164
 msgid "Official Communication"
 msgstr "Official Communication"
 
@@ -1142,7 +1143,7 @@ msgstr "Promotes harm"
 msgid "Raid or spam attack"
 msgstr "Raid or spam attack"
 
-#: components/modal/modals/Changelog.tsx:50
+#: components/modal/modals/Changelog.tsx:52
 msgid "Read about updates to Revolt."
 msgstr "Read about updates to Revolt."
 
@@ -1317,7 +1318,7 @@ msgstr "Scams or fraud"
 msgid "See what we're currently working on."
 msgstr "See what we're currently working on."
 
-#: components/app/interface/settings/user/Language.tsx:86
+#: components/app/interface/settings/user/Language.tsx:93
 msgid "Select your language"
 msgstr "Select your language"
 
@@ -1414,9 +1415,13 @@ msgstr "Sign into Revolt"
 msgid "Sign Up"
 msgstr "Sign Up"
 
-#: components/app/interface/channels/text/Message.tsx:178
+#: components/app/interface/channels/text/Message.tsx:179
 msgid "Silent"
 msgstr "Silent"
+
+#: components/i18n/errors.ts:13
+msgid "Something went wrong! Try again later."
+msgstr "Something went wrong! Try again later."
 
 #: components/app/interface/settings/user/Notifications.tsx:48
 msgid "Sounds"
@@ -1518,7 +1523,7 @@ msgstr "This is the start of your notes."
 msgid "This server is about..."
 msgstr "This server is about..."
 
-#: components/app/interface/settings/user/Language.tsx:139
+#: components/app/interface/settings/user/Language.tsx:148
 msgid "Traditional (DD/MM/YYYY)"
 msgstr "Traditional (DD/MM/YYYY)"
 
@@ -1577,7 +1582,7 @@ msgstr "Verifying your account…"
 msgid "View currently active bug reports here."
 msgstr "View currently active bug reports here."
 
-#: components/modal/modals/Changelog.tsx:68
+#: components/modal/modals/Changelog.tsx:70
 msgid "View older updates"
 msgstr "View older updates"
 
@@ -1597,7 +1602,7 @@ msgstr "Voice Channel"
 msgid "We've sent you a verification email. Please allow up to 10 minutes for it to arrive."
 msgstr "We've sent you a verification email. Please allow up to 10 minutes for it to arrive."
 
-#: components/app/interface/channels/text/Message.tsx:173
+#: components/app/interface/channels/text/Message.tsx:174
 msgid "Webhook"
 msgstr "Webhook"
 
