@@ -49,6 +49,7 @@ export function BanMemberModal(
 
   return (
     <Dialog
+      destructive
       show={props.show}
       onClose={props.onClose}
       title={<Trans>Ban Member</Trans>}

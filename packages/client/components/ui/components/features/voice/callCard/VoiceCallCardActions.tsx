@@ -18,7 +18,7 @@ export function VoiceCallCardActions(props: { size: "xs" | "sm" }) {
   const { limits } = useInstance();
 
   return (
-    <Actions>
+    <Actions size={props.size}>
       <Show when={props.size === "xs"}>
         <IconButton
           variant="standard"
@@ -145,9 +145,14 @@ export function VoiceCallCardActions(props: { size: "xs" | "sm" }) {
 const Actions = styled("div", {
   base: {
     flexShrink: 0,
-    gap: "var(--gap-md)",
-    padding: "var(--gap-md)",
+    gap: "var(--space-2)",
+    padding: "var(--space-2)",
     zIndex: 2,
+    border: "var(--hairline)",
+
+    "& button": {
+      transitionDuration: "150ms",
+    },
 
     display: "flex",
     width: "fit-content",
@@ -156,6 +161,18 @@ const Actions = styled("div", {
 
     borderRadius: "var(--borderRadius-full)",
     background: "var(--md-sys-color-surface-container-high)",
-    boxShadow: "var(--elev-2)",
+    boxShadow: "var(--elev-3)",
+  },
+  variants: {
+    size: {
+      sm: {
+        "& button": {
+          width: "44px",
+          height: "44px",
+          borderRadius: "var(--radius-pill)",
+        },
+      },
+      xs: {},
+    },
   },
 });

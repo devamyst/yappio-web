@@ -34,6 +34,7 @@ export function LeaveServerModal(
 
   return (
     <Dialog
+      destructive
       show={props.show}
       onClose={props.onClose}
       title={<Trans>Leave {props.server.name}?</Trans>}

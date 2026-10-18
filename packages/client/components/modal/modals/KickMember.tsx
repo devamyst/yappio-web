@@ -21,6 +21,7 @@ export function KickMemberModal(
 
   return (
     <Dialog
+      destructive
       show={props.show}
       onClose={props.onClose}
       title={<Trans>Kick Member</Trans>}

@@ -5,7 +5,10 @@ import { Motion, Presence } from "solid-motionone";
 
 import { styled } from "styled-system/jsx";
 
+import { Symbol } from "../utils/Symbol";
+
 import { Button } from "./Button";
+import { IconButton } from "./IconButton";
 import { typography } from "./Text";
 
 export interface DialogProps {
@@ -25,6 +28,8 @@ type Props = DialogProps & {
   children: JSX.Element;
   actions?: DialogAction[];
   isDisabled?: boolean;
+  destructive?: boolean;
+  hideClose?: boolean;
 
   scrimBackground?: string;
 
@@ -67,6 +72,17 @@ export function Dialog(props: Props) {
                 }}
                 onClick={(e) => e.stopPropagation()}
               >
+                <Show when={!props.hideClose}>
+                  <CloseSlot>
+                    <IconButton
+                      size="xs"
+                      variant="standard"
+                      onPress={props.onClose}
+                    >
+                      <Symbol size={20}>close</Symbol>
+                    </IconButton>
+                  </CloseSlot>
+                </Show>
                 <Show when={props.icon}>
                   <Icon>{props.icon}</Icon>
                 </Show>
@@ -79,9 +95,15 @@ export function Dialog(props: Props) {
                 <Show when={props.actions}>
                   <Actions>
                     <For each={props.actions}>
-                      {(action) => (
+                      {(action, index) => (
                         <Button
-                          variant="text"
+                          variant={
+                            index() === props.actions!.length - 1
+                              ? props.destructive
+                                ? "_error"
+                                : "filled"
+                              : "text"
+                          }
                           size="small"
                           onPress={() => {
                             if (action.isDisabled) return;
@@ -204,6 +226,7 @@ const ScrimSurface = styled("div", {
 
 const Container = styled("div", {
   base: {
+    position: "relative",
     padding: "24px",
     minWidth: "min(440px, 100%)",
     maxWidth: "560px",
@@ -223,6 +246,15 @@ const Container = styled("div", {
   },
 });
 
+const CloseSlot = styled("div", {
+  base: {
+    position: "absolute",
+    top: "12px",
+    right: "12px",
+    zIndex: 1,
+  },
+});
+
 const Icon = styled("div", {
   base: {
     alignSelf: "center",
@@ -234,6 +266,9 @@ const Icon = styled("div", {
 const Title = styled("span", {
   base: {
     ...typography.raw({ class: "headline", size: "small" }),
+    fontSize: "20px",
+    fontWeight: 700,
+    paddingInlineEnd: "32px",
     marginBlockEnd: "16px",
   },
   variants: {
@@ -260,5 +295,7 @@ const Actions = styled("div", {
     display: "flex",
     justifyContent: "end",
     marginBlockStart: "24px",
+    flexWrap: "wrap",
+    _phone: { paddingBottom: "env(safe-area-inset-bottom)" },
   },
 });

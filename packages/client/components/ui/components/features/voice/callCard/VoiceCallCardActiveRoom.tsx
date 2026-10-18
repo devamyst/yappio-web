@@ -64,9 +64,9 @@ function Participants() {
   let callRef: HTMLDivElement | undefined;
 
   const tileWidth = () => {
-    const vidWidth = Math.round(
-      100 / (voice.vidTracks().length + testTrackCount),
-    );
+    const count = voice.vidTracks().length + testTrackCount;
+    const columns = count <= 1 ? 1 : count <= 4 ? 2 : count <= 9 ? 3 : 4;
+    const vidWidth = Math.round(100 / columns);
     return `max(${TILE_MIN_WIDTH}, ${vidWidth}% - var(--gap-md))`;
   };
 

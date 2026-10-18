@@ -23,6 +23,7 @@ export function RemoveMemberModal(
 
   return (
     <Dialog
+      destructive
       show={props.show}
       onClose={props.onClose}
       title={<Trans>Remove Member</Trans>}

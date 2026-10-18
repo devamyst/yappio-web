@@ -180,25 +180,32 @@ export const tile = cva({
   base: {
     display: "grid",
     aspectRatio: "16/9",
-    transition: "all .3s ease, width 0s, height 0s",
-    borderRadius: "var(--radius-card)",
+    borderRadius: "16px",
     width: "var(--vc-tile-width)",
     maxWidth: "calc(var(--vc-h) * 16 / 9)",
     cursor: "pointer",
 
     color: "var(--md-sys-color-on-surface)",
-    background: "var(--md-sys-color-surface-container-high)",
+    background:
+      "color-mix(in srgb, var(--md-sys-color-primary) 8%, var(--md-sys-color-surface-container-high))",
 
     overflow: "hidden",
     outlineWidth: "2px",
     outlineStyle: "solid",
     outlineOffset: "-2px",
     outlineColor: "transparent",
+    transitionProperty: "outline-color, box-shadow, width, height",
+    transitionDuration: "150ms",
+    "@media (prefers-reduced-motion: reduce)": {
+      transition: "none",
+    },
   },
   variants: {
     speaking: {
       true: {
         outlineColor: "var(--md-sys-color-primary)",
+        boxShadow:
+          "0 0 0 4px color-mix(in srgb, var(--md-sys-color-primary) 28%, transparent), 0 0 24px color-mix(in srgb, var(--md-sys-color-primary) 35%, transparent)",
       },
     },
     focus: {
@@ -245,7 +252,7 @@ const AvatarOnly = styled("div", {
     // TODO: Refactor the avatar component to be reactive later.
     "& > *": {
       width: "auto !important",
-      height: "30% !important",
+      height: "36% !important",
       minHeight: "48px",
     },
   },
@@ -256,7 +263,7 @@ const Overlay = styled("div", {
     minWidth: 0,
     gridArea: "1/1",
 
-    padding: "var(--gap-md) var(--gap-lg)",
+    padding: "var(--space-2) var(--space-3)",
 
     opacity: 1,
     display: "flex",
@@ -288,6 +295,14 @@ const Overlay = styled("div", {
 const OverlayInner = styled("div", {
   base: {
     minWidth: 0,
+    maxWidth: "100%",
+    gap: "var(--space-2)",
+    padding: "4px 10px",
+    borderRadius: "var(--radius-pill)",
+    background: "rgb(0 0 0 / .55)",
+    color: "#fff",
+    fontSize: "13px",
+    fontWeight: 600,
 
     display: "flex",
     alignItems: "center",
