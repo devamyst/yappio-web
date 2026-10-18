@@ -26,13 +26,11 @@ export const EmptyAction = styled("button", {
     cursor: "pointer",
     fontSize: "14px",
     fontWeight: 700,
-    borderRadius: "var(--radius-pill)",
+    borderRadius: "3px",
     color: "var(--md-sys-color-on-primary)",
     background: "var(--md-sys-color-primary)",
-    transition: "box-shadow var(--motion-fast) var(--ease-standard)",
-
     "&:hover": {
-      boxShadow: "0 4px 16px rgb(200 244 60 / 0.3)",
+      background: "#4752c4",
     },
   },
 });

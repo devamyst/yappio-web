@@ -405,8 +405,6 @@ const Empty = styled("div", {
     color: "var(--md-sys-color-on-surface-variant)",
     borderRadius: "var(--radius-card)",
     border: "1px dashed var(--md-sys-color-outline-variant)",
-    background:
-      "radial-gradient(60% 80% at 50% 0%, color-mix(in srgb, var(--md-sys-color-primary) 8%, transparent), transparent)",
   },
 });
 

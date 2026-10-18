@@ -358,7 +358,6 @@ const Banner = styled("div", {
     backgroundPosition: "center",
     opacity: 0.6,
     animation: "fadeIn var(--motion-slow) var(--ease-standard)",
-    maskImage: "linear-gradient(to bottom, black, rgb(0 0 0 / 0.55))",
     "&:after": {
       content: "' '",
       position: "absolute",
@@ -368,7 +367,7 @@ const Banner = styled("div", {
     "&[data-fallback]": {
       opacity: 1,
       backgroundImage:
-        "linear-gradient(135deg, color-mix(in srgb, var(--md-sys-color-primary) 18%, var(--md-sys-color-surface-container-low)), var(--md-sys-color-surface-container-low) 70%)",
+        "linear-gradient(var(--md-sys-color-surface-container-low), var(--md-sys-color-surface-container-low))",
       "&:after": { display: "none" },
     },
   },

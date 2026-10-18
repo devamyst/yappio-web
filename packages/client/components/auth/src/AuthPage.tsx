@@ -50,7 +50,7 @@ const Root = styled("div", {
 
     color: "var(--md-sys-color-on-surface)",
     background:
-      "radial-gradient(ellipse 60% 50% at 50% 0%, rgb(200 244 60 / 0.12), transparent 70%), var(--md-sys-color-surface-container-lowest)",
+      "var(--md-sys-color-surface-container-lowest)",
   },
 });
 

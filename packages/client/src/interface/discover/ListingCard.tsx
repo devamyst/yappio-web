@@ -27,7 +27,7 @@ export function formatCount(count: number) {
 function bannerGradient(seed: string) {
   let hash = 0;
   for (let i = 0; i < seed.length; i++) hash = (hash * 31 + seed.charCodeAt(i)) % 360;
-  return `linear-gradient(135deg, hsl(${hash} 55% 42%) 0%, hsl(${(hash + 55) % 360} 60% 20%) 100%)`;
+  return `linear-gradient(hsl(${hash} 35% 40%), hsl(${hash} 35% 40%))`;
 }
 
 export function ListingCard(props: {
@@ -139,7 +139,7 @@ const Banner = styled("div", {
     backgroundSize: "cover",
     backgroundPosition: "center",
     backgroundImage:
-      "linear-gradient(135deg, var(--md-sys-color-primary) 0%, #1f1c2c 85%)",
+      "linear-gradient(#5865f2, #5865f2)",
   },
 });
 

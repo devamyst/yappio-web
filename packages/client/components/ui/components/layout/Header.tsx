@@ -45,8 +45,8 @@ export const Header = styled("div", {
     placement: {
       primary: {
         background:
-          "linear-gradient(180deg, rgb(200 244 60 / 0.06) 0%, transparent 100%), var(--md-sys-color-surface-container)",
-        boxShadow: "0 1px 0 rgb(0 0 0 / 0.25)",
+          "var(--md-sys-color-surface)",
+        boxShadow: "0 1px 0 var(--md-sys-color-outline-variant)",
       },
       secondary: {
         background: "var(--md-sys-color-surface-container-low)",

@@ -369,13 +369,12 @@ const Hero = styled("div", {
     flexWrap: "wrap",
     gap: "12px",
     padding: "32px 24px",
-    borderRadius: "var(--radius-modal)",
+    borderRadius: "var(--radius-card)",
     color: "var(--md-sys-color-on-surface)",
     border: "1px solid var(--md-sys-color-outline-variant)",
-    background:
-      "radial-gradient(120% 140% at 100% 0%, color-mix(in srgb, var(--md-sys-color-primary) 22%, transparent), transparent 55%), linear-gradient(135deg, var(--md-sys-color-surface-container-highest), var(--md-sys-color-surface-container-low))",
+    background: "var(--md-sys-color-surface-container-low)",
 
-    "& h1": { margin: 0, fontSize: "32px", fontWeight: 800, letterSpacing: "-0.02em" },
+    "& h1": { margin: 0, fontSize: "32px", fontWeight: 700 },
     "& p": {
       margin: "4px 0 0",
       color: "var(--md-sys-color-on-surface-variant)",

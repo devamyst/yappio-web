@@ -192,7 +192,7 @@ const button = cva({
         background: "var(--md-sys-color-primary)",
         "--color": "var(--md-sys-color-on-primary)",
         "&:hover:not([disabled])": {
-          boxShadow: "0 0 0 1px rgb(200 244 60 / 0.6), 0 4px 16px rgb(200 244 60 / 0.3)",
+          background: "#4752c4",
         },
       },
       tonal: {

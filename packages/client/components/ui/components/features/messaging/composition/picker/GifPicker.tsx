@@ -402,7 +402,7 @@ const Category = styled("div", {
     trending: {
       true: {
         background:
-          "linear-gradient(135deg, var(--md-sys-color-primary), var(--md-sys-color-tertiary))",
+          "#5865f2",
       },
       false: {},
     },

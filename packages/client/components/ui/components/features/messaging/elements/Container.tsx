@@ -153,8 +153,8 @@ const base = cva({
     },
     mentioned: {
       true: {
-        background: "rgb(200 244 60 / 0.12)",
-        boxShadow: "inset 2px 0 0 var(--md-sys-color-primary)",
+        background: "rgb(88 101 242 / 0.1)",
+        boxShadow: "inset 2px 0 0 #5865f2",
       },
     },
     highlight: {

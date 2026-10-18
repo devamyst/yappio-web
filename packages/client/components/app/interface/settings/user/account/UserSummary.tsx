@@ -25,7 +25,7 @@ export function UserSummary(props: {
           color: "white",
         }
       : {
-          background: `linear-gradient(135deg, var(--md-sys-color-surface-container-high), color-mix(in srgb, var(--md-sys-color-primary) 38%, var(--md-sys-color-surface)))`,
+          background: "var(--md-sys-color-surface-container-high)",
           color: "var(--md-sys-color-on-surface)",
         };
 

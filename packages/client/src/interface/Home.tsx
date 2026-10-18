@@ -63,9 +63,6 @@ const Hero = styled("div", {
     borderRadius: "var(--radius-modal)",
     border: "1px solid var(--md-sys-color-outline-variant)",
     boxShadow: "var(--elev-2)",
-    backgroundSize: "200% 200%",
-    animation: "home-drift 16s ease-in-out infinite",
-    "@media (prefers-reduced-motion: reduce)": { animation: "none" },
     _phone: { padding: "var(--space-6) var(--space-4)" },
     display: "flex",
     flexDirection: "column",
@@ -73,8 +70,8 @@ const Hero = styled("div", {
     gap: "var(--space-2)",
     textAlign: "center",
     padding: "var(--space-6) var(--space-8)",
-    background:
-      "radial-gradient(ellipse 50% 80% at 15% 20%, rgb(200 244 60 / 0.3) 0%, transparent 70%), radial-gradient(ellipse 50% 80% at 90% 90%, rgb(91 212 160 / 0.26) 0%, transparent 70%), radial-gradient(ellipse 40% 60% at 70% 0%, rgb(140 120 255 / 0.2) 0%, transparent 70%), var(--md-sys-color-surface-container-high)",
+    background: "#5865f2",
+    color: "#ffffff",
   },
 });
 
@@ -143,7 +140,7 @@ const Tagline = styled("p", {
   base: {
     fontSize: "20px",
     fontWeight: 700,
-    color: "var(--md-sys-color-on-surface)",
+    color: "#ffffff",
     opacity: 0.9,
   },
 });
@@ -183,8 +180,7 @@ const ActionCard = styled("button", {
     "&:hover": {
       background:
         "color-mix(in srgb, var(--md-sys-color-primary) 10%, var(--md-sys-color-surface-container-highest))",
-      borderColor: "rgb(200 244 60 / 0.55)",
-      transform: "translateY(-2px)",
+      borderColor: "var(--md-sys-color-outline)",
     },
   },
 });
@@ -196,9 +192,8 @@ const CardIcon = styled("div", {
     display: "grid",
     placeItems: "center",
     borderRadius: "var(--radius-control)",
-    color: "var(--md-sys-color-on-primary)",
-    background: "var(--md-sys-color-primary)",
-    boxShadow: "0 4px 14px rgb(200 244 60 / 0.3)",
+    color: "#ffffff",
+    background: "#5865f2",
   },
 });
 
@@ -327,7 +322,6 @@ export function HomePage() {
 
   return (
     <Base>
-      <style>{`@keyframes home-drift{0%,100%{background-position:0% 0%}50%{background-position:100% 100%}}`}</style>
       <Header placement="primary">
         <HeaderIcon>
           <MdHome {...iconSize(22)} />
@@ -339,8 +333,8 @@ export function HomePage() {
           <Wordmark
             class={css({
               width: "200px",
-              fill: "var(--md-sys-color-on-surface)",
-              filter: "var(--yappio-wordmark-filter, none)",
+              fill: "#ffffff",
+              filter: "brightness(0) invert(1)",
             })}
           />
           <Tagline>

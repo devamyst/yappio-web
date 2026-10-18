@@ -111,8 +111,8 @@ const iconButton2 = cva({
       standard: {
         "--colour": "var(--md-sys-color-on-surface-variant)",
         "&:hover:not([disabled])": {
-          "--colour": "var(--md-sys-color-primary)",
-          background: "rgb(200 244 60 / 0.12)",
+          "--colour": "var(--md-sys-color-on-surface)",
+          background: "var(--md-sys-color-surface-container-high)",
         },
       },
 
