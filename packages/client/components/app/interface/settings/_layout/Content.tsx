@@ -1,6 +1,8 @@
 import { Accessor, JSX, Setter, Show } from "solid-js";
 import { Motion, Presence } from "solid-motionone";
 
+import { useLingui } from "@lingui/solid/macro";
+
 import { css } from "styled-system/css";
 import { styled } from "styled-system/jsx";
 
@@ -24,6 +26,30 @@ export function SettingsContent(props: {
   action: Accessor<(() => JSX.Element) | undefined>;
 }) {
   const { navigate } = useSettingsNavigation();
+  const { t } = useLingui();
+
+  const hints = (): Record<string, string> => ({
+    account: t`Your login, email and security.`,
+    profile: t`How other people see you across Yappio.`,
+    sessions: t`Devices that are signed in to your account.`,
+    bots: t`Create and manage the bots you own.`,
+    voice: t`Microphone, noise handling and screen sharing.`,
+    appearance: t`Theme, colours, fonts and message layout.`,
+    notifications: t`Choose what makes noise and where.`,
+    language: t`Pick the language and date format.`,
+    native: t`Options for the desktop app.`,
+    sync: t`Choose what follows you between devices.`,
+    about: t`Version and build details.`,
+    advanced: t`Options most people never need to touch.`,
+    overview: t`The basics: name, description and look.`,
+    emojis: t`Custom emoji members can use in this server.`,
+    members: t`Everyone who has joined this server.`,
+    roles: t`Colours, ordering and permissions for members.`,
+    invites: t`Links people have used to join.`,
+    bans: t`People kept out of this server.`,
+    permissions: t`Who can see and do what here.`,
+    webhooks: t`Let other services post into this channel.`,
+  });
   const reduceMotion =
     typeof window !== "undefined" &&
     window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -46,6 +72,9 @@ export function SettingsContent(props: {
                   navigate={(keys) => navigate(keys.join("/"))}
                 />
               </Text>
+            </Show>
+            <Show when={!props.page()!.includes("/") && hints()[props.page()!]}>
+              <p class={hint}>{hints()[props.page()!]}</p>
             </Show>
             {props.children}
             <div class={css({ minHeight: "80px" })} />
@@ -92,6 +121,12 @@ export function SettingsContent(props: {
   );
 }
 
+const hint = css({
+  margin: "calc(var(--space-2) * -1) 0 var(--space-2)",
+  fontSize: "14px",
+  color: "var(--md-sys-color-on-surface-variant)",
+});
+
 /**
  * Base styles
  */
@@ -130,7 +165,7 @@ const InnerContent = styled("div", {
     justifyContent: "stretch",
     zIndex: 1,
 
-    _tablet: { padding: "12px" },
+    _tablet: { padding: "12px", paddingBottom: "96px" },
     _phone: { height: "100vh" },
   },
 });

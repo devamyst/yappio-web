@@ -287,10 +287,40 @@ CategoryButton.Group = styled("div", {
   base: {
     display: "flex",
     flexDirection: "column",
-    gap: "var(--gap-xs)",
+    gap: 0,
 
-    borderRadius: "var(--radius-card)",
+    borderRadius: "16px",
+    border: "1px solid var(--md-sys-color-outline-variant)",
+    background: "var(--md-sys-color-surface-container-low)",
     overflow: "hidden",
+
+    "& > * + *": {
+      borderTop: "1px solid var(--md-sys-color-outline-variant)",
+    },
+    "& > * > a, & > a": {
+      borderRadius: 0,
+    },
+    "& > a, & summary > a": {
+      background: "transparent",
+    },
+    "& > a:hover, & summary > a:hover": {
+      background: "var(--md-sys-color-surface-container-high)",
+    },
+  },
+  variants: {
+    danger: {
+      true: {
+        borderColor: "color-mix(in srgb, var(--md-sys-color-error) 45%, transparent)",
+        background: "color-mix(in srgb, var(--md-sys-color-error) 8%, var(--md-sys-color-surface-container-low))",
+
+        "& > * + *": {
+          borderTopColor: "color-mix(in srgb, var(--md-sys-color-error) 30%, transparent)",
+        },
+        "& > a:hover, & summary > a:hover": {
+          background: "color-mix(in srgb, var(--md-sys-color-error) 14%, transparent)",
+        },
+      },
+    },
   },
 });
 

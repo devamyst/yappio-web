@@ -10,11 +10,9 @@ import { useInstance } from "@revolt/instance";
 import { useModals } from "@revolt/modal";
 import {
   Button,
-  CircularProgress,
   Column,
   Form2,
   MenuItem,
-  Row,
   Text,
 } from "@revolt/ui";
 
@@ -151,15 +149,7 @@ export default function ChannelOverview(props: ChannelSettingsProps) {
               <MenuItem value="21600">{duration({ hours: 6 })}</MenuItem>
             </Form2.Select>
           </Show>
-          <Row>
-            <Form2.Reset group={editGroup} onReset={onReset} />
-            <Form2.Submit group={editGroup} requireDirty>
-              <Trans>Save</Trans>
-            </Form2.Submit>
-            <Show when={editGroup.isPending}>
-              <CircularProgress />
-            </Show>
-          </Row>
+          <Form2.SaveBar group={editGroup} onReset={onReset} />
         </Column>
       </form>
       <Column>

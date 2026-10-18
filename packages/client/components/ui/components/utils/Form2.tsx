@@ -433,6 +433,56 @@ const FormResetButton = (props: {
   );
 };
 
+const FormSaveBar = (props: {
+  group: IFormGroup;
+  onReset: () => void;
+  children?: JSX.Element;
+}) => (
+  <Show when={props.group.isDirty || props.group.isPending}>
+    <div class={saveBar}>
+      <span class={saveBarText}>
+        <Trans>You have unsaved changes</Trans>
+      </span>
+      <div class={saveBarActions}>
+        <FormResetButton group={props.group} onReset={props.onReset} />
+        <FormSubmitButton group={props.group} requireDirty>
+          {props.children ?? <Trans>Save</Trans>}
+        </FormSubmitButton>
+      </div>
+    </div>
+  </Show>
+);
+
+const saveBar = css({
+  position: "sticky",
+  bottom: "16px",
+  zIndex: 3,
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "space-between",
+  gap: "var(--space-3)",
+  padding: "10px 10px 10px 18px",
+  borderRadius: "var(--radius-card)",
+  border: "1px solid var(--md-sys-color-outline-variant)",
+  background: "var(--md-sys-color-surface-container-highest)",
+  boxShadow: "var(--elev-3)",
+  animation: "slideUp var(--motion-med) var(--ease-emph)",
+  _phone: { bottom: "calc(12px + env(safe-area-inset-bottom))", flexWrap: "wrap" },
+});
+
+const saveBarText = css({
+  fontSize: "14px",
+  fontWeight: 600,
+  color: "var(--md-sys-color-on-surface)",
+});
+
+const saveBarActions = css({
+  display: "flex",
+  alignItems: "center",
+  gap: "var(--space-2)",
+  marginInlineStart: "auto",
+});
+
 /**
  * Form submission button
  */
@@ -546,6 +596,7 @@ export const Form2 = {
   VirtualSelect: FormVirtualSelect,
   Reset: FormResetButton,
   Submit: FormSubmitButton,
+  SaveBar: FormSaveBar,
   canSubmit,
   reset: (group: IFormGroup, onReset?: () => void) => {
     resetGeneric(group, true);

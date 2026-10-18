@@ -1,5 +1,4 @@
 import { createFormControl, createFormGroup } from "solid-forms";
-import { Show } from "solid-js";
 
 import { Trans, useLingui } from "@lingui/solid/macro";
 import { useMutation } from "@tanstack/solid-query";
@@ -10,10 +9,8 @@ import { useInstance } from "@revolt/instance";
 import { useModals } from "@revolt/modal";
 import {
   CategoryButton,
-  CircularProgress,
   Column,
   Form2,
-  Row,
 } from "@revolt/ui";
 
 import MdContentCopy from "@material-design-icons/svg/outlined/content_copy.svg?component-solid";
@@ -104,15 +101,7 @@ export function ViewWebhook(props: { webhook: ChannelWebhook }) {
             control={editGroup.controls.name}
             label={t`Webhook Name`}
           />
-          <Row>
-            <Form2.Reset group={editGroup} onReset={onReset} />
-            <Form2.Submit group={editGroup}>
-              <Trans>Save</Trans>
-            </Form2.Submit>
-            <Show when={editGroup.isPending}>
-              <CircularProgress />
-            </Show>
-          </Row>
+          <Form2.SaveBar group={editGroup} onReset={onReset} />
         </Column>
       </form>
 

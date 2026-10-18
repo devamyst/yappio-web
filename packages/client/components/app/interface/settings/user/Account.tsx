@@ -300,7 +300,7 @@ function ManageAccount() {
   }
 
   return (
-    <CategoryButton.Group>
+    <CategoryButton.Group danger>
       <CategoryButton
         action="chevron"
         disabled={mfa.isLoading}

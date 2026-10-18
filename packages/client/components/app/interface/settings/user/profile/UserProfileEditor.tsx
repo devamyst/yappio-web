@@ -9,10 +9,8 @@ import { useClient } from "@revolt/client";
 import { useInstance } from "@revolt/instance";
 import {
   CategoryButton,
-  CircularProgress,
   Column,
   Form2,
-  Row,
   Text,
 } from "@revolt/ui";
 
@@ -214,15 +212,7 @@ export function UserProfileEditor(props: Props) {
           placeholder={t`Something cool about me...`}
         />
 
-        <Row>
-          <Form2.Reset group={editGroup} onReset={onReset} />
-          <Form2.Submit group={editGroup} requireDirty>
-            <Trans>Save</Trans>
-          </Form2.Submit>
-          <Show when={editGroup.isPending}>
-            <CircularProgress />
-          </Show>
-        </Row>
+        <Form2.SaveBar group={editGroup} onReset={onReset} />
       </Column>
     </form>
   );
