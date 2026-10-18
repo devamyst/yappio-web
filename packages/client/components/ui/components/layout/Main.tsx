@@ -15,7 +15,7 @@ export const main = cva({
     overflow: "hidden",
     flexDirection: "column",
 
-    background: "var(--md-sys-color-surface-container)",
+    background: "var(--md-sys-color-surface)",
     paddingBottom: "env(keyboard-inset-height)",
   },
 });
