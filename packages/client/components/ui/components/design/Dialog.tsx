@@ -46,16 +46,16 @@ export function Dialog(props: Props) {
         style={{
           "--background": props.scrimBackground
             ? `url('${props.scrimBackground}'), rgba(0, 0, 0, 0.6)`
-            : "rgba(0, 0, 0, 0.6)",
+            : "rgb(0 0 0 / 0.7)",
         }}
       >
         <Presence>
           <Show when={props.show}>
             <Motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.3, easing: [0.05, 0.7, 0.1, 1.0] }}
+              initial={{ opacity: 0, scale: 0.96 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.96 }}
+              transition={{ duration: 0.2, easing: [0.2, 0, 0, 1] }}
               class="dialog"
             >
               <Container
@@ -164,7 +164,7 @@ const Scrim = styled("div", {
         "--background": "rgba(0, 0, 0, 0.9)",
       },
       false: {
-        "--background": "rgba(0, 0, 0, 0.6)",
+        "--background": "rgb(0 0 0 / 0.7)",
       },
     },
   },
@@ -187,7 +187,7 @@ const ScrimSurface = styled("div", {
     padding: {
       true: {
         padding: "80px",
-        _phone: { padding: "30px" },
+        _phone: { padding: "0", alignItems: "end" },
       },
     },
     overflow: {
@@ -205,9 +205,15 @@ const ScrimSurface = styled("div", {
 const Container = styled("div", {
   base: {
     padding: "24px",
-    minWidth: "280px",
+    minWidth: "min(440px, 100%)",
     maxWidth: "560px",
-    borderRadius: "28px",
+    borderRadius: "var(--radius-modal)",
+    boxShadow: "var(--elev-3)",
+    border: "var(--hairline)",
+    _phone: {
+      minWidth: "100vw",
+      borderBottomRadius: "0",
+    },
 
     display: "flex",
     flexDirection: "column",
