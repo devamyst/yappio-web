@@ -208,7 +208,7 @@ const button = cva({
         "--color": "var(--md-sys-color-on-surface-variant)",
       },
       text: {
-        "--color": "var(--md-sys-color-primary)",
+        "--color": "var(--md-sys-color-tertiary)",
       },
       _error: {
         background: "var(--md-sys-color-error)",
