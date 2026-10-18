@@ -1,3 +1,4 @@
+import { css } from "styled-system/css";
 import { Trans } from "@lingui/solid/macro";
 import { Show } from "solid-js";
 
@@ -16,6 +17,10 @@ import { Fields, Form } from "./Form";
 /**
  * Flow for creating a new account
  */
+const submitWrap = css({
+  "& button": { minWidth: "112px" },
+});
+
 export default function FlowCreate() {
   const api = useApi();
   const navigate = useNavigate();
@@ -72,9 +77,11 @@ export default function FlowCreate() {
               <MdArrowBack {...iconSize("1.2em")} /> <Trans>Back</Trans>
             </Button>
           </a>
-          <Button type="submit">
+          <div class={submitWrap}>
+<Button type="submit">
             <Trans>Register</Trans>
           </Button>
+</div>
         </Row>
       </Form>
       {import.meta.env.DEV && (

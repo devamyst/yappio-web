@@ -224,8 +224,10 @@ export function GroupMemberSidebar(props: Props) {
 
       <Deferred>
         <VirtualContainer
-          items={props.channel.recipients.toSorted((a, b) =>
-            a.displayName.localeCompare(b.displayName),
+          items={props.channel.recipients.toSorted(
+            (a, b) =>
+              Number(b.online) - Number(a.online) ||
+              a.displayName.localeCompare(b.displayName),
           )}
           scrollTarget={props.scrollTargetElement}
           itemSize={{ height: 42 }}

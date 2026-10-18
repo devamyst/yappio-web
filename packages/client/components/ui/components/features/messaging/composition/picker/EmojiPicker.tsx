@@ -6,6 +6,8 @@ import {
   createEffect,
   createMemo,
   createSignal,
+  onCleanup,
+  onMount,
   useContext,
 } from "solid-js";
 
@@ -80,7 +82,7 @@ type Item =
       value: string;
     };
 
-const COLUMNS = 9;
+const MAX_COLUMNS = 9;
 
 const [hoveredItem, setHoveredItem] = createSignal<Item | null>(null);
 
@@ -93,10 +95,23 @@ export function EmojiPicker() {
 
   let emojiScrollTargetElement!: HTMLDivElement;
 
+  const [columns, setColumns] = createSignal(MAX_COLUMNS);
+
+  onMount(() => {
+    const observer = new ResizeObserver(() => {
+      const width = emojiScrollTargetElement.clientWidth;
+      if (width > 0) {
+        setColumns(Math.max(5, Math.min(MAX_COLUMNS, Math.floor(width / 40))));
+      }
+    });
+    observer.observe(emojiScrollTargetElement);
+    onCleanup(() => observer.disconnect());
+  });
+
   function scrollToItem(pred: (item: Item) => boolean) {
     const idx = items().findIndex(pred);
     if (idx !== -1 && emojiScrollTargetElement) {
-      emojiScrollTargetElement.scrollTop = Math.floor(idx / COLUMNS) * 40;
+      emojiScrollTargetElement.scrollTop = Math.floor(idx / columns()) * 40;
     }
   }
 
@@ -123,7 +138,7 @@ export function EmojiPicker() {
     if (recentEmoji().length > 0) {
       items.push({ t: 3, title: t`Recently used` });
 
-      while (items.length % COLUMNS) {
+      while (items.length % columns()) {
         items.push({ t: 1 });
       }
 
@@ -131,7 +146,7 @@ export function EmojiPicker() {
         items.push({ t: 5, value });
       }
 
-      while (items.length % COLUMNS) {
+      while (items.length % columns()) {
         items.push({ t: 1 });
       }
     }
@@ -146,7 +161,7 @@ export function EmojiPicker() {
         server,
       });
 
-      while (items.length % COLUMNS) {
+      while (items.length % columns()) {
         items.push({ t: 1 });
       }
 
@@ -154,7 +169,7 @@ export function EmojiPicker() {
         items.push({ t: 2, emoji });
       }
 
-      while (items.length % COLUMNS) {
+      while (items.length % columns()) {
         items.push({ t: 1 });
       }
     }
@@ -164,7 +179,7 @@ export function EmojiPicker() {
       title: t`Default`,
     });
 
-    while (items.length % COLUMNS) {
+    while (items.length % columns()) {
       items.push({ t: 1 });
     }
 
@@ -255,7 +270,7 @@ export function EmojiPicker() {
               items={items()}
               scrollTarget={emojiScrollTargetElement}
               itemSize={{ height: 40, width: 40 }}
-              crossAxisCount={() => COLUMNS}
+              crossAxisCount={columns}
             >
               {EmojiItem}
             </VirtualContainer>

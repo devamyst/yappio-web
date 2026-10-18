@@ -1,5 +1,6 @@
 import { Match, Switch } from "solid-js";
 
+import { css } from "styled-system/css";
 import { Trans } from "@lingui/solid/macro";
 
 import { useClientLifecycle } from "@revolt/client";
@@ -24,6 +25,10 @@ import { Fields, Form } from "./Form";
 /**
  * Flow for logging into an account
  */
+const submitWrap = css({
+  "& button": { minWidth: "112px" },
+});
+
 export default function FlowLogin() {
   const state = useState();
   const modals = useModals();
@@ -85,9 +90,11 @@ export default function FlowLogin() {
                     <MdArrowBack {...iconSize("1.2em")} /> <Trans>Back</Trans>
                   </Button>
                 </a>
-                <Button type="submit">
+                <div class={submitWrap}>
+<Button type="submit">
                   <Trans>Login</Trans>
                 </Button>
+</div>
               </Row>
             </Form>
           </>

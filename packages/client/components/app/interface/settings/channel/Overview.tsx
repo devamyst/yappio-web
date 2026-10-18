@@ -152,6 +152,7 @@ export default function ChannelOverview(props: ChannelSettingsProps) {
           <Form2.SaveBar group={editGroup} onReset={onReset} />
         </Column>
       </form>
+      <Show when={props.channel.type !== "Group"}>
       <Column>
         <Text class="label">
           <Trans>Mark as Mature</Trans>
@@ -179,6 +180,7 @@ export default function ChannelOverview(props: ChannelSettingsProps) {
           </Button>
         </div>
       </Column>
+      </Show>
     </Column>
   );
 }
