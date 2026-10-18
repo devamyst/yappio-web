@@ -107,8 +107,7 @@ export const HomeSidebar = (props: Props) => {
             </ButtonTitle>
           </MenuButton>
 
-          <Show when={instance.isStoat}>
-            <MenuButton
+          <MenuButton
               href={state.layout.getLastActiveDiscoverPath()}
               size="normal"
               icon={<Symbol>explore</Symbol>}
@@ -122,7 +121,7 @@ export const HomeSidebar = (props: Props) => {
                 <Trans>Discover</Trans>
               </ButtonTitle>
             </MenuButton>
-          </Show>
+          
 
           <Switch
             fallback={

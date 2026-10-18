@@ -4,6 +4,7 @@ import { IS_DEV } from "@revolt/client";
 
 import { type ActiveModal } from ".";
 import { AddBotModal } from "./modals/AddBot";
+import { PublishListingModal } from "./modals/PublishListing";
 import { AddFriendModal } from "./modals/AddFriend";
 import { AddMembersToGroupModal } from "./modals/AddMembersToGroup";
 import { BanMemberModal } from "./modals/BanMember";
@@ -81,6 +82,8 @@ export function RenderModal(props: ActiveModal & { onClose: () => void }) {
   const modalProps = mergeProps(props.props, modal2Props);
 
   switch (modalProps.type) {
+    case "publish_listing":
+      return <PublishListingModal {...modalProps} />;
     case "add_bot":
       return <AddBotModal {...modalProps} />;
     case "add_friend":

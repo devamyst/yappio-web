@@ -6,7 +6,9 @@ import type { API } from "stoat.js";
 
 import { useClient } from "@revolt/client";
 import { useInstance } from "@revolt/instance";
+import { useModals } from "@revolt/modal";
 import {
+  CategoryButton,
   CircularProgress,
   Column,
   Form2,
@@ -14,6 +16,8 @@ import {
   Row,
   Text,
 } from "@revolt/ui";
+
+import { Symbol } from "@revolt/ui/components/utils/Symbol";
 
 import { ServerSettingsProps } from "../ServerSettings";
 
@@ -24,6 +28,7 @@ export default function ServerOverview(props: ServerSettingsProps) {
   const { t } = useLingui();
   const client = useClient();
   const instance = useInstance();
+  const { openModal } = useModals();
 
   /* eslint-disable solid/reactivity */
   const editGroup = createFormGroup({
@@ -253,6 +258,14 @@ export default function ServerOverview(props: ServerSettingsProps) {
             label={t`Server Description`}
             placeholder={t`This server is about...`}
           />
+          <CategoryButton
+            icon={<Symbol>explore</Symbol>}
+            action="chevron"
+            onClick={() => openModal({ type: "publish_listing", server: props.server })}
+            description={t`List this server on Discover so people can find it`}
+          >
+            <Trans>Discovery</Trans>
+          </CategoryButton>
           <Text class="title" size="small">
             <Trans>System message channels</Trans>
           </Text>
