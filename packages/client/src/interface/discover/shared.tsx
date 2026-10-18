@@ -19,8 +19,11 @@ export const JoinButton = styled("button", {
     borderRadius: "var(--radius-pill)",
     color: "var(--md-sys-color-on-primary)",
     background: "var(--md-sys-color-primary)",
+    transition:
+      "filter var(--motion-fast) var(--ease-standard), transform var(--motion-fast) var(--ease-standard)",
 
-    "&:hover": { filter: "brightness(1.08)" },
+    "&:hover": { filter: "brightness(1.08)", transform: "translateY(-1px)" },
+    "&:active": { transform: "none" },
     "&:disabled": { opacity: 0.5, cursor: "default" },
     "&:focus-visible": {
       outline: "2px solid var(--md-sys-color-primary)",

@@ -157,18 +157,19 @@ export function Discover() {
               <Symbol size={20}>add</Symbol>
               <Trans>Publish</Trans>
             </PublishButton>
+            <HeroSearch>
+              <SearchBox>
+              <Symbol size={20}>search</Symbol>
+              <input
+                type="search"
+                value={search()}
+                placeholder={t`Search servers and apps`}
+                aria-label={t`Search`}
+                onInput={(e) => onSearch(e.currentTarget.value)}
+              />
+            </SearchBox>
+            </HeroSearch>
           </Hero>
-
-          <SearchBox>
-            <Symbol size={20}>search</Symbol>
-            <input
-              type="search"
-              value={search()}
-              placeholder={t`Search servers and apps`}
-              aria-label={t`Search`}
-              onInput={(e) => onSearch(e.currentTarget.value)}
-            />
-          </SearchBox>
 
           <Tabs role="tablist">
             <TabButton
@@ -242,7 +243,11 @@ export function Discover() {
               <Switch>
                 <Match when={warming()}>
                   <Empty>
-                    <Symbol size={48}>hourglass_top</Symbol>
+                    <WarmArt aria-hidden="true">
+                      <span />
+                      <span />
+                      <span />
+                    </WarmArt>
                     <h2>
                       <Trans>Discovery is warming up</Trans>
                     </h2>
@@ -252,6 +257,13 @@ export function Discover() {
                         minute.
                       </Trans>
                     </p>
+                    <PublishButton
+                      type="button"
+                      onClick={() => setReload(reload() + 1)}
+                    >
+                      <Symbol size={20}>refresh</Symbol>
+                      <Trans>Retry</Trans>
+                    </PublishButton>
                   </Empty>
                 </Match>
                 <Match when={loading() && items().length === 0}>
@@ -356,13 +368,14 @@ const Hero = styled("div", {
     justifyContent: "space-between",
     flexWrap: "wrap",
     gap: "12px",
-    padding: "24px",
-    borderRadius: "var(--radius-card)",
+    padding: "32px 24px",
+    borderRadius: "var(--radius-modal)",
     color: "var(--md-sys-color-on-surface)",
+    border: "1px solid var(--md-sys-color-outline-variant)",
     background:
-      "linear-gradient(135deg, var(--md-sys-color-surface-container-highest), var(--md-sys-color-surface-container-low))",
+      "radial-gradient(120% 140% at 100% 0%, color-mix(in srgb, var(--md-sys-color-primary) 22%, transparent), transparent 55%), linear-gradient(135deg, var(--md-sys-color-surface-container-highest), var(--md-sys-color-surface-container-low))",
 
-    "& h1": { margin: 0, fontSize: "28px", fontWeight: 800 },
+    "& h1": { margin: 0, fontSize: "32px", fontWeight: 800, letterSpacing: "-0.02em" },
     "& p": {
       margin: "4px 0 0",
       color: "var(--md-sys-color-on-surface-variant)",
@@ -370,7 +383,9 @@ const Hero = styled("div", {
   },
 });
 
-const HeroText = styled("div", { base: { minWidth: 0 } });
+const HeroText = styled("div", { base: { minWidth: 0, flex: "1 1 240px" } });
+
+const HeroSearch = styled("div", { base: { flexBasis: "100%", marginTop: "8px" } });
 
 const PublishButton = styled("button", {
   base: {
@@ -466,7 +481,24 @@ const Toolbar = styled("div", {
 });
 
 const Chips = styled("div", {
-  base: { display: "flex", flexWrap: "wrap", gap: "6px", minWidth: 0 },
+  base: {
+    display: "flex",
+    flexWrap: "nowrap",
+    gap: "6px",
+    minWidth: 0,
+    flex: "1 1 240px",
+    overflowX: "auto",
+    scrollbarWidth: "none",
+    padding: "2px 16px",
+    margin: "0 -16px",
+    maskImage:
+      "linear-gradient(90deg, transparent 0, #000 16px, #000 calc(100% - 24px), transparent 100%)",
+    WebkitMaskImage:
+      "linear-gradient(90deg, transparent 0, #000 16px, #000 calc(100% - 24px), transparent 100%)",
+
+    "&::-webkit-scrollbar": { display: "none" },
+    "& > *": { flexShrink: 0 },
+  },
 });
 
 const Chip = styled("button", {
@@ -474,7 +506,7 @@ const Chip = styled("button", {
     height: "32px",
     padding: "0 14px",
     cursor: "pointer",
-    border: "none",
+    border: "1px solid var(--md-sys-color-outline-variant)",
     fontSize: "13px",
     borderRadius: "var(--radius-pill)",
     color: "var(--md-sys-color-on-surface)",
@@ -507,6 +539,32 @@ const SortSelect = styled("select", {
 
     "&:focus-visible": {
       outline: "2px solid var(--md-sys-color-primary)",
+    },
+  },
+});
+
+const WarmArt = styled("div", {
+  base: {
+    display: "flex",
+    alignItems: "flex-end",
+    gap: "8px",
+    height: "72px",
+    marginBottom: "8px",
+
+    "& span": {
+      width: "18px",
+      borderRadius: "var(--radius-pill)",
+      background: "var(--md-sys-color-primary)",
+      boxShadow:
+        "0 0 18px color-mix(in srgb, var(--md-sys-color-primary) 55%, transparent)",
+      animation: "yappioPulse 1.4s ease-in-out infinite",
+    },
+    "& span:nth-child(1)": { height: "32px" },
+    "& span:nth-child(2)": { height: "60px", animationDelay: "0.2s" },
+    "& span:nth-child(3)": { height: "44px", animationDelay: "0.4s" },
+
+    "@media (prefers-reduced-motion: reduce)": {
+      "& span": { animation: "none" },
     },
   },
 });

@@ -24,6 +24,12 @@ export function formatCount(count: number) {
     : String(count);
 }
 
+function bannerGradient(seed: string) {
+  let hash = 0;
+  for (let i = 0; i < seed.length; i++) hash = (hash * 31 + seed.charCodeAt(i)) % 360;
+  return `linear-gradient(135deg, hsl(${hash} 55% 42%) 0%, hsl(${(hash + 55) % 360} 60% 20%) 100%)`;
+}
+
 export function ListingCard(props: {
   item: CardData;
   action?: JSX.Element;
@@ -35,7 +41,11 @@ export function ListingCard(props: {
         style={
           props.item.bannerUrl
             ? { "background-image": `url('${props.item.bannerUrl}')` }
-            : undefined
+            : {
+                "background-image": bannerGradient(
+                  props.item.categories[0] ?? props.item.name,
+                ),
+              }
         }
       >
         <Show when={props.item.featured}>
@@ -62,7 +72,7 @@ export function ListingCard(props: {
         <Footer>
           <Show when={props.item.type === "server"}>
             <Count>
-              <Symbol size={16}>person</Symbol>
+              <Symbol size={16}>group</Symbol>
               {formatCount(props.item.memberCount ?? 0)}
             </Count>
           </Show>
@@ -98,12 +108,14 @@ const Card = styled("article", {
     borderRadius: "var(--radius-card)",
     background: "var(--md-sys-color-surface-container-high)",
     boxShadow: "var(--elev-1)",
+    border: "1px solid transparent",
     transition:
-      "transform var(--motion-med) var(--ease-standard), box-shadow var(--motion-med) var(--ease-standard)",
+      "transform var(--motion-med) var(--ease-standard), box-shadow var(--motion-med) var(--ease-standard), border-color var(--motion-med) var(--ease-standard)",
 
     "&:hover, &:focus-within": {
-      transform: "translateY(-2px)",
-      boxShadow: "var(--elev-2)",
+      transform: "translateY(-4px)",
+      boxShadow: "var(--elev-3)",
+      borderColor: "color-mix(in srgb, var(--md-sys-color-primary) 55%, transparent)",
     },
 
     "@media (prefers-reduced-motion: reduce)": {
@@ -122,7 +134,7 @@ const Card = styled("article", {
 const Banner = styled("div", {
   base: {
     position: "relative",
-    height: "96px",
+    height: "120px",
     flexShrink: 0,
     backgroundSize: "cover",
     backgroundPosition: "center",
@@ -145,6 +157,8 @@ const FeaturedPill = styled("span", {
     borderRadius: "var(--radius-pill)",
     color: "var(--md-sys-color-on-primary)",
     background: "var(--md-sys-color-primary)",
+    boxShadow:
+      "0 0 0 3px color-mix(in srgb, var(--md-sys-color-primary) 30%, transparent), 0 0 18px color-mix(in srgb, var(--md-sys-color-primary) 70%, transparent)",
   },
 });
 
@@ -235,7 +249,11 @@ const Count = styled("span", {
     display: "flex",
     alignItems: "center",
     gap: "4px",
-    fontSize: "13px",
+    padding: "3px 10px 3px 8px",
+    fontSize: "12px",
+    fontWeight: 600,
+    borderRadius: "var(--radius-pill)",
+    background: "var(--md-sys-color-surface-container-highest)",
     color: "var(--md-sys-color-on-surface-variant)",
   },
 });
