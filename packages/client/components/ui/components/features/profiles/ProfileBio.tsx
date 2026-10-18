@@ -4,9 +4,9 @@ import { styled } from "styled-system/jsx";
 
 import { Markdown } from "@revolt/markdown";
 
-import { Ripple, Text, typography } from "../../design";
+import { Ripple, typography } from "../../design";
 
-import { ProfileCard } from "./ProfileCard";
+import { CardTitle, ProfileCard } from "./ProfileCard";
 
 interface Props {
   full?: boolean;
@@ -30,9 +30,9 @@ export function ProfileBio(props: Props) {
           <Ripple />
         </Show>
 
-        <Text class="title" size="large">
+        <CardTitle>
           Bio
-        </Text>
+        </CardTitle>
 
         <Bio>
           <Markdown content={props.content} />
@@ -46,5 +46,15 @@ const Bio = styled("span", {
   base: {
     ...typography.raw({ class: "_messages" }),
     userSelect: "text",
+    minWidth: 0,
+    overflowWrap: "anywhere",
+
+    "& h1, & h2, & h3, & h4, & h5, & h6": {
+      lineHeight: 1.25,
+      margin: "0.25em 0",
+    },
+    "& p, & ul, & ol": {
+      margin: "0.25em 0",
+    },
   },
 });

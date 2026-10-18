@@ -13,18 +13,18 @@ export const ProfileCard = styled("div", {
     color: "var(--md-sys-color-on-surface)",
     background: "var(--md-sys-color-surface-container)",
 
-    padding: "var(--gap-lg)",
+    padding: "var(--gap-md) var(--gap-lg)",
     borderRadius: "var(--radius-card)",
 
     display: "flex",
     gap: "var(--gap-sm)",
     flexDirection: "column",
+
   },
   variants: {
     width: {
       1: {
         overflow: "hidden",
-        aspectRatio: "1/1",
       },
       2: {
         gridColumn: "1 / 3",
@@ -36,7 +36,7 @@ export const ProfileCard = styled("div", {
     constraint: {
       half: {
         overflow: "hidden",
-        aspectRatio: "2/1",
+        maxHeight: "168px",
       },
     },
     isLink: {
@@ -47,5 +47,16 @@ export const ProfileCard = styled("div", {
   },
   defaultVariants: {
     width: 1,
+  },
+});
+
+export const CardTitle = styled("div", {
+  base: {
+    fontSize: "0.75rem",
+    lineHeight: "1rem",
+    fontWeight: 700,
+    letterSpacing: "0.06em",
+    textTransform: "uppercase",
+    color: "var(--md-sys-color-on-surface-variant)",
   },
 });

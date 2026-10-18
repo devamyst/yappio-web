@@ -8,16 +8,16 @@ import { timeLocale, useTime } from "@revolt/i18n";
 import { Text } from "../../design";
 import { OverflowingText } from "../../utils";
 
-import { ProfileCard } from "./ProfileCard";
+import { CardTitle, ProfileCard } from "./ProfileCard";
 
 export function ProfileJoined(props: { user: User; member?: ServerMember }) {
   const dayjs = useTime();
 
   return (
     <ProfileCard>
-      <Text class="title" size="large">
+      <CardTitle>
         <Trans>Joined</Trans>
-      </Text>
+      </CardTitle>
       <Text class="label">
         <OverflowingText>Yappio</OverflowingText>
         {/* <Trans>Account Created</Trans> */}

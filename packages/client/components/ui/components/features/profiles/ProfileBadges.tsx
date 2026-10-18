@@ -15,9 +15,8 @@ import badgePaw from "../../../../../public/assets/badges/paw.svg";
 import badgeRaccoon from "../../../../../public/assets/badges/raccoon.svg";
 import badgeSupporter from "../../../../../public/assets/badges/supporter.svg";
 import badgeTranslator from "../../../../../public/assets/badges/translator.svg";
-import { Text } from "../../design";
 
-import { ProfileCard } from "./ProfileCard";
+import { CardTitle, ProfileCard } from "./ProfileCard";
 
 export function ProfileBadges(props: { user: User }) {
   const { t } = useLingui();
@@ -25,9 +24,9 @@ export function ProfileBadges(props: { user: User }) {
   return (
     <Show when={props.user.badges}>
       <ProfileCard>
-        <Text class="title" size="large">
+        <CardTitle>
           <Trans>Badges</Trans>
-        </Text>
+        </CardTitle>
 
         <BadgeRow>
           <Show when={props.user.badges & UserBadges.Founder}>

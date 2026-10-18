@@ -10,7 +10,7 @@ import { Avatar, Ripple, Text } from "../../design";
 import { Trans } from "@lingui/solid/macro";
 import { useQuery } from "@tanstack/solid-query";
 import { Row } from "../../layout";
-import { ProfileCard } from "./ProfileCard";
+import { CardTitle, ProfileCard } from "./ProfileCard";
 
 export function ProfileOwner(props: { bot: { owner: string } }) {
   const client = useClient();
@@ -40,9 +40,9 @@ export function ProfileOwner(props: { bot: { owner: string } }) {
       <Show when={props.bot.owner}>
         <ProfileCard isLink onClick={OpenOwnerProfile}>
           <Ripple />
-          <Text class="title" size="large">
+          <CardTitle>
             <Trans>Owner</Trans>
-          </Text>
+          </CardTitle>
           <Row>
             <Avatar
               src={query.data?.animatedAvatarURL}

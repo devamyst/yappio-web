@@ -22,7 +22,7 @@ const base = cva({
     animation: "popIn var(--motion-fast) var(--ease-standard)",
 
     width: "340px",
-    height: "400px",
+    maxHeight: "min(540px, calc(100vh - 32px))",
 
     borderRadius: "var(--radius-card)",
     overflow: "hidden",

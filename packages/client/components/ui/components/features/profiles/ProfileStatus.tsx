@@ -4,9 +4,9 @@ import { Trans, useLingui } from "@lingui/solid/macro";
 import { User } from "stoat.js";
 import { styled } from "styled-system/jsx";
 
-import { Text, typography } from "../../design";
+import { typography } from "../../design";
 
-import { ProfileCard } from "./ProfileCard";
+import { CardTitle, ProfileCard } from "./ProfileCard";
 
 export function ProfileStatus(props: { user: User }) {
   const { t } = useLingui();
@@ -14,9 +14,9 @@ export function ProfileStatus(props: { user: User }) {
   return (
     <Show when={props.user.status?.text}>
       <ProfileCard>
-        <Text class="title" size="large">
+        <CardTitle>
           <Trans>Status</Trans>
-        </Text>
+        </CardTitle>
         <Status>
           {props.user.statusMessage((s) =>
             s === "Online"

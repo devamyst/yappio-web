@@ -7,7 +7,6 @@ import { styled } from "styled-system/jsx";
 import { useLingui } from "@lingui/solid/macro";
 import { OverflowingText, Tooltip } from "@revolt/ui";
 import { Avatar, Ripple, UserStatus, typography } from "../../design";
-import { Row } from "../../layout";
 
 export function ProfileBanner(props: {
   user: User;
@@ -38,92 +37,81 @@ export function ProfileBanner(props: {
   }
 
   const bannerImage = () => {
-    if (props.bannerUrl)
-      return `linear-gradient(rgba(0, 0, 0, 0.2),rgba(0, 0, 0, 0.7)), url('${props.bannerUrl}')`;
+    if (props.bannerUrl) return `url('${props.bannerUrl}')`;
     let hash = 0;
     for (const char of props.user.id) hash = (hash * 31 + char.charCodeAt(0)) % 360;
-    return `linear-gradient(rgba(0, 0, 0, 0.1),rgba(0, 0, 0, 0.45)), linear-gradient(135deg, hsl(${hash} 55% 42%), hsl(${(hash + 55) % 360} 60% 20%))`;
+    return `linear-gradient(135deg, hsl(${hash} 55% 42%), hsl(${(hash + 55) % 360} 60% 20%))`;
   };
 
   const pronouns = () => props.member?.pronouns ?? props.user.pronouns;
+  const shownName = () => props.member?.displayName ?? props.user.displayName;
+  const sameName = () => shownName() === props.user.username;
+
+  const handle = () => (
+    <Tooltip
+      content={isCopied() ? t`Copied!` : t`Click to copy username`}
+      placement="top"
+    >
+      <Username onClick={onUsernameClick}>
+        {props.user.username}
+        <LowEmphasis>#{props.user.discriminator}</LowEmphasis>
+      </Username>
+    </Tooltip>
+  );
 
   return (
     <Banner
-      style={{
-        "background-image": bannerImage(),
-      }}
       isLink={typeof props.onClick !== "undefined"}
       onClick={props.onClick}
       width={props.width}
     >
+      <Cover
+        large={props.width === 3}
+        style={{ "background-image": bannerImage() }}
+      />
       <Show when={typeof props.onClick !== "undefined"}>
         <Ripple />
       </Show>
 
-      <Row align gap="lg">
-        <Avatar
-          src={props.user.animatedAvatarURL}
-          size={48}
-          holepunch="bottom-right"
-          onClick={props.onClickAvatar}
-          interactive={props.user.avatar && !!props.onClickAvatar}
-          overlay={<UserStatus.Graphic status={props.user.presence} />}
-        />
+      <Info>
+        <AvatarRing>
+          <Avatar
+            src={props.user.animatedAvatarURL}
+            fallback={shownName()}
+            size={72}
+            holepunch="bottom-right"
+            onClick={props.onClickAvatar}
+            interactive={props.user.avatar && !!props.onClickAvatar}
+            overlay={<UserStatus.Graphic status={props.user.presence} />}
+          />
+        </AvatarRing>
         <UserDetails>
-          <Show
-            when={
-              (props.member?.displayName ?? props.user.displayName) !==
-              props.user.username
-            }
-          >
-            <span class={css({ fontWeight: 600 })}>
-              {props.member?.displayName ?? props.user.displayName}
-            </span>
+          <Show when={!sameName()} fallback={<Name>{handle()}</Name>}>
+            <Name>
+              <OverflowingText>{shownName()}</OverflowingText>
+            </Name>
+            <Handle>{handle()}</Handle>
           </Show>
-          <Row>
-            <UsernameContainer>
-              <Tooltip
-                content={isCopied() ? t`Copied!` : t`Click to copy username`}
-                placement="top"
-              >
-                <Username onClick={onUsernameClick}>
-                  {props.user.username}
-                  <LowEmphasis>#{props.user.discriminator}</LowEmphasis>
-                </Username>
-              </Tooltip>
-            </UsernameContainer>
+          <Show when={pronouns()}>
             <Pronouns>
-              <OverflowingText>
-                <LowEmphasis>{pronouns() ?? ""}</LowEmphasis>
-              </OverflowingText>
+              <OverflowingText>{pronouns()}</OverflowingText>
             </Pronouns>
-          </Row>
+          </Show>
         </UserDetails>
-      </Row>
+      </Info>
     </Banner>
   );
 }
 
 const Banner = styled("div", {
   base: {
-    // for <Ripple />:
     position: "relative",
-
     userSelect: "none",
-
-    height: "120px",
-    padding: "var(--gap-lg)",
-
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "end",
-
-    backgroundSize: "cover",
-    backgroundPosition: "center",
-
-    borderRadius: "var(--borderRadius-xl)",
-
-    color: "white",
+    minWidth: 0,
+    overflow: "hidden",
+    background: "var(--md-sys-color-surface-container)",
+    color: "var(--md-sys-color-on-surface)",
+    borderRadius: "var(--radius-card)",
   },
   variants: {
     width: {
@@ -142,26 +130,81 @@ const Banner = styled("div", {
   },
 });
 
+const Cover = styled("div", {
+  base: {
+    height: "96px",
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+  },
+  variants: {
+    large: {
+      true: {
+        height: "140px",
+      },
+    },
+  },
+});
+
+const Info = styled("div", {
+  base: {
+    display: "flex",
+    flexDirection: "column",
+    gap: "var(--gap-sm)",
+    padding: "0 var(--gap-lg) var(--gap-lg)",
+  },
+});
+
+const AvatarRing = styled("div", {
+  base: {
+    marginTop: "-40px",
+    padding: "4px",
+    width: "fit-content",
+    lineHeight: 0,
+    position: "relative",
+    borderRadius: "50%",
+    background: "var(--md-sys-color-surface-container)",
+  },
+});
+
+const Name = styled("div", {
+  base: {
+    fontSize: "1.25rem",
+    fontWeight: 700,
+    lineHeight: "1.5rem",
+    minWidth: 0,
+  },
+});
+
+const Handle = styled("div", {
+  base: {
+    fontSize: "0.875rem",
+    lineHeight: "1.25rem",
+    color: "var(--md-sys-color-on-surface-variant)",
+  },
+});
+
+const Pronouns = styled("div", {
+  base: {
+    fontSize: "0.8125rem",
+    lineHeight: "1.25rem",
+    color: "var(--md-sys-color-on-surface-variant)",
+    minWidth: 0,
+  },
+});
+
 const UserDetails = styled("div", {
   base: {
     ...typography.raw(),
 
-    flexGrow: 1,
+    minWidth: 0,
     display: "flex",
-    lineHeight: "1rem",
-    gap: "var(--gap-xs)",
     flexDirection: "column",
-  },
-});
-
-const UsernameContainer = styled("div", {
-  base: {
-    flexShrink: 0,
   },
 });
 
 const Username = styled("span", {
   base: {
+    cursor: "pointer",
     _hover: {
       textDecoration: "underline",
     },
@@ -170,17 +213,7 @@ const Username = styled("span", {
 
 const LowEmphasis = styled("span", {
   base: {
-    fontWeight: 200,
-  },
-});
-
-const Pronouns = styled("div", {
-  base: {
-    ...typography.raw(),
-    minWidth: 0,
-    flexGrow: 1,
-    lineHeight: "1rem",
-    gap: "var(--gap-xs)",
-    textAlign: "right",
+    fontWeight: 400,
+    opacity: 0.7,
   },
 });

@@ -6,9 +6,9 @@ import { styled } from "styled-system/jsx";
 
 import { useModals } from "@revolt/modal";
 
-import { Ripple, Text, typography } from "../../design";
+import { Ripple, typography } from "../../design";
 
-import { ProfileCard } from "./ProfileCard";
+import { CardTitle, ProfileCard } from "./ProfileCard";
 
 export function ProfileRoles(props: { member?: ServerMember }) {
   const { openModal } = useModals();
@@ -30,9 +30,9 @@ export function ProfileRoles(props: { member?: ServerMember }) {
       <ProfileCard isLink onClick={openRoles}>
         <Ripple />
 
-        <Text class="title" size="large">
+        <CardTitle>
           <Trans>Roles</Trans>
-        </Text>
+        </CardTitle>
         <RoleChips>
           <For each={visibleRoles().toReversed()}>
             {(role) => (

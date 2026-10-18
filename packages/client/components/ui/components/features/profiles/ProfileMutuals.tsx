@@ -7,9 +7,9 @@ import { styled } from "styled-system/jsx";
 import { useClient } from "@revolt/client";
 import { useModals } from "@revolt/modal";
 
-import { Avatar, Ripple, Text } from "../../design";
+import { Avatar, Ripple } from "../../design";
 
-import { ProfileCard } from "./ProfileCard";
+import { CardTitle, ProfileCard } from "./ProfileCard";
 
 export function ProfileMutuals(props: { user: User; member?: ServerMember }) {
   const client = useClient();
@@ -73,9 +73,9 @@ export function ProfileMutuals(props: { user: User; member?: ServerMember }) {
         <ProfileCard isLink onClick={openFriends}>
           <Ripple />
 
-          <Text class="title" size="large">
+          <CardTitle>
             Mutuals
-          </Text>
+          </CardTitle>
           <Grid>
             <For each={query.data?.users}>
               {(user) => (
@@ -93,9 +93,9 @@ export function ProfileMutuals(props: { user: User; member?: ServerMember }) {
         <ProfileCard isLink onClick={openGroups}>
           <Ripple />
 
-          <Text class="title" size="large">
+          <CardTitle>
             Groups
-          </Text>
+          </CardTitle>
           <Grid>
             <For each={query.data?.groups}>
               {(group) => (
