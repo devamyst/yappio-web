@@ -52,7 +52,7 @@ const SidebarButtonBase = styled("a", {
     display: "flex",
     alignItems: "center",
     padding: "6px 8px",
-    borderRadius: "8px",
+    borderRadius: "var(--radius-xs)",
     fontWeight: 500,
     marginInlineEnd: "12px",
     fontSize: "15px",
@@ -69,7 +69,8 @@ const SidebarButtonBase = styled("a", {
   variants: {
     "aria-selected": {
       true: {
-        background: "var(--md-sys-color-primary-container)",
+        background: "var(--md-sys-color-surface-container-highest)",
+        fontWeight: 600,
       },
     },
   },

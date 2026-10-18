@@ -101,6 +101,7 @@ const Base = styled("div", {
     display: "flex",
     flex: "1 0 218px",
     paddingLeft: "8px",
+    background: "var(--md-sys-color-surface-container-low)",
     justifyContent: "flex-end",
     height: "100%",
 
@@ -121,8 +122,8 @@ const Base = styled("div", {
  */
 const Content = styled("div", {
   base: {
-    minWidth: "230px",
-    maxWidth: "300px",
+    minWidth: "218px",
+    maxWidth: "218px",
     padding: "74px 0 8px",
     display: "flex",
     gap: "2px",
