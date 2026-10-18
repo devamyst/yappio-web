@@ -134,7 +134,7 @@ export class Theme extends AbstractStore<"theme", TypeTheme> {
       preset: "you",
       mode: "dark",
 
-      m3Accent: "#ffc82c",
+      m3Accent: "#c8f43c",
       m3Contrast: 0.0,
       m3Variant: "tonal_spot",
 

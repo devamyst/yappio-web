@@ -128,6 +128,38 @@ type MaterialColours = {
   shadow: string;
 };
 
+export const YAPPIO_ACCENT = "#c8f43c";
+
+const YAPPIO_DARK: Partial<MaterialColours> = {
+  primary: "#c8f43c",
+  "on-primary": "#1a2200",
+  "primary-container": "#3b4a00",
+  "on-primary-container": "#dfff7a",
+  secondary: "#cfd4b4",
+  "on-secondary": "#242810",
+  "secondary-container": "#3c402b",
+  "on-secondary-container": "#e4e9c8",
+  tertiary: "#a8b5ff",
+  "on-tertiary": "#14195c",
+  "tertiary-container": "#2f3369",
+  "on-tertiary-container": "#dde1ff",
+  "surface-dim": "#100e19",
+  surface: "#15131f",
+  "surface-bright": "#2e2b3b",
+  "surface-container-lowest": "#0f0d17",
+  "surface-container-low": "#1a1826",
+  "surface-container": "#1f1c2c",
+  "surface-container-high": "#292637",
+  "surface-container-highest": "#343143",
+  "on-surface": "#ece9f5",
+  "on-surface-variant": "#b9b5c9",
+  outline: "#8a869b",
+  "outline-variant": "#3a3749",
+  "inverse-surface": "#e6e1ec",
+  "inverse-on-surface": "#312f3b",
+  "inverse-primary": "#5b7000",
+};
+
 /**
  * Generate a Material You colour scheme
  * @param accent Accent colour in hex format
@@ -175,7 +207,7 @@ function generateMaterialYouScheme(
       break;
   }
 
-  return {
+  const colours: MaterialColours = {
     primary: hexFromArgb(scheme.primary),
     "on-primary": hexFromArgb(scheme.onPrimary),
     "primary-container": hexFromArgb(scheme.primaryContainer),
@@ -228,4 +260,10 @@ function generateMaterialYouScheme(
     scrim: hexFromArgb(scheme.scrim),
     shadow: hexFromArgb(scheme.shadow),
   };
+
+  if (darkMode && accent.toLowerCase() === YAPPIO_ACCENT) {
+    return { ...colours, ...YAPPIO_DARK };
+  }
+
+  return colours;
 }
