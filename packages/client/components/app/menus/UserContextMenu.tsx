@@ -235,6 +235,29 @@ export function UserContextMenu(props: {
 
   /**
    * Whether the user can ban this member
+  /**
+   * Whether the user can time out this member
+   */
+  function canTimeout() {
+    return (
+      !props.user.self &&
+      props.member?.server?.havePermission("TimeoutMembers") &&
+      props.member.id.user !== props.member.server.ownerId &&
+      props.member.inferiorTo(props.member.server.member!)
+    );
+  }
+
+  function timeoutMember() {
+    openModal({
+      type: "timeout_member",
+      member: props.member!,
+    });
+  }
+
+  function removeTimeout() {
+    props.member!.removeTimeout();
+  }
+
    */
   function canBan() {
     return (
@@ -529,11 +552,10 @@ export function UserContextMenu(props: {
       </Show>
 
       {/* Moderation: kick, ban */}
-      {/** TODO: #287 timeout users */}
       <Show
         when={
           canRemoveMemberFromGroup() ||
-          (props.member && (canKick() || canBan()))
+          (props.member && (canKick() || canBan() || canTimeout()))
         }
       >
         <ContextMenuDivider />
@@ -552,6 +574,35 @@ export function UserContextMenu(props: {
         </Show>
         <Show when={canKick()}>
           <ContextMenuButton
+        <Show when={canTimeout()}>
+          <Show
+            when={props.member!.timeout && props.member!.timeout > new Date()}
+            fallback={
+              <ContextMenuButton
+                symbol={
+                  <IconSlot>
+                    <Symbol size={16}>timer</Symbol>
+                  </IconSlot>
+                }
+                onClick={timeoutMember}
+                destructive
+              >
+                <Trans>Timeout</Trans>
+              </ContextMenuButton>
+            }
+          >
+            <ContextMenuButton
+              symbol={
+                <IconSlot>
+                  <Symbol size={16}>timer_off</Symbol>
+                </IconSlot>
+              }
+              onClick={removeTimeout}
+            >
+              <Trans>Remove timeout</Trans>
+            </ContextMenuButton>
+          </Show>
+        </Show>
             symbol={
               <IconSlot>
                 <Symbol size={16}>person_remove</Symbol>

@@ -44,6 +44,12 @@ export function ProfileJoined(props: { user: User; member?: ServerMember }) {
           )}
         </Text>
       </Show>
+      <Show when={props.member?.timeout && props.member.timeout > new Date()}>
+        <Text class="label">
+          <Trans>Timed out until</Trans>
+        </Text>
+        <Text>{dayjs(props.member!.timeout).format("lll")}</Text>
+      </Show>
     </ProfileCard>
   );
 }

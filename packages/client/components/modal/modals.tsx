@@ -42,6 +42,8 @@ import { JoinServerModal } from "./modals/JoinServer";
 import { BlockUserModal } from "./modals/BlockUser";
 import { KickMemberModal } from "./modals/KickMember";
 import { LeaveServerModal } from "./modals/LeaveServer";
+import { PurgeMessagesModal } from "./modals/PurgeMessages";
+import { TimeoutMemberModal } from "./modals/TimeoutMember";
 import { LinkWarningModal } from "./modals/LinkWarning";
 import { MFAEnableTOTPModal } from "./modals/MFAEnableTOTP";
 import { MFAFlowModal } from "./modals/MFAFlow";
@@ -160,6 +162,10 @@ export function RenderModal(props: ActiveModal & { onClose: () => void }) {
     case "leave_server":
       return <LeaveServerModal {...modalProps} />;
     case "link_warning":
+    case "timeout_member":
+      return <TimeoutMemberModal {...modalProps} />;
+    case "purge_messages":
+      return <PurgeMessagesModal {...modalProps} />;
       return <LinkWarningModal {...modalProps} />;
     case "mfa_enable_totp":
       return <MFAEnableTOTPModal {...modalProps} />;

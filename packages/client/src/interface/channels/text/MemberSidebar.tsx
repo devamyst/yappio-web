@@ -1,6 +1,6 @@
 import { createMemo, Match, Show, Switch } from "solid-js";
 
-import { useLingui } from "@lingui/solid/macro";
+import { Trans, useLingui } from "@lingui/solid/macro";
 import { VirtualContainer } from "@minht11/solid-virtual-container";
 import { Channel, ServerMember, User } from "stoat.js";
 import { styled } from "styled-system/jsx";
@@ -15,6 +15,7 @@ import {
   MenuButton,
   OverflowingText,
   Row,
+  Symbol,
   Tooltip,
   typography,
   Username,
@@ -398,6 +399,19 @@ function Member(props: {
               }
             />
           </OverflowingText>
+          <Show
+            when={
+              props.member?.timeout && props.member.timeout > new Date()
+            }
+          >
+            <Tooltip
+              content={() => <Trans>Timed out</Trans>}
+              placement="top-start"
+              aria={t`Timed out`}
+            >
+              <Symbol size={14}>timer</Symbol>
+            </Tooltip>
+          </Show>
           <Show when={status()}>
             <Tooltip
               content={() => <TextWithEmoji content={status()!} />}
