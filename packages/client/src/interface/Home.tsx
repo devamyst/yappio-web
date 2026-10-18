@@ -58,6 +58,7 @@ const Hero = styled("div", {
   base: {
     position: "relative",
     overflow: "hidden",
+    flexShrink: 0,
     width: "100%",
     maxWidth: "720px",
     borderRadius: "var(--radius-modal)",
@@ -77,6 +78,7 @@ const Hero = styled("div", {
 
 const Shortcuts = styled("div", {
   base: {
+    flexShrink: 0,
     width: "100%",
     maxWidth: "720px",
     display: "flex",
@@ -147,6 +149,7 @@ const Tagline = styled("p", {
 
 const Cards = styled("div", {
   base: {
+    flexShrink: 0,
     display: "grid",
     gridTemplateColumns: "repeat(3, minmax(0, 1fr))",
     gap: "var(--space-3)",
