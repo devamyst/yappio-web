@@ -117,6 +117,47 @@ class Lifecycle {
 
     this.client = null!;
     this.dispose();
+    this.watchDevice();
+  }
+
+  private watchDevice() {
+    let hiddenAt = 0;
+
+    const resume = () => {
+      switch (this.state()) {
+        case State.Offline:
+          if (navigator.onLine) {
+            this.transition({ type: TransitionType.DeviceOnline });
+          }
+          break;
+        case State.Disconnected:
+          this.transition({ type: TransitionType.Retry });
+          break;
+        case State.Connected: {
+          const before = this.client.events.ping();
+          this.client.events.send({ type: "Ping", data: +new Date() });
+          setTimeout(() => {
+            if (
+              this.state() === State.Connected &&
+              this.client.events.ping() === before
+            ) {
+              this.client.events.disconnect();
+            }
+          }, 6000);
+          break;
+        }
+      }
+    };
+
+    window.addEventListener("online", resume);
+    window.addEventListener("focus", resume);
+    document.addEventListener("visibilitychange", () => {
+      if (document.visibilityState === "hidden") {
+        hiddenAt = Date.now();
+      } else if (Date.now() - hiddenAt > 15000) {
+        resume();
+      }
+    });
   }
 
   private dispose(logout = false) {
@@ -186,7 +227,7 @@ class Lifecycle {
           });
         } else {
           const retryIn =
-            (Math.pow(2, this.#connectionFailures) - 1) *
+            Math.min(30, Math.pow(2, this.#connectionFailures) - 1) *
             (0.8 + Math.random() * 0.4);
 
           console.info(
