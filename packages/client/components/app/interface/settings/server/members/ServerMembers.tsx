@@ -1,4 +1,11 @@
-import { For, Show, createMemo, createSignal, onMount } from "solid-js";
+import {
+  For,
+  Show,
+  createMemo,
+  createSignal,
+  onCleanup,
+  onMount,
+} from "solid-js";
 
 import { Trans, useLingui } from "@lingui/solid/macro";
 import { Server, ServerMember } from "stoat.js";
@@ -6,7 +13,13 @@ import { styled } from "styled-system/jsx";
 
 import { useClient } from "@revolt/client";
 import { useModals } from "@revolt/modal";
-import { Avatar, Button, CircularProgress, TextField } from "@revolt/ui";
+import { Avatar, CircularProgress, Symbol, TextField } from "@revolt/ui";
+
+import {
+  ContextMenu,
+  ContextMenuButton,
+  ContextMenuDivider,
+} from "../../../../menus/ContextMenu";
 
 export function ServerMembers(props: { server: Server }) {
   const { t } = useLingui();
@@ -52,11 +65,53 @@ export function ServerMembers(props: { server: Server }) {
     );
   });
 
-  const canAct = (member: ServerMember, permission: "KickMembers" | "BanMembers") =>
+  const [menuFor, setMenuFor] = createSignal<string>();
+
+  const closeMenu = () => setMenuFor(undefined);
+  const closeOnOutside = (event: PointerEvent) => {
+    if (!(event.target as Element).closest("[data-member-actions]")) closeMenu();
+  };
+  onMount(() => document.addEventListener("pointerdown", closeOnOutside));
+  onCleanup(() => document.removeEventListener("pointerdown", closeOnOutside));
+
+  const isOwner = () => !!props.server.owner?.self;
+
+  const outranks = (member: ServerMember) =>
     !member.user?.self &&
     member.id.user !== props.server.ownerId &&
-    props.server.havePermission(permission) &&
     member.inferiorTo(props.server.member!);
+
+  const canRoles = (member: ServerMember) =>
+    isOwner() ||
+    (props.server.havePermission("AssignRoles") && outranks(member));
+
+  const canNickname = (member: ServerMember) =>
+    member.user?.self
+      ? props.server.havePermission("ChangeNickname") ||
+        props.server.havePermission("ChangeAvatar")
+      : (props.server.havePermission("ManageNicknames") ||
+          props.server.havePermission("RemoveAvatars")) &&
+        outranks(member);
+
+  const canAct = (
+    member: ServerMember,
+    permission: "KickMembers" | "BanMembers" | "TimeoutMembers",
+  ) => props.server.havePermission(permission) && outranks(member);
+
+  const isTimedOut = (member: ServerMember) =>
+    !!member.timeout && member.timeout > new Date();
+
+  const hasActions = (member: ServerMember) =>
+    canRoles(member) ||
+    canNickname(member) ||
+    canAct(member, "TimeoutMembers") ||
+    canAct(member, "KickMembers") ||
+    canAct(member, "BanMembers");
+
+  const act = (fn: () => void) => {
+    closeMenu();
+    fn();
+  };
 
   return (
     <Page>
@@ -102,26 +157,115 @@ export function ServerMembers(props: { server: Server }) {
                   </For>
                 </Chips>
               </Info>
-              <Actions>
-                <Show when={canAct(member, "KickMembers")}>
-                  <Button
-                    size="xs"
-                    variant="tonal"
-                    onPress={() => openModal({ type: "kick_member", member })}
+              <Show when={isTimedOut(member)}>
+                <TimedOut>
+                  <Symbol size={14}>timer</Symbol>
+                  <Trans>Timed out</Trans>
+                </TimedOut>
+              </Show>
+              <Show when={hasActions(member)}>
+                <Actions data-member-actions="">
+                  <MenuTrigger
+                    type="button"
+                    aria-label={t`Member actions`}
+                    onClick={() =>
+                      setMenuFor(menuFor() === member.id.user ? undefined : member.id.user)
+                    }
                   >
-                    <Trans>Kick</Trans>
-                  </Button>
-                </Show>
-                <Show when={canAct(member, "BanMembers")}>
-                  <Button
-                    size="xs"
-                    variant="_error"
-                    onPress={() => openModal({ type: "ban_member", member })}
-                  >
-                    <Trans>Ban</Trans>
-                  </Button>
-                </Show>
-              </Actions>
+                    <Symbol size={20}>more_vert</Symbol>
+                  </MenuTrigger>
+                  <Show when={menuFor() === member.id.user}>
+                    <Dropdown>
+                      <ContextMenu>
+                        <Show when={canRoles(member)}>
+                          <ContextMenuButton
+                            onClick={() =>
+                              act(() =>
+                                openModal({
+                                  type: "user_profile_roles",
+                                  member,
+                                }),
+                              )
+                            }
+                          >
+                            <Trans>Roles</Trans>
+                          </ContextMenuButton>
+                        </Show>
+                        <Show when={canNickname(member)}>
+                          <ContextMenuButton
+                            onClick={() =>
+                              act(() =>
+                                openModal({ type: "server_identity", member }),
+                              )
+                            }
+                          >
+                            <Trans>Nickname</Trans>
+                          </ContextMenuButton>
+                        </Show>
+                        <Show
+                          when={
+                            canAct(member, "TimeoutMembers") ||
+                            canAct(member, "KickMembers") ||
+                            canAct(member, "BanMembers")
+                          }
+                        >
+                          <ContextMenuDivider />
+                        </Show>
+                        <Show when={canAct(member, "TimeoutMembers")}>
+                          <Show
+                            when={isTimedOut(member)}
+                            fallback={
+                              <ContextMenuButton
+                                onClick={() =>
+                                  act(() =>
+                                    openModal({ type: "timeout_member", member }),
+                                  )
+                                }
+                              >
+                                <Trans>Timeout</Trans>
+                              </ContextMenuButton>
+                            }
+                          >
+                            <ContextMenuButton
+                              onClick={() =>
+                                act(() =>
+                                  member.removeTimeout().catch(showError),
+                                )
+                              }
+                            >
+                              <Trans>Remove timeout</Trans>
+                            </ContextMenuButton>
+                          </Show>
+                        </Show>
+                        <Show when={canAct(member, "KickMembers")}>
+                          <ContextMenuButton
+                            destructive
+                            onClick={() =>
+                              act(() =>
+                                openModal({ type: "kick_member", member }),
+                              )
+                            }
+                          >
+                            <Trans>Kick</Trans>
+                          </ContextMenuButton>
+                        </Show>
+                        <Show when={canAct(member, "BanMembers")}>
+                          <ContextMenuButton
+                            destructive
+                            onClick={() =>
+                              act(() =>
+                                openModal({ type: "ban_member", member }),
+                              )
+                            }
+                          >
+                            <Trans>Ban</Trans>
+                          </ContextMenuButton>
+                        </Show>
+                      </ContextMenu>
+                    </Dropdown>
+                  </Show>
+                </Actions>
+              </Show>
             </Row>
           )}
         </For>
@@ -200,5 +344,44 @@ const Dot = styled("span", {
 });
 
 const Actions = styled("div", {
-  base: { display: "flex", gap: "var(--space-1)", flexShrink: 0 },
+  base: { position: "relative", display: "flex", flexShrink: 0 },
+});
+
+const MenuTrigger = styled("button", {
+  base: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    width: "32px",
+    height: "32px",
+    border: "none",
+    borderRadius: "4px",
+    cursor: "pointer",
+    background: "transparent",
+    color: "var(--md-sys-color-on-surface-variant)",
+    "&:hover": {
+      background: "var(--md-sys-color-surface-container-highest)",
+      color: "var(--md-sys-color-on-surface)",
+    },
+  },
+});
+
+const Dropdown = styled("div", {
+  base: {
+    position: "absolute",
+    top: "100%",
+    insetInlineEnd: 0,
+    zIndex: 50,
+  },
+});
+
+const TimedOut = styled("div", {
+  base: {
+    display: "flex",
+    alignItems: "center",
+    gap: "4px",
+    flexShrink: 0,
+    fontSize: "12px",
+    color: "var(--md-sys-color-error)",
+  },
 });
