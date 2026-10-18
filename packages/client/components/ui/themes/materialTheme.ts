@@ -130,6 +130,26 @@ type MaterialColours = {
 
 export const YAPPIO_ACCENT = "#c8f43c";
 
+const YAPPIO_LIGHT: Partial<MaterialColours> = {
+  primary: "#4d6400",
+  "on-primary": "#ffffff",
+  "primary-container": "#c8f43c",
+  "on-primary-container": "#1a2200",
+  "surface-dim": "#dedce8",
+  surface: "#fbfaff",
+  "surface-bright": "#fbfaff",
+  "surface-container-lowest": "#e9e7f2",
+  "surface-container-low": "#f1eff8",
+  "surface-container": "#f7f6fc",
+  "surface-container-high": "#ecebf3",
+  "surface-container-highest": "#e4e2ec",
+  "on-surface": "#1b1a24",
+  "on-surface-variant": "#4a4759",
+  outline: "#79768a",
+  "outline-variant": "#cac7d6",
+  "inverse-primary": "#c8f43c",
+};
+
 const YAPPIO_DARK: Partial<MaterialColours> = {
   primary: "#c8f43c",
   "on-primary": "#1a2200",
@@ -263,6 +283,10 @@ function generateMaterialYouScheme(
 
   if (darkMode && accent.toLowerCase() === YAPPIO_ACCENT) {
     return { ...colours, ...YAPPIO_DARK };
+  }
+
+  if (!darkMode && accent.toLowerCase() === YAPPIO_ACCENT) {
+    return { ...colours, ...YAPPIO_LIGHT };
   }
 
   return colours;

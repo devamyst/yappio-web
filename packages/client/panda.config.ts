@@ -21,6 +21,18 @@ export default defineConfig({
   theme: {
     extend: {
       keyframes: {
+        fadeIn: {
+          "0%": { opacity: "0" },
+          "100%": { opacity: "1" },
+        },
+        popIn: {
+          "0%": { opacity: "0", transform: "scale(.96)" },
+          "100%": { opacity: "1", transform: "scale(1)" },
+        },
+        slideUp: {
+          "0%": { opacity: "0", transform: "translateY(8px)" },
+          "100%": { opacity: "1", transform: "translateY(0)" },
+        },
         materialPhysicsButtonSelect: {
           "0%": {
             paddingInline: "var(--padding-inline)",

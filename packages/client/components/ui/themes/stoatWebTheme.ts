@@ -26,15 +26,52 @@ export function createStoatWebVariables(theme: SelectedTheme) {
     "--effects-invert-light": theme.darkMode ? "invert(0%)" : "invert(1000%)",
 
     // transitions
-    "--transitions-fast": ".1s ease-in-out",
-    "--transitions-medium": ".2s ease",
+    "--transitions-fast": "var(--motion-fast) var(--ease-standard)",
+    "--transitions-medium": "var(--motion-med) var(--ease-standard)",
 
     // brand
     "--brand-presence-online": "#3ABF7E",
-    "--brand-presence-idle": "#F39F00",
-    "--brand-presence-busy": "#F84848",
+    "--brand-presence-idle": "#F0B232",
+    "--brand-presence-busy": "#F23F43",
     "--brand-presence-focus": "#4799F0",
-    "--brand-presence-invisible": "#A5A5A5",
+    "--brand-presence-invisible": "#80848E",
+
+    // radius
+    "--radius-xs": "4px",
+    "--radius-control": "8px",
+    "--radius-card": "12px",
+    "--radius-modal": "16px",
+    "--radius-pill": "999px",
+    "--radius-server": "16px",
+
+    // spacing
+    "--space-1": "4px",
+    "--space-2": "8px",
+    "--space-3": "12px",
+    "--space-4": "16px",
+    "--space-5": "20px",
+    "--space-6": "24px",
+    "--space-7": "32px",
+    "--space-8": "40px",
+
+    // elevation
+    "--elev-1": theme.darkMode
+      ? "0 1px 2px rgb(0 0 0 / .35)"
+      : "0 1px 2px rgb(0 0 0 / .08)",
+    "--elev-2": theme.darkMode
+      ? "0 4px 12px rgb(0 0 0 / .4)"
+      : "0 4px 12px rgb(0 0 0 / .12)",
+    "--elev-3": theme.darkMode
+      ? "0 16px 40px rgb(0 0 0 / .5)"
+      : "0 16px 40px rgb(0 0 0 / .18)",
+    "--hairline": "1px solid var(--md-sys-color-outline-variant)",
+
+    // motion
+    "--motion-fast": "120ms",
+    "--motion-med": "200ms",
+    "--motion-slow": "320ms",
+    "--ease-standard": "cubic-bezier(.2, 0, 0, 1)",
+    "--ease-emph": "cubic-bezier(.3, 0, 0, 1)",
 
     // font
     "--fonts-primary": `"${theme.interfaceFont}", "Inter", sans-serif`,
@@ -93,7 +130,11 @@ const themeConstants = {
     xxl: "64px",
   },
   layout: {
-    "width-channel-sidebar": "248px",
+    "width-channel-sidebar": "240px",
+    "width-server-list": "72px",
+    "width-member-list": "240px",
+    "height-header": "48px",
+    "height-user-panel": "56px",
     "width-user-context-menu-truncate": "300px",
     "height-message-box": "32vh",
   },

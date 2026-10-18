@@ -138,12 +138,12 @@ export class Theme extends AbstractStore<"theme", TypeTheme> {
       m3Contrast: 0.0,
       m3Variant: "tonal_spot",
 
-      interfaceFont: "Inter",
+      interfaceFont: "Plus Jakarta Sans Variable",
       monospaceFont: "Fira Code",
 
       blur: true,
-      messageSize: 14,
-      messageGroupSpacing: 12,
+      messageSize: 15,
+      messageGroupSpacing: 16,
     };
   }
 
