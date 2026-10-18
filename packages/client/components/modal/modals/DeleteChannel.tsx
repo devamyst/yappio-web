@@ -23,6 +23,7 @@ export function DeleteChannelModal(
 
   return (
     <Dialog
+      destructive
       show={props.show}
       onClose={props.onClose}
       title={

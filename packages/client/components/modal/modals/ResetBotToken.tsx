@@ -20,6 +20,7 @@ export function ResetBotTokenModal(
 
   return (
     <Dialog
+      destructive
       show={props.show}
       onClose={props.onClose}
       title={<Trans>Reset {props.bot.user!.username}'s token?</Trans>}

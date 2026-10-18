@@ -29,6 +29,7 @@ import {
   ServerList,
   ServerSidebar,
   UserPanel,
+  VoiceConnectedPanel,
 } from "./navigation";
 
 const MainBar = styled("div", {
@@ -124,6 +125,7 @@ export const Sidebar = (props: {
               <Server />
             </Match>
           </Switch>
+          <VoiceConnectedPanel />
           <UserPanel />
         </SidebarColumn>
       </Show>

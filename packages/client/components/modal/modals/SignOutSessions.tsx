@@ -27,6 +27,7 @@ export function SignOutSessionsModal(
 
   return (
     <Dialog
+      destructive
       show={props.show}
       onClose={props.onClose}
       title={<Trans>Are you sure you want to clear your sessions?</Trans>}

@@ -98,6 +98,8 @@ const Spinner = styled("div", {
     flexShrink: 0,
     width: "48px",
     height: "48px",
+    animation: "yappioPulse 1.6s var(--ease-standard) infinite",
+    "@media (prefers-reduced-motion: reduce)": { animation: "none" },
   },
 });
 

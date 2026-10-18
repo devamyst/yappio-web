@@ -23,6 +23,7 @@ export function DeleteMessageModal(
 
   return (
     <Dialog
+      destructive
       show={props.show}
       onClose={props.onClose}
       title={<Trans>Delete message</Trans>}

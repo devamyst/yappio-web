@@ -45,7 +45,7 @@ export function Titlebar() {
       <Show
         when={
           (isNative && window.desktopConfig?.get().customFrame) ||
-          isDisconnected()
+          false
         }
       >
         <Motion.div

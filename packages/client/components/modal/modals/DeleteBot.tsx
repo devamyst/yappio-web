@@ -27,6 +27,7 @@ export function DeleteBotModal(
 
   return (
     <Dialog
+      destructive
       show={props.show}
       onClose={props.onClose}
       title={<Trans>Delete {props.bot.user!.displayName}?</Trans>}

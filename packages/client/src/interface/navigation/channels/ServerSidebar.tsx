@@ -9,7 +9,7 @@ import {
   createMemo,
 } from "solid-js";
 
-import { useLingui } from "@lingui/solid/macro";
+import { Trans, useLingui } from "@lingui/solid/macro";
 import type { API, Channel, Server, ServerFlags } from "stoat.js";
 import { styled } from "styled-system/jsx";
 
@@ -17,6 +17,7 @@ import { useDevice } from "@revolt/common";
 import { KeybindAction, createKeybind } from "@revolt/keybinds";
 import { TextWithEmoji } from "@revolt/markdown";
 import { useModals } from "@revolt/modal";
+import { EmptyAction, EmptyState } from "./EmptyState";
 import { useNavigate } from "@revolt/routing";
 import { useVoice } from "@revolt/rtc";
 import { useState } from "@revolt/state";
@@ -90,6 +91,7 @@ type OrderingEvent =
  */
 export const ServerSidebar = (props: Props) => {
   const navigate = useNavigate();
+  const { openModal } = useModals();
   const { isMobile } = useDevice();
 
   // Users can manage certain parts of the server individually, regardless of their ManageServer Permission
@@ -232,6 +234,30 @@ export const ServerSidebar = (props: Props) => {
             />
           )}
         </Draggable>
+        <Show
+          when={
+            props.server.orderedChannels.every(
+              (category) => category.channels.length === 0,
+            )
+          }
+        >
+          <EmptyState
+            title={<Trans>No channels yet</Trans>}
+            hint={<Trans>This server has nothing to show you.</Trans>}
+            action={
+              <Show when={canManageServer()}>
+                <EmptyAction
+                  type="button"
+                  onClick={() =>
+                    openModal({ type: "create_channel", server: props.server })
+                  }
+                >
+                  <Trans>Create a channel</Trans>
+                </EmptyAction>
+              </Show>
+            }
+          />
+        </Show>
       </div>
     </SidebarBase>
   );

@@ -297,6 +297,9 @@ const ServerListBase = styled("div", {
 
     _phone: {
       minHeight: 0,
+      paddingTop: "calc(var(--space-2) + env(safe-area-inset-top))",
+      paddingBottom: "env(safe-area-inset-bottom)",
+      paddingLeft: "env(safe-area-inset-left)",
     },
   },
 });

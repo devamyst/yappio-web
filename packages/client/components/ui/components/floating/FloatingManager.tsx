@@ -13,6 +13,7 @@ import { Portal } from "solid-js/web";
 import { Motion, Presence } from "solid-motionone";
 
 import { autoUpdate, flip, offset, shift } from "@floating-ui/dom";
+import { styled } from "styled-system/jsx";
 
 import { Keybind, KeybindAction } from "@revolt/keybinds";
 
@@ -170,20 +171,42 @@ function Floating(props: FloatingElement & { mouseX: number; mouseY: number }) {
     onCleanup(() => document.removeEventListener("click", onClick));
   }
 
+  const phoneQuery = window.matchMedia("(max-width: 600px)");
+  const [isPhone, setIsPhone] = createSignal(phoneQuery.matches);
+  const onPhoneChange = () => setIsPhone(phoneQuery.matches);
+  onMount(() => phoneQuery.addEventListener("change", onPhoneChange));
+  onCleanup(() => phoneQuery.removeEventListener("change", onPhoneChange));
+
+  const asSheet = () => isPhone() && !!props.show()?.contextMenu;
+
   return (
     <Motion
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.1, easing: [0.87, 0, 0.13, 1] }}
     >
+      <Show when={asSheet()}>
+        <SheetScrim />
+      </Show>
       <div
         ref={setFloating}
-        style={{
-          position: position.strategy,
-          top: `${position.y ?? 0}px`,
-          left: `${position.x ?? 0}px`,
-          "z-index": props.show()?.userCard ? "99" : "999",
-        }}
+        style={
+          asSheet()
+            ? {
+                position: "fixed",
+                top: "auto",
+                left: "0",
+                right: "0",
+                bottom: "0",
+                "z-index": "999",
+              }
+            : {
+                position: position.strategy,
+                top: `${position.y ?? 0}px`,
+                left: `${position.x ?? 0}px`,
+                "z-index": props.show()?.userCard ? "99" : "999",
+              }
+        }
       >
         <Switch>
           <Match when={props.show()?.tooltip}>
@@ -202,7 +225,15 @@ function Floating(props: FloatingElement & { mouseX: number; mouseY: number }) {
             />
           </Match>
           <Match when={props.show()?.contextMenu}>
-            {props.show()!.contextMenu!({})}
+            <Show
+              when={asSheet()}
+              fallback={props.show()!.contextMenu!({})}
+            >
+              <Sheet>
+                <SheetHandle />
+                {props.show()!.contextMenu!({})}
+              </Sheet>
+            </Show>
           </Match>
           <Match when={props.show()?.autoComplete}>
             <AutoComplete {...props.show()!.autoComplete!} />
@@ -212,3 +243,45 @@ function Floating(props: FloatingElement & { mouseX: number; mouseY: number }) {
     </Motion>
   );
 }
+
+const SheetScrim = styled("div", {
+  base: {
+    position: "fixed",
+    inset: 0,
+    zIndex: 998,
+    background: "rgb(0 0 0 / 0.55)",
+  },
+});
+
+const Sheet = styled("div", {
+  base: {
+    maxHeight: "70vh",
+    overflowY: "auto",
+    padding: "0 var(--space-2) calc(var(--space-4) + env(safe-area-inset-bottom))",
+    borderTopLeftRadius: "16px",
+    borderTopRightRadius: "16px",
+    background: "var(--md-sys-color-surface-container-high)",
+    boxShadow: "var(--elev-3)",
+    animation: "yappioSheetIn var(--motion-med) var(--ease-emph)",
+    "@media (prefers-reduced-motion: reduce)": { animation: "none" },
+
+    "& > :not(:first-child)": {
+      width: "100%",
+      maxWidth: "none",
+      minWidth: "0",
+      boxShadow: "none",
+      border: "none",
+      background: "transparent",
+    },
+  },
+});
+
+const SheetHandle = styled("div", {
+  base: {
+    width: "40px",
+    height: "4px",
+    margin: "10px auto 8px",
+    borderRadius: "var(--radius-pill)",
+    background: "var(--md-sys-color-outline-variant)",
+  },
+});

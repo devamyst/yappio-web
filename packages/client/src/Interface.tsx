@@ -4,9 +4,11 @@ import {
   JSX,
   Match,
   onCleanup,
+  Show,
   Switch,
 } from "solid-js";
 
+import { Trans } from "@lingui/solid/macro";
 import { Server } from "stoat.js";
 import { styled } from "styled-system/jsx";
 
@@ -14,7 +16,7 @@ import { ChannelContextMenu, ServerContextMenu } from "@revolt/app";
 import { MessageCache } from "@revolt/app/interface/channels/text/MessageCache";
 import { Titlebar } from "@revolt/app/interface/desktop/Titlebar";
 import { useClient, useClientLifecycle } from "@revolt/client";
-import { State } from "@revolt/client/Controller";
+import { State, TransitionType } from "@revolt/client/Controller";
 import { NotificationsWorker } from "@revolt/client/NotificationsWorker";
 import { useModals } from "@revolt/modal";
 import { Navigate, useBeforeLeave, useLocation } from "@revolt/routing";
@@ -24,6 +26,7 @@ import { LoadingScreen } from "@revolt/ui";
 
 import { SlideDrawer } from "../components/ui/components/navigation/SlideDrawer";
 import { Sidebar } from "./interface/Sidebar";
+import { PhoneNav } from "./interface/navigation/PhoneNav";
 
 /**
  * Application layout
@@ -130,14 +133,95 @@ const Interface = (props: { children: JSX.Element }) => {
                 {props.children}
               </Content>
             </Layout>
+            <PhoneNav />
           </Match>
         </Switch>
+
+        <Show when={isLoggedIn() && isDisconnected()}>
+          <ReconnectPill role="status">
+            <Dot />
+            <Switch>
+              <Match when={lifecycle.state() === State.Offline}>
+                <Trans>Device is offline</Trans>
+              </Match>
+              <Match when={lifecycle.state() === State.Disconnected}>
+                <Trans>Disconnected</Trans>
+              </Match>
+              <Match when={true}>
+                <Trans>Reconnecting</Trans>
+              </Match>
+            </Switch>
+            <Show
+              when={
+                lifecycle.state() === State.Disconnected ||
+                lifecycle.state() === State.Offline
+              }
+            >
+              <ReconnectButton
+                type="button"
+                onClick={() =>
+                  lifecycle.transition({ type: TransitionType.Retry })
+                }
+              >
+                <Trans>Retry</Trans>
+              </ReconnectButton>
+            </Show>
+          </ReconnectPill>
+        </Show>
 
         <NotificationsWorker />
       </AppRoot>
     </MessageCache>
   );
 };
+
+const ReconnectPill = styled("div", {
+  base: {
+    position: "fixed",
+    top: "calc(12px + env(safe-area-inset-top))",
+    left: "50%",
+    transform: "translateX(-50%)",
+    zIndex: 997,
+    display: "flex",
+    alignItems: "center",
+    gap: "var(--space-2)",
+    padding: "6px 8px 6px 14px",
+    maxWidth: "calc(100vw - 32px)",
+    borderRadius: "var(--radius-pill)",
+    fontSize: "13px",
+    fontWeight: 600,
+    color: "var(--md-sys-color-on-surface)",
+    background: "var(--md-sys-color-surface-container-highest)",
+    border: "var(--hairline)",
+    boxShadow: "var(--elev-2)",
+    animation: "yappioPillIn var(--motion-med) var(--ease-emph)",
+    "@media (prefers-reduced-motion: reduce)": { animation: "none" },
+  },
+});
+
+const Dot = styled("span", {
+  base: {
+    width: "8px",
+    height: "8px",
+    flexShrink: 0,
+    borderRadius: "50%",
+    background: "var(--brand-presence-idle)",
+    animation: "yappioPulse 1.6s var(--ease-standard) infinite",
+    "@media (prefers-reduced-motion: reduce)": { animation: "none" },
+  },
+});
+
+const ReconnectButton = styled("button", {
+  base: {
+    cursor: "pointer",
+    padding: "4px 12px",
+    borderRadius: "var(--radius-pill)",
+    fontSize: "13px",
+    fontWeight: 700,
+    color: "var(--md-sys-color-on-primary)",
+    background: "var(--md-sys-color-primary)",
+  },
+});
 
 const AppRoot = styled("div", {
   base: {
@@ -159,8 +243,8 @@ const Layout = styled("div", {
   variants: {
     disconnected: {
       true: {
-        color: "var(--md-sys-color-on-primary-container)",
-        background: "var(--md-sys-color-primary-container)",
+        color: "var(--md-sys-color-outline)",
+        background: "var(--md-sys-color-surface-container-lowest)",
       },
       false: {
         color: "var(--md-sys-color-outline)",

@@ -25,6 +25,7 @@ export function DeleteCategoryModal(
 
   return (
     <Dialog
+      destructive
       show={props.show}
       onClose={props.onClose}
       title={<Trans>Delete category</Trans>}

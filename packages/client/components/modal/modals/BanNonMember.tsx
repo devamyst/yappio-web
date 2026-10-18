@@ -36,6 +36,7 @@ export function BanNonMemberModal(
 
   return (
     <Dialog
+      destructive
       show={props.show}
       onClose={props.onClose}
       title={<Trans>Ban User</Trans>}

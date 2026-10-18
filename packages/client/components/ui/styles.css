@@ -161,3 +161,95 @@ body {
 .hljs-tag {
   /* purposely ignored */
 }
+
+mdui-checkbox,
+mdui-radio,
+mdui-switch,
+mdui-slider,
+mdui-select,
+mdui-text-field {
+  transition:
+    outline-color var(--motion-fast) var(--ease-standard),
+    box-shadow var(--motion-fast) var(--ease-standard);
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  border-radius: var(--radius-control);
+}
+
+mdui-checkbox:focus-visible,
+mdui-radio:focus-visible,
+mdui-switch:focus-visible,
+mdui-slider:focus-visible,
+mdui-select:focus-visible {
+  outline-color: var(--md-sys-color-primary);
+}
+
+mdui-text-field:focus-within,
+mdui-select:focus-within {
+  box-shadow: 0 0 0 3px
+    color-mix(in srgb, var(--md-sys-color-primary) 30%, transparent);
+}
+
+mdui-slider::part(thumb) {
+  box-shadow: var(--elev-1);
+}
+
+mdui-snackbar {
+  --shape-corner: 999px;
+  --shape-corner-small: 999px;
+  box-shadow: var(--elev-3);
+  border: var(--hairline);
+  max-width: min(520px, calc(100vw - 32px));
+  margin-bottom: env(safe-area-inset-bottom);
+}
+
+mdui-snackbar::part(message) {
+  font-weight: 600;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  mdui-checkbox,
+  mdui-radio,
+  mdui-switch,
+  mdui-slider,
+  mdui-select,
+  mdui-text-field {
+    transition: none;
+  }
+}
+
+@keyframes yappioPulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+    filter: drop-shadow(0 0 0 transparent);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(0.94);
+    filter: drop-shadow(0 0 12px color-mix(in srgb, var(--md-sys-color-primary) 55%, transparent));
+  }
+}
+
+@keyframes yappioPillIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -8px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+@keyframes yappioSheetIn {
+  from {
+    transform: translateY(24px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
