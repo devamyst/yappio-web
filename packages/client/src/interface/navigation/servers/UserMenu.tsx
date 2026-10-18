@@ -34,7 +34,7 @@ import MdInfo from "@material-design-icons/svg/outlined/info.svg?component-solid
 import MdNotificationsOff from "@material-design-icons/svg/outlined/notifications_off.svg?component-solid";
 
 interface Props {
-  anchor: Accessor<HTMLDivElement | undefined>;
+  anchor: Accessor<HTMLElement | undefined>;
 }
 
 const TruncatedStatusText = styled("div", {
@@ -47,7 +47,7 @@ const TruncatedStatusText = styled("div", {
 });
 
 /**
- * User menu attached to the server list
+ * Status menu anchored to the user panel
  */
 export function UserMenu(props: Props) {
   const { t } = useLingui();
@@ -60,7 +60,7 @@ export function UserMenu(props: Props) {
   const [ref, setRef] = createSignal<HTMLDivElement>();
 
   const position = useFloating(() => props.anchor(), ref, {
-    placement: "right-start",
+    placement: "top-start",
     whileElementsMounted: autoUpdate,
     middleware: [offset(5), shift()],
   });
@@ -115,8 +115,8 @@ export function UserMenu(props: Props) {
               top: `${position.y ?? 0}px`,
               left: `${position.x ?? 0}px`,
             }}
-            initial={{ opacity: 0, x: -24 }}
-            animate={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2, easing: [0.87, 0, 0.13, 1] }}
           >

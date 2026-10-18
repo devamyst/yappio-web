@@ -164,7 +164,7 @@ const Layout = styled("div", {
       },
       false: {
         color: "var(--md-sys-color-outline)",
-        background: "var(--md-sys-color-surface-container-high)",
+        background: "var(--md-sys-color-surface-container-lowest)",
       },
     },
   },
@@ -175,7 +175,7 @@ const Layout = styled("div", {
  */
 const Content = styled("div", {
   base: {
-    background: "var(--md-sys-color-surface-container-low)",
+    background: "var(--md-sys-color-surface-container)",
     display: "flex",
     width: "100%",
     minWidth: 0,
@@ -183,8 +183,6 @@ const Content = styled("div", {
   variants: {
     sidebar: {
       false: {
-        borderTopLeftRadius: "var(--borderRadius-lg)",
-        borderBottomLeftRadius: "var(--borderRadius-lg)",
         overflow: "hidden",
       },
     },

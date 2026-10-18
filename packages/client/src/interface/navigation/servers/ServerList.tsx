@@ -1,4 +1,4 @@
-import { Accessor, For, JSX, Show, createMemo, createSignal } from "solid-js";
+import { Accessor, For, JSX, Show, createMemo } from "solid-js";
 
 import { Trans } from "@lingui/solid/macro";
 import { Channel, Server, User } from "stoat.js";
@@ -9,20 +9,14 @@ import { useClient } from "@revolt/client";
 import { useDevice } from "@revolt/common";
 import { useInstance } from "@revolt/instance";
 import { KeybindAction, createKeybind } from "@revolt/keybinds";
-import { useModals } from "@revolt/modal";
 import { useNavigate } from "@revolt/routing";
 import { useState } from "@revolt/state";
-import { Avatar, Column, Text, Time, Unreads, UserStatus } from "@revolt/ui";
-import { VoiceStatus } from "@revolt/ui/components/design/VoiceStatus";
-
-import MdAdd from "@material-design-icons/svg/filled/add.svg?component-solid";
-import MdExplore from "@material-design-icons/svg/filled/explore.svg?component-solid";
-import MdHome from "@material-design-icons/svg/filled/home.svg?component-solid";
-import MdSettings from "@material-design-icons/svg/filled/settings.svg?component-solid";
+import { Column, Text, Time } from "@revolt/ui";
+import { Initials } from "@revolt/ui/components/utils";
+import { Symbol } from "@revolt/ui/components/utils/Symbol";
 
 import { Tooltip } from "../../../../components/ui/components/floating";
 import { Draggable } from "../../../../components/ui/components/utils/Draggable";
-import { UserMenu } from "./UserMenu";
 
 interface Props {
   /**
@@ -70,7 +64,6 @@ export const ServerList = (props: Props) => {
   const client = useClient();
   const navigate = useNavigate();
   const { isMobile } = useDevice();
-  const { openModal } = useModals();
   const instance = useInstance();
 
   const navigateServer = (byOffset: number) => {
@@ -114,99 +107,71 @@ export const ServerList = (props: Props) => {
       .length;
   });
 
-  // Ref for floating menu
-  const [menuButton, setMenuButton] = createSignal<HTMLDivElement>();
+  const dmAvatar = (conversation: Channel) =>
+    conversation.iconURL ?? conversation.recipient?.avatarURL;
 
   return (
     <ServerListBase>
       <div use:invisibleScrollable={{ direction: "y", class: listBase() }}>
-        <a
-          class={entryContainer({
-            indicator: !props.selectedServer() ? "selected" : undefined,
-          })}
-          href="/app"
-          use:floating={{
-            tooltip: {
-              content: `You have ${homeNotifications()} pending friend requests.`,
-              placement: "right",
-            },
-          }}
-        >
-          <Avatar
-            size={42}
-            fallback={<MdHome />}
-            holepunch={homeNotifications() ? "top-right" : undefined}
-            overlay={
-              <Show when={homeNotifications()}>
-                <Unreads.Graphic
-                  unread={homeNotifications() !== 0}
-                  count={homeNotifications()}
-                />
-              </Show>
-            }
-          />
-        </a>
         <Tooltip
           placement="right"
-          content={() => (
-            <Column>
-              <span>{props.user.username}</span>
-              <Text class="label" size="small">
-                {props.user.presence}
-              </Text>
-            </Column>
-          )}
-          aria={props.user.username}
+          content={`You have ${homeNotifications()} pending friend requests.`}
         >
-          <a ref={setMenuButton} class={entryContainer()}>
-            <Avatar
-              size={42}
-              src={props.user.avatarURL}
-              holepunch={"bottom-right"}
-              overlay={<UserStatus.Graphic status={props.user.presence} />}
-              interactive
-            />
+          <a
+            class={entryContainer({
+              indicator: !props.selectedServer() ? "selected" : undefined,
+            })}
+            href="/app"
+          >
+            <TileWrap>
+              <Tile data-tile="" selected={!props.selectedServer()} brand>
+                <LogoImage src="/assets/web/android-chrome-192x192.png" />
+              </Tile>
+              <Show when={homeNotifications()}>
+                <Badge>{homeNotifications() > 99 ? "99+" : homeNotifications()}</Badge>
+              </Show>
+            </TileWrap>
           </a>
-          <UserMenu anchor={menuButton} />
         </Tooltip>
         <For each={props.unreadConversations.slice(0, 9)}>
           {(conversation) => (
             <Tooltip placement="right" content={conversation.displayName}>
               <a
-                class={entryContainer()}
+                class={entryContainer({ indicator: "alert" })}
                 use:floating={props.menuGenerator(conversation)}
                 href={`/channel/${conversation.id}`}
               >
-                <Avatar
-                  size={42}
-                  // TODO: fix this
-                  src={conversation.iconURL}
-                  holepunch={conversation.unread ? "top-right" : "none"}
-                  overlay={
-                    <>
-                      <Show when={conversation.unread}>
-                        <Unreads.Graphic
-                          count={conversation.mentions?.size ?? 0}
-                          unread
+                <TileWrap>
+                  <Tile data-tile="">
+                    <Show
+                      when={dmAvatar(conversation)}
+                      fallback={
+                        <Initials
+                          input={
+                            conversation.name ??
+                            conversation.recipient?.username ??
+                            ""
+                          }
+                          maxLength={2}
                         />
-                      </Show>
-                    </>
-                  }
-                  fallback={
-                    conversation.name ?? conversation.recipient?.username
-                  }
-                  interactive
-                />
+                      }
+                    >
+                      <TileImage src={dmAvatar(conversation)} draggable={false} />
+                    </Show>
+                  </Tile>
+                  <Show when={(conversation.mentions?.size ?? 0) > 0}>
+                    <Badge>{conversation.mentions?.size}</Badge>
+                  </Show>
+                </TileWrap>
               </a>
             </Tooltip>
           )}
         </For>
         <Show when={props.unreadConversations.length > 9}>
           <a class={entryContainer()} href={`/`}>
-            <Avatar
-              size={42}
-              fallback={<>+{props.unreadConversations.length - 9}</>}
-            />
+            <TileWrap>
+              <Tile data-tile="">+{props.unreadConversations.length - 9}</Tile>
+            </TileWrap>
           </a>
         </Show>
         <LineDivider />
@@ -264,41 +229,26 @@ export const ServerList = (props: Props) => {
                 use:floating={props.menuGenerator(entry.item)}
               >
                 <a href={state.layout.getLastActiveServerPath(entry.item.id)}>
-                  <Avatar
-                    size={42}
-                    src={entry.item.iconURL}
-                    holepunch={
-                      entry.item.mentions.length
-                        ? entry.item.voiceStatus !== "none"
-                          ? "right"
-                          : "top-right"
-                        : entry.item.voiceStatus !== "none"
-                          ? "bottom-right"
-                          : "none"
-                    }
-                    overlay={
-                      <>
-                        <Show
-                          when={
-                            entry.item.mentions
-                              .length /* as opposed to item.unread */
-                          }
-                        >
-                          <Unreads.Graphic
-                            count={entry.item.mentions.length}
-                            unread
-                          />
-                        </Show>
-                        <Show when={entry.item.voiceStatus !== "none"}>
-                          <VoiceStatus.Graphic
-                            status={entry.item.voiceStatus}
-                          />
-                        </Show>
-                      </>
-                    }
-                    fallback={entry.item.name}
-                    interactive
-                  />
+                  <TileWrap>
+                    <Tile data-tile="" selected={props.selectedServer() === entry.item.id}>
+                      <Show
+                        when={entry.item.iconURL}
+                        fallback={
+                          <Initials input={entry.item.name} maxLength={2} />
+                        }
+                      >
+                        <TileImage src={entry.item.iconURL} draggable={false} />
+                      </Show>
+                    </Tile>
+                    <Show when={entry.item.mentions.length}>
+                      <Badge>{entry.item.mentions.length}</Badge>
+                    </Show>
+                    <Show when={entry.item.voiceStatus !== "none"}>
+                      <VoiceDot>
+                        <Symbol size={12}>volume_up</Symbol>
+                      </VoiceDot>
+                    </Show>
+                  </TileWrap>
                 </a>
               </div>
             </Tooltip>
@@ -309,7 +259,11 @@ export const ServerList = (props: Props) => {
             class={entryContainer()}
             onClick={() => props.onCreateOrJoinServer()}
           >
-            <Avatar size={42} fallback={<MdAdd />} />
+            <TileWrap>
+              <Tile data-tile="" action>
+                <Symbol size={24}>add</Symbol>
+              </Tile>
+            </TileWrap>
           </a>
         </Tooltip>
         <Show when={instance.isStoat}>
@@ -318,79 +272,78 @@ export const ServerList = (props: Props) => {
               href={state.layout.getLastActiveDiscoverPath()}
               class={entryContainer()}
             >
-              <Avatar size={42} fallback={<MdExplore />} />
+              <TileWrap>
+                <Tile data-tile="" action>
+                  <Symbol size={24}>explore</Symbol>
+                </Tile>
+              </TileWrap>
             </a>
           </Tooltip>
         </Show>
       </div>
-      <Shadow>
-        <div />
-      </Shadow>
-      <Tooltip placement="right" content="Settings">
-        <a
-          class={entryContainer()}
-          onClick={() => openModal({ type: "settings", config: "user" })}
-        >
-          <Avatar size={42} fallback={<MdSettings />} interactive />
-        </a>
-      </Tooltip>
     </ServerListBase>
   );
 };
 
-/**
- * Server list container
- */
 const ServerListBase = styled("div", {
   base: {
     display: "flex",
     flexDirection: "column",
+    flexShrink: 0,
+    width: "var(--layout-width-server-list)",
+    paddingTop: "var(--space-2)",
+    background: "var(--md-sys-color-surface-container-lowest)",
 
     fill: "var(--md-sys-color-on-surface)",
+
+    _phone: {
+      minHeight: 0,
+    },
   },
 });
 
-/**
- * Container around list of servers
- */
 const listBase = cva({
   base: {
     flexGrow: 1,
+    paddingBottom: "var(--space-2)",
   },
 });
 
-/**
- * Server entries
- */
 const entryContainer = cva({
   base: {
-    width: "56px",
+    width: "var(--layout-width-server-list)",
     height: "56px",
     position: "relative",
     display: "grid",
     flexShrink: 0,
     placeItems: "center",
+    cursor: "pointer",
 
     "&:before": {
       content: "' '",
       position: "absolute",
-      width: "12px",
+      width: "4px",
       height: "0px",
-      transition: "var(--transitions-fast) all",
-      left: "-8px",
-      borderRadius: "4px",
+      transition:
+        "height var(--motion-med) var(--ease-emph), opacity var(--motion-fast)",
+      left: 0,
+      borderRadius: "0 4px 4px 0",
       background: "var(--md-sys-color-on-surface)",
     },
 
     "&:hover:before": {
-      height: "16px",
+      height: "20px",
+    },
+
+    "&:hover [data-tile]": {
+      borderRadius: "var(--radius-server)",
     },
   },
   variants: {
     indicator: {
       selected: {
         "&:before": {
-          height: "32px !important",
+          height: "40px !important",
         },
       },
       alert: {
@@ -402,34 +355,131 @@ const entryContainer = cva({
   },
 });
 
-/**
- * Divider line between two lists
- */
-const LineDivider = styled("div", {
+const TileWrap = styled("div", {
   base: {
-    height: "1px",
-    flexShrink: 0,
-    margin: "6px auto",
-    width: "calc(100% - 24px)",
-    background: "var(--md-sys-color-outline-variant)",
+    position: "relative",
+    width: "48px",
+    height: "48px",
   },
 });
 
-/**
- * Shadow at the bottom of the list
- */
-const Shadow = styled("div", {
+const Tile = styled("div", {
   base: {
-    height: 0,
-    zIndex: 1,
-    position: "relative",
-
-    "& div": {
-      height: "12px",
-      marginTop: "-12px",
-      position: "absolute",
-      background:
-        "linear-gradient(to bottom, transparent, var(--md-sys-color-surface-container-highest))",
+    width: "48px",
+    height: "48px",
+    overflow: "hidden",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    fontSize: "14px",
+    fontWeight: 600,
+    userSelect: "none",
+    borderRadius: "50%",
+    transition:
+      "border-radius var(--motion-med) var(--ease-emph), background var(--motion-med) var(--ease-standard), color var(--motion-fast)",
+    color: "var(--md-sys-color-on-surface)",
+    background: "var(--md-sys-color-surface-container-high)",
+  },
+  variants: {
+    selected: {
+      true: {
+        borderRadius: "var(--radius-server)",
+        background: "var(--md-sys-color-surface-container-highest)",
+      },
+      false: {},
     },
+    brand: {
+      true: {},
+      false: {},
+    },
+    action: {
+      true: {
+        color: "var(--brand-presence-online)",
+
+        "&:hover": {
+          color: "white",
+          background: "var(--brand-presence-online)",
+        },
+      },
+      false: {},
+    },
+  },
+  compoundVariants: [
+    {
+      brand: true,
+      selected: true,
+      css: {
+        background: "var(--md-sys-color-primary)",
+      },
+    },
+  ],
+});
+
+const TileImage = styled("img", {
+  base: {
+    width: "100%",
+    height: "100%",
+    objectFit: "cover",
+  },
+});
+
+const LogoImage = styled("img", {
+  base: {
+    width: "100%",
+    height: "100%",
+    objectFit: "cover",
+  },
+});
+
+const Badge = styled("div", {
+  base: {
+    position: "absolute",
+    right: "-4px",
+    bottom: "-4px",
+    minWidth: "20px",
+    height: "20px",
+    padding: "0 5px",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: "var(--radius-pill)",
+    border: "3px solid var(--md-sys-color-surface-container-lowest)",
+    boxSizing: "content-box",
+    fontSize: "11px",
+    fontWeight: 700,
+    lineHeight: 1,
+    pointerEvents: "none",
+    color: "var(--md-sys-color-on-error)",
+    background: "var(--md-sys-color-error)",
+  },
+});
+
+const VoiceDot = styled("div", {
+  base: {
+    position: "absolute",
+    left: "-4px",
+    bottom: "-4px",
+    width: "18px",
+    height: "18px",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: "50%",
+    border: "3px solid var(--md-sys-color-surface-container-lowest)",
+    boxSizing: "content-box",
+    pointerEvents: "none",
+    color: "white",
+    background: "var(--brand-presence-online)",
+  },
+});
+
+const LineDivider = styled("div", {
+  base: {
+    height: "2px",
+    flexShrink: 0,
+    margin: "var(--space-1) auto var(--space-2)",
+    width: "32px",
+    borderRadius: "var(--radius-pill)",
+    background: "var(--md-sys-color-outline-variant)",
   },
 });
