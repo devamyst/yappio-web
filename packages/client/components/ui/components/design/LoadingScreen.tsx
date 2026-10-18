@@ -7,7 +7,7 @@ import Instance from "@revolt/instance/Instance";
 import { Button, CircularProgress, Symbol, Text } from "@revolt/ui";
 
 /**
- * Stoat status page URL
+ * Yappio status page URL
  */
 const STATUS_PAGE_URL = "https://status.stoat.chat";
 

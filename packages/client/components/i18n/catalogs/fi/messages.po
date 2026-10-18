@@ -936,7 +936,7 @@ msgid "Could not find what you requested."
 msgstr "Etsittyä tietoa ei löytynyt."
 
 #: components/instance/index.tsx
-msgid "Couldn't fetch Stoat configuration from {hStr}."
+msgid "Couldn't fetch Yappio configuration from {hStr}."
 msgstr ""
 
 #: components/app/interface/settings/server/emojis/EmojiList.tsx
@@ -1214,7 +1214,7 @@ msgid "Discord RPC"
 msgstr "Discord-RPC"
 
 #: src/interface/Home.tsx
-msgid "Discover Stoat"
+msgid "Discover Yappio"
 msgstr "Tutki Stoatia"
 
 #: components/app/interface/settings/user/appearance/AppearanceMenu.tsx
@@ -1261,11 +1261,11 @@ msgid "Donate"
 msgstr "Lahjoita"
 
 #: src/interface/Home.tsx
-msgid "Donate to Stoat"
+msgid "Donate to Yappio"
 msgstr "Lahjoita Stoatille"
 
 #: components/ui/components/features/profiles/ProfileBadges.tsx
-msgid "Donated to Stoat"
+msgid "Donated to Yappio"
 msgstr "Lahjoitti Stoatille"
 
 #: components/modal/modals/MFARecovery.tsx
@@ -1439,7 +1439,7 @@ msgid "Extreme violence, gore or animal cruelty"
 msgstr "Äärimmäistä väkivaltaa, raakaa/veristä kuvastoa tai eläinrääkkäystä"
 
 #: components/client/NotificationsController.ts
-msgid "Failed to enable notifications. Stoat does not have notification permission."
+msgid "Failed to enable notifications. Yappio does not have notification permission."
 msgstr ""
 
 #: components/client/NotificationsController.ts
@@ -1546,7 +1546,7 @@ msgid "Get it on Google Play"
 msgstr ""
 
 #: components/ui/components/features/messaging/composition/picker/GifPicker.tsx
-msgid "Gifbox is our own GIF service, so you can keep sharing GIFs right here on Stoat."
+msgid "Gifbox is our own GIF service, so you can keep sharing GIFs right here on Yappio."
 msgstr ""
 
 #: components/ui/components/features/messaging/composition/picker/GifPicker.tsx
@@ -1554,7 +1554,7 @@ msgid "GIFs are now powered by Gifbox"
 msgstr ""
 
 #: src/interface/Home.tsx
-msgid "Give feedback on Stoat"
+msgid "Give feedback on Yappio"
 msgstr "Anna Stoatista palautetta"
 
 #: components/modal/modals/ReportContent.tsx
@@ -1579,7 +1579,7 @@ msgstr "Mene omiin tiliasetuksiin vaihtamaan käyttäjänimesi"
 
 #: components/app/interface/settings/user/Feedback.tsx
 #: src/interface/Home.tsx
-msgid "Go to the Stoat Lounge"
+msgid "Go to the Yappio Lounge"
 msgstr "Mene Stoatin Loungeen"
 
 #~ msgid "Go to the testers server"
@@ -1632,7 +1632,7 @@ msgid "Help contribute to an existing or new language"
 msgstr "Osallistu olemassa olevan tai uuden kielen kehittämiseen"
 
 #: components/ui/components/features/profiles/ProfileBadges.tsx
-msgid "Helped translate Stoat"
+msgid "Helped translate Yappio"
 msgstr "Auttoi kääntämään Stoatia"
 
 #. placeholder {0}: link()
@@ -1688,7 +1688,7 @@ msgid "Impersonation"
 msgstr "Esiintyminen toisena henkilönä"
 
 #: src/AndroidNag.tsx
-msgid "In the meantime, install Stoat from Google Play for a faster, smoother experience designed for Android."
+msgid "In the meantime, install Yappio from Google Play for a faster, smoother experience designed for Android."
 msgstr ""
 
 #: components/app/interface/settings/user/voice/VoiceInputOptions.tsx
@@ -1696,8 +1696,8 @@ msgid "Input Volume"
 msgstr ""
 
 #: components/app/interface/settings/user/Native.tsx
-msgid "Instead of closing, Stoat will hide in your tray."
-msgstr "Sulkeutumisen sijaan, Stoat piiloutuu tehtäväpalkkiisi."
+msgid "Instead of closing, Yappio will hide in your tray."
+msgstr "Sulkeutumisen sijaan, Yappio piiloutuu tehtäväpalkkiisi."
 
 #: components/app/interface/settings/user/appearance/AppearanceMenu.tsx
 msgid "Interface Font"
@@ -1762,8 +1762,8 @@ msgstr "Liity palvelimelle"
 
 #: components/app/interface/settings/user/Feedback.tsx
 #: src/interface/Home.tsx
-msgid "Join the Stoat Lounge"
-msgstr "Liity Stoat Loungeen"
+msgid "Join the Yappio Lounge"
+msgstr "Liity Yappio Loungeen"
 
 #: components/ui/components/features/voice/callCard/VoiceCallCardPreview.tsx
 #: src/interface/channels/ChannelHeader.tsx
@@ -1821,15 +1821,15 @@ msgid "Latest"
 msgstr "Viimeisin"
 
 #: components/app/interface/settings/user/Native.tsx
-msgid "Launch Stoat when you log into your computer."
-msgstr "Käynnistä Stoat kun kirjaudut tietokoneellesi."
+msgid "Launch Yappio when you log into your computer."
+msgstr "Käynnistä Yappio kun kirjaudut tietokoneellesi."
 
 #: components/ui/components/features/messaging/composition/picker/GifPicker.tsx
 msgid "Learn more"
 msgstr ""
 
 #: components/app/interface/settings/user/bots/MyBots.tsx
-msgid "Learn more about how to create bots on Stoat."
+msgid "Learn more about how to create bots on Yappio."
 msgstr "Lue lisää bottien luomisesta Stoatissa."
 
 #: components/modal/modals/DeleteChannel.tsx
@@ -1853,7 +1853,7 @@ msgid "Leave server"
 msgstr "Poistu palvelimelta"
 
 #: components/app/interface/settings/user/Native.tsx
-msgid "Let Stoat use its own custom titlebar."
+msgid "Let Yappio use its own custom titlebar."
 msgstr "Anna Stoatin käyttää omaa mukautettua otsikkoriviä."
 
 #: src/interface/Home.tsx
@@ -2162,7 +2162,7 @@ msgid "New Password"
 msgstr "Uusi salasana"
 
 #: components/app/interface/channels/text/Message.tsx
-msgid "New to Stoat"
+msgid "New to Yappio"
 msgstr "Uusi Stoatiin"
 
 #: components/app/interface/channels/text/Message.tsx
@@ -2583,7 +2583,7 @@ msgid "Rename Session"
 msgstr "Nimeä istunto uudelleen"
 
 #: components/app/interface/settings/user/Native.tsx
-msgid "Rep Stoat using Discord rich presence."
+msgid "Rep Yappio using Discord rich presence."
 msgstr "Edusta Stoattia käyttämällä Discordin rikasta läsnäoloa."
 
 #: components/app/menus/MessageContextMenu.tsx
@@ -2924,7 +2924,7 @@ msgid "Show send message button"
 msgstr "Näytä lähetä viesti -painike"
 
 #: components/auth/src/flows/FlowLogin.tsx
-msgid "Sign into Stoat"
+msgid "Sign into Yappio"
 msgstr "Kirjaudu sisään Stoatiin"
 
 #: components/auth/src/flows/FlowHome.tsx
@@ -3007,35 +3007,35 @@ msgstr "Aloita tietokoneella"
 msgid "Status"
 msgstr "Tila"
 
-#~ msgid "Stoat Desktop"
+#~ msgid "Yappio Desktop"
 #~ msgstr ""
 
 #: components/ui/components/features/profiles/ProfileBadges.tsx
-msgid "Stoat Developer"
+msgid "Yappio Developer"
 msgstr "Stoatin kehittäjä"
 
 #: components/app/interface/settings/user/Native.tsx
-msgid "Stoat for Desktop"
-msgstr "Stoat-työpöytäsovellus"
+msgid "Yappio for Desktop"
+msgstr "Yappio-työpöytäsovellus"
 
 #: components/ui/components/features/profiles/ProfileBadges.tsx
-msgid "Stoat Founder"
+msgid "Yappio Founder"
 msgstr "Stoatin Perustaja"
 
 #: components/auth/src/flows/FlowHome.tsx
-msgid "Stoat is one of the best ways to stay connected with your friends and community, anywhere, anytime."
-msgstr "Stoat on yksi parhaista tavoista pysyä yhteydessä ystäviisi ja yhteisöihisi missä vain, milloin vain."
+msgid "Yappio is one of the best ways to stay connected with your friends and community, anywhere, anytime."
+msgstr "Yappio on yksi parhaista tavoista pysyä yhteydessä ystäviisi ja yhteisöihisi missä vain, milloin vain."
 
 #: components/app/interface/settings/server/roles/ServerRoleEditor.tsx
-msgid "Stoat rocks!"
+msgid "Yappio rocks!"
 msgstr ""
 
 #: components/app/interface/settings/user/Native.tsx
-msgid "Stoat will start in the system tray."
+msgid "Yappio will start in the system tray."
 msgstr ""
 
 #: src/AndroidNag.tsx
-msgid "Stoat works best as an app"
+msgid "Yappio works best as an app"
 msgstr ""
 
 #: components/ui/components/features/voice/callCard/VoiceCallCardActions.tsx
@@ -3071,7 +3071,7 @@ msgid "Subscriptions"
 msgstr "Tilaukset"
 
 #: components/app/interface/settings/user/Feedback.tsx
-msgid "Suggest new Stoat features on GitHub discussions."
+msgid "Suggest new Yappio features on GitHub discussions."
 msgstr "Ehdota uusia toimintoja Stoatiin Github-keskusteluissa."
 
 #: src/interface/Home.tsx
@@ -3278,8 +3278,8 @@ msgstr "Poista käyttäjän esto"
 
 #. placeholder {0}: err.type
 #: components/i18n/errors.tsx
-msgid "Uncaught Stoat error: {0}"
-msgstr "Käsittelemätön Stoat virhe: {0}"
+msgid "Uncaught Yappio error: {0}"
+msgstr "Käsittelemätön Yappio virhe: {0}"
 
 #: components/app/interface/settings/user/notifications/Sounds.tsx
 #: components/ui/components/features/voice/callCard/VoiceCallCardActions.tsx
@@ -3714,7 +3714,7 @@ msgid "You've been invited to join this server.<0/>Would you like to join?"
 msgstr "Sinut on kutsuttu liittymään tälle palvelimelle.</0>Haluatko liittyä?"
 
 #: components/modal/modals/SignedOut.tsx
-msgid "You've been signed out of Stoat!"
+msgid "You've been signed out of Yappio!"
 msgstr "Sinut on kirjattu ulos Stoatista!"
 
 #: components/i18n/errors.tsx

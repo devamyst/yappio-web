@@ -99,7 +99,7 @@ export function ChannelContextMenu(props: { channel: Channel }) {
   }
 
   /**
-   * Open channel in Stoat Admin Panel
+   * Open channel in Yappio Admin Panel
    */
   function openAdminPanel() {
     window.open(

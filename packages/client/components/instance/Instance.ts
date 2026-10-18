@@ -96,7 +96,7 @@ export default class Instance {
     this.#nav(this.href(Instance.relPath(), true, host));
   }
 
-  /** Create a new Stoat.js client, disposing the old one */
+  /** Create a new Yappio.js client, disposing the old one */
   newClient() {
     //Reuse initial client for first login only
     if (this.#firstInit) {

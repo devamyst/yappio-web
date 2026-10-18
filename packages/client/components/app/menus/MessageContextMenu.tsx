@@ -115,7 +115,7 @@ export function MessageContextMenu(props: {
   }
 
   /**
-   * Open message in Stoat Admin Panel
+   * Open message in Yappio Admin Panel
    */
   function openAdminPanel() {
     window.open(

@@ -53,7 +53,7 @@ export function Feedback() {
             icon={<MdStar {...iconSize(22)} />}
             ignoreClick
             description={
-              <Trans>Suggest new Stoat features on GitHub discussions.</Trans>
+              <Trans>Suggest new Yappio features on GitHub discussions.</Trans>
             }
           >
             <Trans>Submit feature suggestion</Trans>
@@ -100,7 +100,7 @@ export function Feedback() {
               }
               icon={<MdGroups3 />}
             >
-              <Trans>Go to the Stoat Lounge</Trans>
+              <Trans>Go to the Yappio Lounge</Trans>
             </CategoryButton>
           </Match>
           <Match when={showLoungeButton && !isInLounge}>
@@ -119,7 +119,7 @@ export function Feedback() {
               }
               icon={<MdGroups3 />}
             >
-              <Trans>Join the Stoat Lounge</Trans>
+              <Trans>Join the Yappio Lounge</Trans>
             </CategoryButton>
           </Match>
         </Switch>

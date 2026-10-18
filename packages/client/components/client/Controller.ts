@@ -418,7 +418,7 @@ export default class ClientController {
 
   isLoggedIn: Accessor<boolean>;
 
-  /** Stoat instance the client belongs to. Also accessible via `useInstance()` */
+  /** Yappio instance the client belongs to. Also accessible via `useInstance()` */
   readonly instance: Instance;
 
   /**
@@ -486,9 +486,9 @@ export default class ClientController {
         os = "iPadOS";
       }
 
-      friendly_name = `Stoat for Web (${name} on ${os})`;
+      friendly_name = `Yappio for Web (${name} on ${os})`;
     } else {
-      friendly_name = "Stoat for Web (Unknown Device)";
+      friendly_name = "Yappio for Web (Unknown Device)";
     }
 
     // Try to login with given credentials

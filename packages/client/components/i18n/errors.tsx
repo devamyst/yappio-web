@@ -164,7 +164,7 @@ export function useError() {
           return err.type + " " + err.location;
 
         default:
-          return t`Uncaught Stoat error: ${err.type}`;
+          return t`Uncaught Yappio error: ${err.type}`;
       }
     }
 

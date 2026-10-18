@@ -11,7 +11,7 @@ import AndroidPromo from "../public/assets/inapp-promotion/web/android-phone.png
 const ANDROID_NAG_DISMISS_KEY = "android-nag-dismissed";
 
 /**
- * Google Play listing for the Stoat app
+ * Google Play listing for the Yappio app
  */
 const PLAY_STORE_URL =
   "https://play.google.com/store/apps/details?id=chat.revolt";
@@ -54,11 +54,11 @@ export function AndroidNag() {
     <Show when={show()}>
       <Base>
         <Hero>
-          <img src={AndroidPromo} alt="Stoat on Android" />
+          <img src={AndroidPromo} alt="Yappio on Android" />
 
           <Heading>
             <Text class="headline" size="large">
-              <Trans>Stoat works best as an app</Trans>
+              <Trans>Yappio works best as an app</Trans>
             </Text>
           </Heading>
 
@@ -71,7 +71,7 @@ export function AndroidNag() {
 
             <Text class="body" size="large">
               <Trans>
-                In the meantime, install Stoat from Google Play for a faster,
+                In the meantime, install Yappio from Google Play for a faster,
                 smoother experience designed for Android.
               </Trans>
             </Text>

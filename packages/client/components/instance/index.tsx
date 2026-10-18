@@ -32,14 +32,14 @@ export function InstanceContext(props: { children?: JSXElement }) {
 
   const [inst, setInst] = createSignal<Instance>();
 
-  //Check Stoat instance
+  //Check Yappio instance
   const host = normalizeHost(params.host);
 
   function onError(e: unknown) {
     console.error(e);
     if ((e as Error).message === "Failed to fetch") {
       const hStr = `'${host || DefaultHost}'`;
-      e = t`Couldn't fetch Stoat configuration from ${hStr}.`;
+      e = t`Couldn't fetch Yappio configuration from ${hStr}.`;
     }
     snackbar.show({
       message: t`Oops, something went wrong! ${e}`,

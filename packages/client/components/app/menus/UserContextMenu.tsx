@@ -178,7 +178,7 @@ export function UserContextMenu(props: {
   }
 
   /**
-   * Open user in Stoat Admin Panel
+   * Open user in Yappio Admin Panel
    */
   function openAdminPanel() {
     window.open(

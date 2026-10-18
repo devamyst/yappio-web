@@ -961,7 +961,7 @@ msgid "Could not find what you requested."
 msgstr "Tidak dapat menemukan apa yang kamu minta."
 
 #: components/instance/index.tsx
-msgid "Couldn't fetch Stoat configuration from {hStr}."
+msgid "Couldn't fetch Yappio configuration from {hStr}."
 msgstr ""
 
 #: components/app/interface/settings/server/emojis/EmojiList.tsx
@@ -1245,8 +1245,8 @@ msgid "Discord RPC"
 msgstr "Discord RPC"
 
 #: src/interface/Home.tsx
-msgid "Discover Stoat"
-msgstr "Temukan Stoat"
+msgid "Discover Yappio"
+msgstr "Temukan Yappio"
 
 #: components/app/interface/settings/user/appearance/AppearanceMenu.tsx
 msgid "Display & Text"
@@ -1292,12 +1292,12 @@ msgid "Donate"
 msgstr "Donasi"
 
 #: src/interface/Home.tsx
-msgid "Donate to Stoat"
-msgstr "Donasi untuk Stoat"
+msgid "Donate to Yappio"
+msgstr "Donasi untuk Yappio"
 
 #: components/ui/components/features/profiles/ProfileBadges.tsx
-msgid "Donated to Stoat"
-msgstr "Didonasikan kepada Stoat"
+msgid "Donated to Yappio"
+msgstr "Didonasikan kepada Yappio"
 
 #: components/modal/modals/MFARecovery.tsx
 msgid "Done"
@@ -1470,7 +1470,7 @@ msgid "Extreme violence, gore or animal cruelty"
 msgstr "Kekerasan ekstrem, adegan berdarah, atau kekejaman terhadap hewan"
 
 #: components/client/NotificationsController.ts
-msgid "Failed to enable notifications. Stoat does not have notification permission."
+msgid "Failed to enable notifications. Yappio does not have notification permission."
 msgstr ""
 
 #: components/client/NotificationsController.ts
@@ -1577,7 +1577,7 @@ msgid "Get it on Google Play"
 msgstr ""
 
 #: components/ui/components/features/messaging/composition/picker/GifPicker.tsx
-msgid "Gifbox is our own GIF service, so you can keep sharing GIFs right here on Stoat."
+msgid "Gifbox is our own GIF service, so you can keep sharing GIFs right here on Yappio."
 msgstr ""
 
 #: components/ui/components/features/messaging/composition/picker/GifPicker.tsx
@@ -1585,8 +1585,8 @@ msgid "GIFs are now powered by Gifbox"
 msgstr ""
 
 #: src/interface/Home.tsx
-msgid "Give feedback on Stoat"
-msgstr "Berikan umpan balik terhadap Stoat"
+msgid "Give feedback on Yappio"
+msgstr "Berikan umpan balik terhadap Yappio"
 
 #: components/modal/modals/ReportContent.tsx
 msgid "Give us some detail"
@@ -1610,8 +1610,8 @@ msgstr "Pergi ke pengaturan akun untuk menyunting nama pengguna kamu"
 
 #: components/app/interface/settings/user/Feedback.tsx
 #: src/interface/Home.tsx
-msgid "Go to the Stoat Lounge"
-msgstr "Pergi ke Lounge Stoat"
+msgid "Go to the Yappio Lounge"
+msgstr "Pergi ke Lounge Yappio"
 
 #~ msgid "Go to the testers server"
 #~ msgstr "Pergi ke server penguji"
@@ -1663,8 +1663,8 @@ msgid "Help contribute to an existing or new language"
 msgstr "Bantu berkontribusi terhadap bahasa baru atau yang sudah ada"
 
 #: components/ui/components/features/profiles/ProfileBadges.tsx
-msgid "Helped translate Stoat"
-msgstr "Membantu menerjemahkan Stoat"
+msgid "Helped translate Yappio"
+msgstr "Membantu menerjemahkan Yappio"
 
 #. placeholder {0}: link()
 #: components/modal/modals/CreateInvite.tsx
@@ -1720,7 +1720,7 @@ msgid "Impersonation"
 msgstr "Peniruan"
 
 #: src/AndroidNag.tsx
-msgid "In the meantime, install Stoat from Google Play for a faster, smoother experience designed for Android."
+msgid "In the meantime, install Yappio from Google Play for a faster, smoother experience designed for Android."
 msgstr ""
 
 #: components/app/interface/settings/user/voice/VoiceInputOptions.tsx
@@ -1728,8 +1728,8 @@ msgid "Input Volume"
 msgstr ""
 
 #: components/app/interface/settings/user/Native.tsx
-msgid "Instead of closing, Stoat will hide in your tray."
-msgstr "Daripada menutup, Stoat akan bersembunyi dalam tray kamu."
+msgid "Instead of closing, Yappio will hide in your tray."
+msgstr "Daripada menutup, Yappio akan bersembunyi dalam tray kamu."
 
 #: components/app/interface/settings/user/appearance/AppearanceMenu.tsx
 msgid "Interface Font"
@@ -1794,8 +1794,8 @@ msgstr "Bergabung ke server"
 
 #: components/app/interface/settings/user/Feedback.tsx
 #: src/interface/Home.tsx
-msgid "Join the Stoat Lounge"
-msgstr "Bergabung ke Longue Stoat"
+msgid "Join the Yappio Lounge"
+msgstr "Bergabung ke Longue Yappio"
 
 #: components/ui/components/features/voice/callCard/VoiceCallCardPreview.tsx
 #: src/interface/channels/ChannelHeader.tsx
@@ -1853,16 +1853,16 @@ msgid "Latest"
 msgstr "Terbaru"
 
 #: components/app/interface/settings/user/Native.tsx
-msgid "Launch Stoat when you log into your computer."
-msgstr "Luncurkan Stoat ketika kamu masuk ke komputermu."
+msgid "Launch Yappio when you log into your computer."
+msgstr "Luncurkan Yappio ketika kamu masuk ke komputermu."
 
 #: components/ui/components/features/messaging/composition/picker/GifPicker.tsx
 msgid "Learn more"
 msgstr ""
 
 #: components/app/interface/settings/user/bots/MyBots.tsx
-msgid "Learn more about how to create bots on Stoat."
-msgstr "Pelajari lebih lanjut tentang cara membuat bot pada Stoat."
+msgid "Learn more about how to create bots on Yappio."
+msgstr "Pelajari lebih lanjut tentang cara membuat bot pada Yappio."
 
 #: components/modal/modals/DeleteChannel.tsx
 #: components/modal/modals/LeaveServer.tsx
@@ -1885,7 +1885,7 @@ msgid "Leave server"
 msgstr "Keluar server"
 
 #: components/app/interface/settings/user/Native.tsx
-msgid "Let Stoat use its own custom titlebar."
+msgid "Let Yappio use its own custom titlebar."
 msgstr "Biarkan Staot menggunakan titlebar kustomnya sendiri."
 
 #: src/interface/Home.tsx
@@ -2194,8 +2194,8 @@ msgid "New Password"
 msgstr "Kata Sandi Baru"
 
 #: components/app/interface/channels/text/Message.tsx
-msgid "New to Stoat"
-msgstr "Pendatang Baru di Stoat"
+msgid "New to Yappio"
+msgstr "Pendatang Baru di Yappio"
 
 #: components/app/interface/channels/text/Message.tsx
 msgid "New to the server"
@@ -2616,8 +2616,8 @@ msgid "Rename Session"
 msgstr "Ubah Nama Sesi"
 
 #: components/app/interface/settings/user/Native.tsx
-msgid "Rep Stoat using Discord rich presence."
-msgstr "Rep Stoat menggunakan Discord rich presence."
+msgid "Rep Yappio using Discord rich presence."
+msgstr "Rep Yappio menggunakan Discord rich presence."
 
 #: components/app/menus/MessageContextMenu.tsx
 msgid "Reply"
@@ -2957,8 +2957,8 @@ msgid "Show send message button"
 msgstr "Tampilkan tombol kirim pesan"
 
 #: components/auth/src/flows/FlowLogin.tsx
-msgid "Sign into Stoat"
-msgstr "Masuk ke dalam Stoat"
+msgid "Sign into Yappio"
+msgstr "Masuk ke dalam Yappio"
 
 #: components/auth/src/flows/FlowHome.tsx
 msgid "Sign Up"
@@ -3040,35 +3040,35 @@ msgstr "Mulai dengan Komputer"
 msgid "Status"
 msgstr "Status"
 
-#~ msgid "Stoat Desktop"
+#~ msgid "Yappio Desktop"
 #~ msgstr ""
 
 #: components/ui/components/features/profiles/ProfileBadges.tsx
-msgid "Stoat Developer"
-msgstr "Pengembang Stoat"
+msgid "Yappio Developer"
+msgstr "Pengembang Yappio"
 
 #: components/app/interface/settings/user/Native.tsx
-msgid "Stoat for Desktop"
-msgstr "Stoat untuk Desktop"
+msgid "Yappio for Desktop"
+msgstr "Yappio untuk Desktop"
 
 #: components/ui/components/features/profiles/ProfileBadges.tsx
-msgid "Stoat Founder"
-msgstr "Pendiri Stoat"
+msgid "Yappio Founder"
+msgstr "Pendiri Yappio"
 
 #: components/auth/src/flows/FlowHome.tsx
-msgid "Stoat is one of the best ways to stay connected with your friends and community, anywhere, anytime."
-msgstr "Stoat adalah salah satu cara terbaik untuk tetap terhubung dengan temen dan komunitas kamu, dimana pun, kapan pun."
+msgid "Yappio is one of the best ways to stay connected with your friends and community, anywhere, anytime."
+msgstr "Yappio adalah salah satu cara terbaik untuk tetap terhubung dengan temen dan komunitas kamu, dimana pun, kapan pun."
 
 #: components/app/interface/settings/server/roles/ServerRoleEditor.tsx
-msgid "Stoat rocks!"
+msgid "Yappio rocks!"
 msgstr ""
 
 #: components/app/interface/settings/user/Native.tsx
-msgid "Stoat will start in the system tray."
+msgid "Yappio will start in the system tray."
 msgstr ""
 
 #: src/AndroidNag.tsx
-msgid "Stoat works best as an app"
+msgid "Yappio works best as an app"
 msgstr ""
 
 #: components/ui/components/features/voice/callCard/VoiceCallCardActions.tsx
@@ -3104,8 +3104,8 @@ msgid "Subscriptions"
 msgstr "Langganan"
 
 #: components/app/interface/settings/user/Feedback.tsx
-msgid "Suggest new Stoat features on GitHub discussions."
-msgstr "Sarankan fitur Stoat baru di diskusi GitHub."
+msgid "Suggest new Yappio features on GitHub discussions."
+msgstr "Sarankan fitur Yappio baru di diskusi GitHub."
 
 #: src/interface/Home.tsx
 msgid "Support the project by donating - thank you!"
@@ -3311,8 +3311,8 @@ msgstr "Buka Blokir"
 
 #. placeholder {0}: err.type
 #: components/i18n/errors.tsx
-msgid "Uncaught Stoat error: {0}"
-msgstr "Kegalatan Stoat: {0}"
+msgid "Uncaught Yappio error: {0}"
+msgstr "Kegalatan Yappio: {0}"
 
 #: components/app/interface/settings/user/notifications/Sounds.tsx
 #: components/ui/components/features/voice/callCard/VoiceCallCardActions.tsx
@@ -3749,8 +3749,8 @@ msgid "You've been invited to join this server.<0/>Would you like to join?"
 msgstr "Kamu telah diundang untuk bergabung ke server ini.<0/>Apakah kamu ingin bergabung?"
 
 #: components/modal/modals/SignedOut.tsx
-msgid "You've been signed out of Stoat!"
-msgstr "Kamu telah keluar dari Stoat!"
+msgid "You've been signed out of Yappio!"
+msgstr "Kamu telah keluar dari Yappio!"
 
 #: components/i18n/errors.tsx
 msgid "You've reached your personal bot limit."

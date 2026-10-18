@@ -15,7 +15,7 @@ const getEnv = (name: string, devOnly?: boolean) =>
     ? (import.meta.env[name] as string)
     : undefined;
 
-/** If host is Stoat, normalize to STOAT_HOST, else return host */
+/** If host is Yappio, normalize to STOAT_HOST, else return host */
 export const normalizeHost = (host: string) =>
   [
     // historically...
