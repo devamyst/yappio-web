@@ -40,7 +40,6 @@ import {
 /* @refresh reload */
 import "@revolt/ui/styles";
 
-import { AndroidNag } from "./AndroidNag";
 import AuthPage from "./Auth";
 import Interface from "./Interface";
 import "./index.css";
@@ -131,7 +130,6 @@ function MountContext(props: { children?: JSX.Element }) {
                   {props.children}
                   <ModalRenderer />
                   <FloatingManager />
-                  <AndroidNag />
                 </QueryClientProvider>
               </VoiceContext>
             </SoundContext>
