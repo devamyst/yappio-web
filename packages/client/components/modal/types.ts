@@ -207,6 +207,16 @@ export type Modals =
       member: ServerMember;
     }
   | {
+      type: "timeout_member";
+      member: ServerMember;
+    }
+  | {
+      type: "purge_messages";
+      channel: Channel;
+      ids?: string[];
+      onDone?: () => void;
+    }
+  | {
       type: "leave_server";
       server: Server;
     }
@@ -219,16 +229,6 @@ export type Modals =
     }
   | ({
       type: "mfa_flow";
-  | {
-      type: "timeout_member";
-      member: ServerMember;
-    }
-  | {
-      type: "purge_messages";
-      channel: Channel;
-      ids?: string[];
-      onDone?: () => void;
-    }
     } & (
       | {
           mfa: MFA;

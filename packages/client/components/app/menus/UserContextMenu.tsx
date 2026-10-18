@@ -236,8 +236,6 @@ export function UserContextMenu(props: {
   }
 
   /**
-   * Whether the user can ban this member
-  /**
    * Whether the user can time out this member
    */
   function canTimeout() {
@@ -260,6 +258,8 @@ export function UserContextMenu(props: {
     props.member!.removeTimeout();
   }
 
+  /**
+   * Whether the user can ban this member
    */
   function canBan() {
     return (
@@ -574,8 +574,6 @@ export function UserContextMenu(props: {
             <Trans>Remove Member</Trans>
           </ContextMenuButton>
         </Show>
-        <Show when={canKick()}>
-          <ContextMenuButton
         <Show when={canTimeout()}>
           <Show
             when={props.member!.timeout && props.member!.timeout > new Date()}
@@ -605,6 +603,8 @@ export function UserContextMenu(props: {
             </ContextMenuButton>
           </Show>
         </Show>
+        <Show when={canKick()}>
+          <ContextMenuButton
             symbol={
               <IconSlot>
                 <Symbol size={16}>person_remove</Symbol>
