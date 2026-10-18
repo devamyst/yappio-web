@@ -98,7 +98,9 @@ const Base = styled("div", {
     minWidth: 0,
 
     padding: "var(--gap-sm) var(--gap-md)",
-    borderStartRadius: "var(--borderRadius-xl)",
+    minHeight: "44px",
+    alignItems: "center",
+    borderStartRadius: "var(--radius-card)",
 
     display: "flex",
     background: "var(--md-sys-color-surface-container-high)",
@@ -107,10 +109,10 @@ const Base = styled("div", {
   variants: {
     hasActionsAppend: {
       true: {
-        borderEndRadius: "var(--borderRadius-md)",
+        borderEndRadius: "var(--radius-xs)",
       },
       false: {
-        borderEndRadius: "var(--borderRadius-xl)",
+        borderEndRadius: "var(--radius-card)",
       },
     },
   },

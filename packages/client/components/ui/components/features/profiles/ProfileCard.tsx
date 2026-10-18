@@ -11,10 +11,10 @@ export const ProfileCard = styled("div", {
     userSelect: "none",
 
     color: "var(--md-sys-color-on-surface)",
-    background: "var(--md-sys-color-surface-container-low)",
+    background: "var(--md-sys-color-surface-container)",
 
     padding: "var(--gap-lg)",
-    borderRadius: "var(--borderRadius-lg)",
+    borderRadius: "var(--radius-card)",
 
     display: "flex",
     gap: "var(--gap-sm)",

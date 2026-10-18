@@ -12,7 +12,8 @@ const Base = styled("div", {
     display: "flex",
     userSelect: "none",
     alignItems: "center",
-    margin: "17px 12px 17px 8px",
+    margin: "17px 16px 17px 16px",
+    justifyContent: "center",
 
     "& time": {
       marginTop: "-2px",
@@ -24,13 +25,14 @@ const Base = styled("div", {
       borderRadius: "var(--borderRadius-md)",
 
       color: "var(--md-sys-color-outline)",
-      background: "var(--md-sys-color-surface-container-lowest)",
+      background: "var(--md-sys-color-surface-container)",
     },
   },
   variants: {
     unread: {
       true: {
-        borderTop: "thin solid var(--md-sys-color-primary)",
+        borderTop: "thin solid var(--md-sys-color-error)",
+        justifyContent: "flex-end",
       },
       false: {
         borderTop: "thin solid var(--md-sys-color-outline-variant)",
@@ -48,11 +50,11 @@ const Base = styled("div", {
 const Unread = styled("div", {
   base: {
     fontSize: "0.625rem",
-    fontWeight: 600,
-    color: "var(--md-sys-color-on-primary)",
-    background: "var(--md-sys-color-primary)",
+    fontWeight: 700,
+    color: "var(--md-sys-color-on-error)",
+    background: "var(--md-sys-color-error)",
 
-    padding: "0 6px",
+    padding: "1px 6px",
     marginTop: "-1px",
     borderRadius: "60px",
   },

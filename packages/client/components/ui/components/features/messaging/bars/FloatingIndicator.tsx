@@ -17,7 +17,7 @@ export const FloatingIndicator = styled("div", {
     width: "100%",
     gap: "var(--gap-md)",
     padding: "var(--gap-md)",
-    borderRadius: "var(--borderRadius-lg)",
+    borderRadius: "var(--radius-pill)",
 
     cursor: "pointer",
     backdropFilter: "var(--effects-blur-md)",
@@ -26,8 +26,9 @@ export const FloatingIndicator = styled("div", {
 
     fill: "var(--md-sys-color-on-primary)",
     color: "var(--md-sys-color-on-primary)",
-    backgroundColor:
-      "color-mix(in srgb, var(--md-sys-color-primary) 55%, transparent)",
+    backgroundColor: "var(--md-sys-color-primary)",
+    boxShadow: "var(--elev-2)",
+    fontWeight: 600,
 
     animation: "slideIn 340ms cubic-bezier(0.2, 0.9, 0.5, 1.16) forwards",
   },

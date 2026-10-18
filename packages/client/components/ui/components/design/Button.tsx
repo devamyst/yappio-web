@@ -173,7 +173,7 @@ const button = cva({
 
     cursor: "pointer",
     border: "none",
-    transition: "var(--transitions-medium) all",
+    transition: "var(--transitions-fast) all",
 
     color: "var(--color)",
     fill: "var(--color)",
@@ -193,8 +193,8 @@ const button = cva({
         "--color": "var(--md-sys-color-on-primary)",
       },
       tonal: {
-        background: "var(--md-sys-color-secondary-container)",
-        "--color": "var(--md-sys-color-on-secondary-container)",
+        background: "var(--md-sys-color-surface-container-highest)",
+        "--color": "var(--md-sys-color-on-surface)",
       },
       outlined: {
         border: "1px solid var(--md-sys-color-outline-variant)",
@@ -293,7 +293,7 @@ const button = cva({
         "--padding-inline": "12px",
       },
       sm: {
-        height: "40px",
+        height: "38px",
         "--padding-inline": "16px",
       },
       md: {
@@ -318,9 +318,9 @@ const button = cva({
        * @deprecated
        */
       small: {
-        height: "40px",
+        height: "38px",
         paddingInline: "16px",
-        borderRadius: "12px",
+        borderRadius: "var(--radius-control)",
 
         ...typography.raw(),
       },
@@ -405,7 +405,7 @@ const button = cva({
       shape: "square",
       size: ["sm", "xs"],
       css: {
-        borderRadius: "var(--borderRadius-md)",
+        borderRadius: "var(--radius-control)",
       },
     },
     {
@@ -428,7 +428,7 @@ const button = cva({
       shape: "round",
       size: ["sm", "xs"],
       css: {
-        borderRadius: "48px",
+        borderRadius: "var(--radius-control)",
       },
     },
     {

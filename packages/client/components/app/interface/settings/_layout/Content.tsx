@@ -97,9 +97,7 @@ const base = css({
   flex: "1 1 800px",
   flexDirection: "row",
   display: "flex",
-  background: "var(--md-sys-color-surface-container-low)",
-  borderStartStartRadius: "30px",
-  borderEndStartRadius: "30px",
+  background: "var(--md-sys-color-surface-container)",
 
   "& > a": {
     textDecoration: "none",

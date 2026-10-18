@@ -80,7 +80,7 @@ type Props = JSX.HTMLAttributes<HTMLInputElement> & {
 };
 
 const field = cva({
-  base: { cursor: "text" },
+  base: { cursor: "text", "--shape-corner": "var(--radius-control)" },
 });
 
 /**

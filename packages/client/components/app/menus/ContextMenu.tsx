@@ -21,13 +21,15 @@ const Base = styled("div", {
   base: {
     display: "flex",
     flexDirection: "column",
-    padding: "var(--gap-md) 0",
+    padding: "6px",
     overflow: "hidden",
-    borderRadius: "var(--borderRadius-xs)",
-    background: "var(--md-sys-color-surface-container)",
+    borderRadius: "var(--radius-control)",
+    background: "var(--md-sys-color-surface-container-lowest)",
+    border: "var(--hairline)",
+    animation: "popIn var(--motion-fast) var(--ease-standard)",
     color: "var(--md-sys-color-on-surface)",
     fill: "var(--md-sys-color-on-surface)",
-    boxShadow: "0 0 3px var(--md-sys-color-shadow)",
+    boxShadow: "var(--elev-3)",
 
     userSelect: "none",
   },
@@ -46,7 +48,7 @@ export function ContextMenu(props: ComponentProps<typeof Base>) {
 export const ContextMenuDivider = styled("div", {
   base: {
     height: "1px",
-    margin: "var(--gap-sm) 0",
+    margin: "4px 0",
     background: "var(--md-sys-color-outline-variant)",
   },
 });
@@ -56,11 +58,14 @@ export const ContextMenuItem = styled("a", {
     display: "flex",
     gap: "var(--gap-md)",
     alignItems: "center",
-    padding: "var(--gap-md) var(--gap-lg)",
+    minHeight: "32px",
+    padding: "6px 10px",
+    borderRadius: "var(--radius-xs)",
+    transition: "background var(--motion-fast) var(--ease-standard)",
 
     "&:hover": {
       background:
-        "color-mix(in srgb, var(--md-sys-color-on-surface) 8%, transparent)",
+        "color-mix(in srgb, var(--md-sys-color-primary) 16%, transparent)",
     },
 
     "& span": {
@@ -71,7 +76,7 @@ export const ContextMenuItem = styled("a", {
     selected: {
       true: {
         background:
-          "color-mix(in srgb, var(--md-sys-color-on-surface) 8%, transparent)",
+          "color-mix(in srgb, var(--md-sys-color-primary) 16%, transparent)",
       },
       false: {},
     },
@@ -99,6 +104,10 @@ export const ContextMenuItem = styled("a", {
       true: {
         fill: "var(--md-sys-color-error)",
         color: "var(--md-sys-color-error)",
+        "&:hover": {
+          background:
+            "color-mix(in srgb, var(--md-sys-color-error) 16%, transparent)",
+        },
       },
     },
   },

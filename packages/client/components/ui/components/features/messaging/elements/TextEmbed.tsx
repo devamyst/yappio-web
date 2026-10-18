@@ -23,10 +23,10 @@ const Base = styled("div", {
     flexDirection: "row",
     gap: "var(--gap-md)",
     padding: "var(--gap-md)",
-    borderRadius: "var(--borderRadius-md)",
-    color: "var(--md-sys-color-on-primary-container)",
-    background: "var(--md-sys-color-primary-container)",
-    borderInlineStart: "var(--gap-sm) solid var(--md-sys-color-primary)",
+    borderRadius: "var(--radius-control)",
+    color: "var(--md-sys-color-on-surface)",
+    background: "var(--md-sys-color-surface-container-high)",
+    borderInlineStart: "4px solid var(--md-sys-color-primary)",
   },
 });
 

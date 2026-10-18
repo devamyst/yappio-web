@@ -44,6 +44,9 @@ export function AppearanceMenu() {
   const { t } = useLingui();
   const [pickerRef, setPickerRef] = createSignal<HTMLDivElement>();
 
+  const compactMode = () =>
+    !!state.settings.getValue("appearance:compact_mode");
+
   function loadFonts() {
     for (const f in FONTS) FONTS[f as Fonts].load();
   }
@@ -305,6 +308,22 @@ export function AppearanceMenu() {
           </Trans>
         </Checkbox>
 
+        <Row justify="stretch">
+          <Button
+            group="connected-start"
+            groupActive={!compactMode()}
+            onPress={() => state.settings.setValue("appearance:compact_mode", false)}
+          >
+            <Trans>Cozy</Trans>
+          </Button>
+          <Button
+            group="connected-end"
+            groupActive={compactMode()}
+            onPress={() => state.settings.setValue("appearance:compact_mode", true)}
+          >
+            <Trans>Compact</Trans>
+          </Button>
+        </Row>
         <Preview>
           <MessagePreview>
             <MessageContainer
@@ -319,6 +338,7 @@ export function AppearanceMenu() {
               username={user()?.displayName}
               pronouns={user()?.pronouns}
               isLink="hide"
+              compact={compactMode()}
             >
               Sphinx of black quartz, judge my vow
             </MessageContainer>
@@ -327,6 +347,7 @@ export function AppearanceMenu() {
               timestamp={new Date()}
               username={"MysticPixie"}
               isLink="hide"
+              compact={compactMode()}
             >
               <code class={css({ fontFamily: `var(--fonts-monospace)` })}>
                 The quick brown fox jumped over the lazy dog

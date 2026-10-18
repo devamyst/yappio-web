@@ -325,8 +325,8 @@ const Card = styled("div", {
     transition: "var(--transitions-fast) all",
     transitionTimingFunction: "ease-in-out",
 
-    borderRadius: "var(--borderRadius-lg)",
-    background: "var(--md-sys-color-secondary-container)",
+    borderRadius: "var(--radius-card)",
+    background: "var(--md-sys-color-surface-container-high)",
   },
   variants: {
     active: {
