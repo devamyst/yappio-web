@@ -35,11 +35,6 @@ import { CompositionMediaPickerContext } from "./CompositionMediaPicker";
 const GIFBOX_EXPLAINER_DISMISS_KEY = "gifbox-explainer-dismissed";
 
 /**
- * Link to more information about Gifbox
- */
-const GIFBOX_LEARN_MORE_URL = "https://stoat.gg/meet-gifbox";
-
-/**
  * Link to upload GIFs to Gifbox
  */
 const GIFBOX_UPLOAD_URL = "https://gifbox.me/upload";
@@ -143,18 +138,6 @@ function GifboxExplainer() {
           </Trans>
         </ExplainerBody>
         <ExplainerActions>
-          <Button
-            variant="text"
-            onPress={() =>
-              window.open(
-                GIFBOX_LEARN_MORE_URL,
-                "_blank",
-                "noopener,noreferrer",
-              )
-            }
-          >
-            <Trans>Learn more</Trans>
-          </Button>
           <Button
             variant="filled"
             onPress={() =>

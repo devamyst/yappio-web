@@ -393,11 +393,11 @@ const Tile = styled("div", {
     },
     action: {
       true: {
-        color: "var(--brand-presence-online)",
+        color: "var(--md-sys-color-primary)",
 
         "&:hover": {
-          color: "white",
-          background: "var(--brand-presence-online)",
+          color: "var(--md-sys-color-on-primary)",
+          background: "var(--md-sys-color-primary)",
         },
       },
       false: {},

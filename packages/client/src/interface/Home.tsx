@@ -169,6 +169,7 @@ export function HomePage() {
             class={css({
               width: "200px",
               fill: "var(--md-sys-color-on-surface)",
+              filter: "var(--yappio-wordmark-filter, none)",
             })}
           />
           <Tagline>

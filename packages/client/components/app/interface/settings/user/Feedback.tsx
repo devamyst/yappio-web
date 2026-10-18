@@ -6,7 +6,6 @@ import { PublicChannelInvite } from "stoat.js";
 import { styled } from "styled-system/jsx";
 
 import MdGroups3 from "@material-design-icons/svg/filled/groups_3.svg?component-solid";
-import MdBugReport from "@material-design-icons/svg/outlined/bug_report.svg?component-solid";
 import MdFormatListNumbered from "@material-design-icons/svg/outlined/format_list_numbered.svg?component-solid";
 import MdStar from "@material-design-icons/svg/outlined/star_outline.svg?component-solid";
 
@@ -70,19 +69,6 @@ export function Feedback() {
             description={<Trans>Submit feedback</Trans>}
           >
             <Trans>Feedback</Trans>
-          </CategoryButton>
-        </Link>
-        <Link
-          href="https://github.com/stoatchat/for-web/issues?q=is%3Aissue%20state%3Aopen%20type%3ABug"
-          target="_blank"
-        >
-          <CategoryButton
-            action="external"
-            icon={<MdBugReport {...iconSize(22)} />}
-            ignoreClick
-            description={<Trans>View currently active bug reports here.</Trans>}
-          >
-            <Trans>Bug Tracker</Trans>
           </CategoryButton>
         </Link>
         <Switch fallback={null}>

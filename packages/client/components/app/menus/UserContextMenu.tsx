@@ -178,16 +178,6 @@ export function UserContextMenu(props: {
   }
 
   /**
-   * Open user in Yappio Admin Panel
-   */
-  function openAdminPanel() {
-    window.open(
-      `https://admin.stoatinternal.com/panel/inspect/user/${props.user.id}`,
-      "_blank",
-    );
-  }
-
-  /**
    * Copy user id to clipboard
    */
   function copyId() {
@@ -661,23 +651,10 @@ export function UserContextMenu(props: {
       {/* Developer tools */}
       <Show
         when={
-          state.settings.getValue("advanced:admin_panel") ||
           state.settings.getValue("advanced:copy_id")
         }
       >
         <ContextMenuDivider />
-      </Show>
-      <Show when={state.settings.getValue("advanced:admin_panel")}>
-        <ContextMenuButton
-          symbol={
-            <IconSlot>
-              <Symbol size={16}>admin_panel_settings</Symbol>
-            </IconSlot>
-          }
-          onClick={openAdminPanel}
-        >
-          <Trans>Admin Panel</Trans>
-        </ContextMenuButton>
       </Show>
       <Show when={state.settings.getValue("advanced:copy_id")}>
         <ContextMenuButton

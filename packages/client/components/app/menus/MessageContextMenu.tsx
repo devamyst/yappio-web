@@ -24,7 +24,6 @@ import MdPin from "@material-design-icons/svg/outlined/pin_invoke.svg?component-
 import MdReply from "@material-design-icons/svg/outlined/reply.svg?component-solid";
 import MdReport from "@material-design-icons/svg/outlined/report.svg?component-solid";
 import MdShare from "@material-design-icons/svg/outlined/share.svg?component-solid";
-import MdShield from "@material-design-icons/svg/outlined/shield.svg?component-solid";
 
 import MdSentimentContent from "@material-symbols/svg-400/outlined/sentiment_content.svg?component-solid";
 
@@ -114,15 +113,6 @@ export function MessageContextMenu(props: {
     }
   }
 
-  /**
-   * Open message in Yappio Admin Panel
-   */
-  function openAdminPanel() {
-    window.open(
-      `https://admin.stoatinternal.com/panel/inspect/message/${props.message!.id}`,
-      "_blank",
-    );
-  }
 
   /**
    * Copy message link to clipboard
@@ -308,11 +298,6 @@ export function MessageContextMenu(props: {
           </ContextMenuButton>
         </Show>
         <ContextMenuDivider />
-        <Show when={state.settings.getValue("advanced:admin_panel")}>
-          <ContextMenuButton icon={MdShield} onClick={openAdminPanel}>
-            <Trans>Admin Panel</Trans>
-          </ContextMenuButton>
-        </Show>
         <ContextMenuButton icon={MdShare} onClick={copyMessageLink}>
           <Trans>Copy message link</Trans>
         </ContextMenuButton>

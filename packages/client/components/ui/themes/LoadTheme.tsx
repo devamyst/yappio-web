@@ -48,6 +48,9 @@ export function LoadTheme() {
       ...createStoatWebVariables(activeTheme),
       // mount --md-sys-color variables
       ...createMaterialColourVariables(activeTheme, "--md-sys-color-"),
+      "--yappio-wordmark-filter": activeTheme.darkMode
+        ? "none"
+        : "brightness(0) opacity(0.88)",
       // mount --mdui-color triplet variables
       ...createMduiColourTriplets(activeTheme, "--mdui-color-"),
     };

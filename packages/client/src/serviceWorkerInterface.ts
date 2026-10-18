@@ -38,9 +38,10 @@ const updateSW = registerSW({
     console.info("Ready to work offline =)");
   },
   onRegistered(r) {
-    setInterval(() => r!.update(), CHECK_INTERVAL_MS);
+    const check = () => void r?.update().catch(() => {});
+    setInterval(check, CHECK_INTERVAL_MS);
     document.addEventListener("visibilitychange", () => {
-      if (!document.hidden) r!.update();
+      if (!document.hidden) check();
     });
   },
 });

@@ -32,6 +32,7 @@ export default function FlowHome() {
                 width: "60%",
                 margin: "auto",
                 fill: "var(--md-sys-color-on-surface)",
+                filter: "var(--yappio-wordmark-filter, none)",
               })}
             />
 

@@ -217,16 +217,7 @@ export function TranslatedError(props: TranslatedErrorProps) {
       <Match when={typeof errorString() !== "string"}>
         <Switch fallback={err(props.error)}>
           <Match when={(errorString() as API.Error).type === "BlockedByShield"}>
-            <Trans>
-              This sign up is marked as spam. Please see{" "}
-              <a
-                href="https://support.stoat.chat/kb/safety/blocked-for-spam"
-                target="_blank"
-                rel="noreferrer"
-              >
-                this support article.
-              </a>
-            </Trans>
+            <Trans>This sign up is marked as spam.</Trans>
           </Match>
         </Switch>
       </Match>

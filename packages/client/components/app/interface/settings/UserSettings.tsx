@@ -5,6 +5,7 @@ import { Server } from "stoat.js";
 import { css } from "styled-system/css";
 
 import { useClient, useClientLifecycle } from "@revolt/client";
+import { YAPPIO_SOURCE_URL } from "@revolt/common";
 import { useInstance } from "@revolt/instance";
 import { useUser } from "@revolt/markdown/users";
 import { useModals } from "@revolt/modal";
@@ -12,7 +13,7 @@ import { ColouredText, Column, Text, iconSize } from "@revolt/ui";
 import { Symbol } from "@revolt/ui/components/utils/Symbol";
 
 import MdAccountCircle from "@material-design-icons/svg/outlined/account_circle.svg?component-solid";
-import MdCoffee from "@material-design-icons/svg/outlined/coffee.svg?component-solid";
+import MdInfo from "@material-design-icons/svg/outlined/info.svg?component-solid";
 import MdLanguage from "@material-design-icons/svg/outlined/language.svg?component-solid";
 import MdLogout from "@material-design-icons/svg/outlined/logout.svg?component-solid";
 import MdMemory from "@material-design-icons/svg/outlined/memory.svg?component-solid";
@@ -32,6 +33,7 @@ import { MyAccount } from "./user/Account";
 import AdvancedSettings from "./user/Advanced";
 import { AppearanceMenu } from "./user/appearance";
 import { MyBots, ViewBot } from "./user/bots";
+import { About } from "./user/About";
 import { Feedback } from "./user/Feedback";
 import { LanguageSettings } from "./user/Language";
 import Native from "./user/Native";
@@ -87,6 +89,8 @@ const Config: SettingsConfiguration<{ server: Server }> = {
         return <MyBots />;
       case "language":
         return <LanguageSettings />;
+      case "about":
+        return <About />;
       case "feedback":
         return <Feedback />;
       case "subscribe":
@@ -311,19 +315,19 @@ const Config: SettingsConfiguration<{ server: Server }> = {
         {
           entries: [
             {
-              href: "https://github.com/stoatchat",
+              href: YAPPIO_SOURCE_URL,
               icon: <MdMemory {...iconSize(20)} />,
               title: <Trans>Source Code</Trans>,
+            },
+            {
+              id: "about",
+              icon: <MdInfo {...iconSize(20)} />,
+              title: <Trans>About Yappio</Trans>,
             },
             {
               id: "advanced",
               icon: <MdScience {...iconSize(20)} />,
               title: <Trans>Advanced</Trans>,
-            },
-            {
-              href: "https://ko-fi.com/stoatchat",
-              icon: <MdCoffee {...iconSize(20)} />,
-              title: <Trans>Donate</Trans>,
             },
             {
               id: "logout",

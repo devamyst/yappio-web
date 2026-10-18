@@ -23,8 +23,8 @@ export function UserSummary(props: {
           color: "black",
         }
       : {
-          background: `var(--md-sys-color-primary-container)`,
-          color: "var(--md-sys-color-on-primary)",
+          background: `linear-gradient(135deg, var(--md-sys-color-surface-container-high), color-mix(in srgb, var(--md-sys-color-primary) 38%, var(--md-sys-color-surface)))`,
+          color: "var(--md-sys-color-on-surface)",
         };
 
   return (

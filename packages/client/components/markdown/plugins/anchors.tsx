@@ -49,11 +49,6 @@ function inAppScope(link: URL, root: string): boolean {
   return (
     [
       root,
-      "https://stoat.chat",
-      "https://beta.stoat.chat",
-      "https://old.stoat.chat",
-      "https://revolt.chat",
-      "https://app.revolt.chat",
     ].includes(link.origin) &&
     /\/(i|app|home|pwa|dev|invite|bot|friends|server|channel)\/?/.test(
       link.pathname,
@@ -80,7 +75,7 @@ export function RenderAnchor(
 
   // Test internal link
   try {
-    let url = new URL(localProps.href);
+    const url = new URL(localProps.href);
 
     // Only allow http, https, mailto, and tel protocols
     if (
@@ -90,15 +85,6 @@ export function RenderAnchor(
       url.protocol !== "tel:"
     ) {
       return <span>{remoteProps.children}</span>;
-    }
-
-    // Remap discover links to native links
-    if (url.origin === "https://rvlt.gg" || url.origin === "https://stt.gg") {
-      if (/^\/[\w\d]+$/.test(url.pathname)) {
-        url = new URL(`/invite${url.pathname}`, instance.origin);
-      } else if (url.pathname.startsWith("/discover")) {
-        url = new URL(url.pathname, instance.origin);
-      }
     }
 
     // Determine whether it's in our scope

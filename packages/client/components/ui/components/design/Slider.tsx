@@ -1,6 +1,16 @@
 import { type JSX, createEffect, createSignal, on, splitProps } from "solid-js";
 
+import { css, cx } from "styled-system/css";
+
 import "mdui/components/slider.js";
+
+const sliderStyle = css({
+  display: "block",
+  boxSizing: "border-box",
+  width: "calc(100% - 6px)",
+  marginInline: "3px",
+  marginBlockStart: "-4px",
+});
 
 type Props = Omit<
   JSX.HTMLAttributes<HTMLInputElement>,
@@ -27,7 +37,7 @@ export function Slider(props: Props) {
     labelFormatter?: (value: number) => string;
   }>();
 
-  const [local, rest] = splitProps(props, ["labelFormatter"]);
+  const [local, rest] = splitProps(props, ["labelFormatter", "class"]);
 
   createEffect(
     on(ref, (ref) => {
@@ -37,5 +47,9 @@ export function Slider(props: Props) {
     }),
   );
 
-  return <mdui-slider ref={setRef} {...rest} />;
+  return <mdui-slider
+      ref={setRef}
+      {...rest}
+      class={cx(sliderStyle, local.class)}
+    />;
 }

@@ -77,6 +77,7 @@ const brandMark = css({
     height: "22px",
     width: "auto",
     fill: "var(--md-sys-color-on-surface)",
+    filter: "var(--yappio-wordmark-filter, none)",
   },
 });
 

@@ -1,128 +1,32 @@
-import { Trans, useLingui } from "@lingui/solid/macro";
+import { useLingui } from "@lingui/solid/macro";
 import { JSX, Show, createSignal, onCleanup, onMount } from "solid-js";
 import { styled } from "styled-system/jsx";
 
-import { useInstance } from "@revolt/instance";
-import Instance from "@revolt/instance/Instance";
-import { Button, CircularProgress, Symbol, Text } from "@revolt/ui";
+import { CircularProgress, Symbol, Text } from "@revolt/ui";
 
 /**
- * Yappio status page URL
- */
-const STATUS_PAGE_URL = "https://status.stoat.chat";
-
-/**
- * Connection troubleshooting knowledge base article
- */
-const TROUBLESHOOTING_URL =
-  "https://support.stoat.chat/kb/troubleshooting/connection-issues";
-
-/**
- * Status API queried when the client is slow to connect
- */
-const STATUS_API_URL = "https://stoat.chat/-/status";
-
-/**
- * How long to wait for a proper connection before asking the status API
- */
-const STATUS_PROBE_DELAY = 5_000;
-
-/**
- * How long to wait before showing troubleshooting advice if an incident has not been reported by the status API yet
+ * How long to wait before showing troubleshooting advice 
  */
 const TROUBLESHOOTING_DELAY = 10_000;
 
 /**
- * Partial API response we care about
- */
-type StatusResponse = {
-  status?: {
-    current_incident_impact?: string;
-    active_incidents?: {
-      title: string;
-      status: string;
-      incident_at: string;
-    }[];
-  };
-};
-
-/**
  * Loading screen shown while the client connects for the first time.
  *
- * If the connection does not succeed within {@link STATUS_PROBE_DELAY}, and we
- * are on an eligible origin, the status API is queried and any ongoing incident
- * is shown so the user knows the outage isn't on their end.
- *
- * Additionally if the connection does not succeed within {@link TROUBLESHOOTING_DELAY},
- * a troubleshooting notice is shown to help the user diagnose their connection issues.
- * We also link to the support page there.
+ * If the connection does not succeed within {@link TROUBLESHOOTING_DELAY},
+ * a notice is shown to help the user diagnose their connection issues.
  */
-export function LoadingScreen(props: { isStoat?: boolean }) {
-  const instance = useInstance() as Instance | undefined;
+export function LoadingScreen(_props: { isStoat?: boolean }) {
   const { t } = useLingui();
 
-  const [notice, setNotice] = createSignal<
-    | { type: "incident"; impact: string; title: string }
-    | { type: "troubleshooting" }
-  >();
-
-  /**
-   * Label for a status impact level
-   */
-  const impactLabel = (impact: string) => {
-    switch (impact) {
-      case "operational":
-        return t`All Systems Operational`;
-      case "degraded_performance":
-        return t`Degraded Performance`;
-      case "partial_outage":
-        return t`Partial Outage`;
-      case "major_outage":
-        return t`Major Outage`;
-      case "maintenance":
-        return t`Ongoing Maintenance`;
-      default:
-        return t`Unknown`;
-    }
-  };
+  const [notice, setNotice] = createSignal<{ type: "troubleshooting" }>();
 
   onMount(() => {
-    const controller = new AbortController();
-
-    // Check the status API for an ongoing incident.
-    const statusTimer = setTimeout(async () => {
-      //TODO Fetch status from current instance backend instead of only stoat.chat
-      if (!props.isStoat && !instance?.isStoat) return;
-      try {
-        const res = await fetch(STATUS_API_URL, { signal: controller.signal });
-        const data = (await res.json()) as StatusResponse;
-
-        const impact = data?.status?.current_incident_impact;
-        const active = (data.status?.active_incidents ?? []).filter(
-          (i) => i.status !== "recovered",
-        );
-
-        if (impact && impact !== "operational" && active.length) {
-          const newest = active.reduce((a, b) =>
-            Date.parse(b.incident_at) > Date.parse(a.incident_at) ? b : a,
-          );
-
-          setNotice({ type: "incident", impact, title: newest.title });
-        }
-      } catch {
-        // the troubleshooting timer handles this case
-      }
-    }, STATUS_PROBE_DELAY);
-
-    // Still no incident so try troubleshooting
     const troubleshootingTimer = setTimeout(() => {
       setNotice((prev) => prev ?? { type: "troubleshooting" });
     }, TROUBLESHOOTING_DELAY);
 
     onCleanup(() => {
-      clearTimeout(statusTimer);
       clearTimeout(troubleshootingTimer);
-      controller.abort();
     });
   });
 
@@ -132,31 +36,12 @@ export function LoadingScreen(props: { isStoat?: boolean }) {
         <CircularProgress />
       </Spinner>
 
-      <Show when={notice()} keyed>
-        {(current) =>
-          current.type === "incident" ? (
-            <NoticeContent
-              symbol={
-                current.impact === "maintenance"
-                  ? "build"
-                  : "running_with_errors"
-              }
-              fill={current.impact === "maintenance"}
-              label={impactLabel(current.impact)}
-              title={current.title}
-              url={STATUS_PAGE_URL}
-              action={<Trans>View status page</Trans>}
-            />
-          ) : (
-            <NoticeContent
-              symbol="wifi_off"
-              label={t`This is taking longer than usual.`}
-              title={t`You may be experiencing connection issues.`}
-              url={TROUBLESHOOTING_URL}
-              action={<Trans>Troubleshooting</Trans>}
-            />
-          )
-        }
+      <Show when={notice()}>
+        <NoticeContent
+          symbol="wifi_off"
+          label={t`This is taking longer than usual.`}
+          title={t`You may be experiencing connection issues.`}
+        />
       </Show>
     </Base>
   );
@@ -170,8 +55,6 @@ function NoticeContent(props: {
   fill?: boolean;
   label: JSX.Element;
   title: JSX.Element;
-  url: string;
-  action: JSX.Element;
 }) {
   return (
     <Notice>
@@ -188,12 +71,6 @@ function NoticeContent(props: {
           {props.title}
         </Text>
       </Header>
-      <Button
-        variant="text"
-        onPress={() => window.open(props.url, "_blank", "noopener,noreferrer")}
-      >
-        {props.action}
-      </Button>
     </Notice>
   );
 }

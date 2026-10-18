@@ -65,6 +65,7 @@ export function Titlebar() {
                 class={css({
                   height: "18px",
                   marginBlockStart: "1px",
+                  filter: "var(--yappio-wordmark-filter, none)",
                 })}
               />{" "}
               <Show when={import.meta.env.DEV}>
