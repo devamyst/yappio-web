@@ -221,14 +221,22 @@ const ReactionBase = styled("div", {
     cursor: "pointer",
     userSelect: "none",
     verticalAlign: "middle",
-    minHeight: "24px",
-    padding: "2px 8px",
-    fontSize: "0.8125rem",
-    borderRadius: "var(--radius-control)",
-    border: "1px solid transparent",
+    minHeight: "28px",
+    padding: "2px 10px",
+    fontSize: "0.875rem",
+    borderRadius: "var(--radius-pill)",
+    border: "1px solid var(--md-sys-color-outline-variant)",
 
     transition: "var(--transitions-fast) all",
     fontWeight: 600,
+    _hover: {
+      transform: "translateY(-1px)",
+      borderColor: "var(--md-sys-color-primary)",
+      boxShadow: "var(--elev-1)",
+    },
+    "@media (prefers-reduced-motion: reduce)": {
+      _hover: { transform: "none" },
+    },
     fontFeatureSettings: "'tnum' 1",
 
     "& img": {
@@ -240,8 +248,9 @@ const ReactionBase = styled("div", {
   variants: {
     active: {
       true: {
-        color: "var(--md-sys-color-on-primary-container)",
-        background: "color-mix(in srgb, var(--md-sys-color-primary-container) 25%, transparent)",
+        color: "var(--md-sys-color-on-surface)",
+        background:
+          "color-mix(in srgb, var(--md-sys-color-primary) 18%, transparent)",
         borderColor: "var(--md-sys-color-primary)",
       },
       false: {
@@ -267,7 +276,7 @@ const AddReaction = styled(ReactionBase, {
     justifyContent: "center",
     fontSize: "var(--emoji-size)",
     background: "var(--md-sys-color-surface-bright)",
-    height: "24px",
+    height: "28px",
     aspectRatio: "1/1",
     padding: "2px",
   },

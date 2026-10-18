@@ -1,4 +1,5 @@
 import {
+  For,
   Match,
   Show,
   Switch,
@@ -9,16 +10,22 @@ import {
 } from "solid-js";
 
 import { VirtualContainer } from "@minht11/solid-virtual-container";
-import { Emoji, Server } from "stoat.js";
+import { Emoji as StoatEmoji, Server } from "stoat.js";
 import { cva } from "styled-system/css";
 import { styled } from "styled-system/jsx";
 
 import { useClient } from "@revolt/client";
+import { Emoji } from "@revolt/markdown";
 import { UnicodeEmoji } from "@revolt/markdown/emoji";
 import { UNICODE_EMOJI_PACK_PUA } from "@revolt/markdown/emoji/UnicodeEmoji";
 import { useState } from "@revolt/state";
-import { Avatar, Ripple, TextField } from "@revolt/ui/components/design";
+import { Avatar, Ripple } from "@revolt/ui/components/design";
 import { Row } from "@revolt/ui/components/layout";
+import { iconSize } from "@revolt/ui/components/utils";
+
+import MdEmojiEmotions from "@material-design-icons/svg/outlined/emoji_emotions.svg?component-solid";
+import MdSchedule from "@material-design-icons/svg/outlined/schedule.svg?component-solid";
+import MdSearch from "@material-design-icons/svg/outlined/search.svg?component-solid";
 
 import emojiMapping from "../../../../../emojiMapping.json";
 
@@ -27,6 +34,7 @@ import {
   CompositionMediaPickerContext,
   compositionContent,
 } from "./CompositionMediaPicker";
+import { isCustomEmojiId, pushRecentEmoji, recentEmoji } from "./recentEmoji";
 
 type Item =
   | {
@@ -47,7 +55,7 @@ type Item =
        * Custom emoji
        */
       t: 2;
-      emoji: Emoji;
+      emoji: StoatEmoji;
     }
   | {
       /**
@@ -63,6 +71,13 @@ type Item =
       t: 4;
       name: string;
       text: string;
+    }
+  | {
+      /**
+       * Recently used emoji, stored as a reaction string
+       */
+      t: 5;
+      value: string;
     };
 
 const COLUMNS = 9;
@@ -76,8 +91,14 @@ export function EmojiPicker() {
 
   const [filter, setFilter] = createSignal("");
 
-  let serverScrollTargetElement!: HTMLDivElement;
   let emojiScrollTargetElement!: HTMLDivElement;
+
+  function scrollToItem(pred: (item: Item) => boolean) {
+    const idx = items().findIndex(pred);
+    if (idx !== -1 && emojiScrollTargetElement) {
+      emojiScrollTargetElement.scrollTop = Math.floor(idx / COLUMNS) * 40;
+    }
+  }
 
   const items = createMemo(() => {
     const filterText = filter().toLowerCase();
@@ -98,6 +119,22 @@ export function EmojiPicker() {
     }
 
     const items: Item[] = [];
+
+    if (recentEmoji().length > 0) {
+      items.push({ t: 3, title: t`Recently used` });
+
+      while (items.length % COLUMNS) {
+        items.push({ t: 1 });
+      }
+
+      for (const value of recentEmoji()) {
+        items.push({ t: 5, value });
+      }
+
+      while (items.length % COLUMNS) {
+        items.push({ t: 1 });
+      }
+    }
 
     for (const server of ordering.orderedServers(client())) {
       const emojis = server.emojis;
@@ -124,7 +161,7 @@ export function EmojiPicker() {
 
     items.push({
       t: 3,
-      title: "Default",
+      title: t`Default`,
     });
 
     while (items.length % COLUMNS) {
@@ -144,52 +181,69 @@ export function EmojiPicker() {
 
   createEffect(() => {
     if (hoveredItem() !== null) return;
-    const first = items().find((item) => item.t === 2 || item.t === 4) ?? null;
+    const first =
+      items().find((item) => item.t === 2 || item.t === 4 || item.t === 5) ??
+      null;
     setHoveredItem(first);
   });
 
   return (
     <Stack>
-      <TextField
-        autoFocus
-        variant="outlined"
-        placeholder="Search for emojis..."
-        value={filter()}
-        onInput={(e) => setFilter(e.currentTarget.value)}
-      />
-      <Row gap={"none"} class={compositionContent()}>
-        <div
-          ref={serverScrollTargetElement}
-          use:invisibleScrollable={{
-            class: scrollContainer({ component: "serverRail" }),
-          }}
-        >
-          <VirtualContainer
-            items={ordering
+      <SearchWrap>
+        <MdSearch {...iconSize(18)} />
+        <SearchInput
+          autofocus
+          type="search"
+          placeholder={t`Search for emojis...`}
+          aria-label={t`Search for emojis`}
+          value={filter()}
+          onInput={(e) => setFilter(e.currentTarget.value)}
+        />
+      </SearchWrap>
+      <Show when={!filter()}>
+        <TabStrip role="tablist">
+          <Show when={recentEmoji().length > 0}>
+            <TabButton
+              role="tab"
+              aria-label={t`Recently used`}
+              onClick={() => scrollToItem((i) => i.t === 3)}
+            >
+              <MdSchedule {...iconSize(20)} />
+            </TabButton>
+          </Show>
+          <For
+            each={ordering
               .orderedServers(client())
               .filter((s) => s.emojis.length > 0)}
-            scrollTarget={serverScrollTargetElement}
-            itemSize={{ height: 40 }}
           >
-            {(props) => (
-              <ServerItem
-                style={props.style}
-                tabIndex={props.tabIndex}
-                item={props.item}
-                onClick={() => {
-                  const idx = items().findIndex(
-                    (item) => item.t === 0 && item.server.id === props.item.id,
-                  );
-                  if (idx !== -1 && emojiScrollTargetElement) {
-                    emojiScrollTargetElement.scrollTop =
-                      Math.floor(idx / COLUMNS) * 40;
-                  }
-                }}
-              />
+            {(server) => (
+              <TabButton
+                role="tab"
+                aria-label={server.name}
+                onClick={() =>
+                  scrollToItem((i) => i.t === 0 && i.server.id === server.id)
+                }
+              >
+                <Avatar
+                  size={22}
+                  src={server.animatedIconURL}
+                  fallback={server.name}
+                />
+              </TabButton>
             )}
-          </VirtualContainer>
-        </div>
-
+          </For>
+          <TabButton
+            role="tab"
+            aria-label={t`Default`}
+            onClick={() =>
+              scrollToItem((i) => i.t === 3 && i.title === t`Default`)
+            }
+          >
+            <MdEmojiEmotions {...iconSize(20)} />
+          </TabButton>
+        </TabStrip>
+      </Show>
+      <Row gap={"none"} class={compositionContent()}>
         <EmojiListColumn>
           <div
             ref={emojiScrollTargetElement}
@@ -223,6 +277,9 @@ export function EmojiPicker() {
                             pack={settings.getValue("appearance:unicode_emoji")}
                           />
                         </Match>
+                        <Match when={item().t === 5}>
+                          <Emoji emoji={(item() as Item & { t: 5 }).value} />
+                        </Match>
                       </Switch>
                     </PreviewEmoji>
                     <div>
@@ -233,6 +290,9 @@ export function EmojiPicker() {
                           </Match>
                           <Match when={item().t === 4}>
                             :{(item() as Item & { t: 4 }).name}:
+                          </Match>
+                          <Match when={item().t === 5}>
+                            <Trans>Recently used</Trans>
                           </Match>
                         </Switch>
                       </PreviewName>
@@ -291,9 +351,84 @@ export function EmojiPicker() {
 const Stack = styled("div", {
   base: {
     minHeight: 0,
+    flexGrow: 1,
     display: "flex",
     flexDirection: "column",
-    gap: "var(--gap-md)",
+    gap: "var(--space-2)",
+    paddingInline: "var(--space-3)",
+  },
+});
+
+const SearchWrap = styled("label", {
+  base: {
+    display: "flex",
+    alignItems: "center",
+    gap: "var(--space-2)",
+    height: "36px",
+    flexShrink: 0,
+    paddingInline: "var(--space-3)",
+    borderRadius: "var(--radius-control)",
+    border: "var(--hairline)",
+    color: "var(--md-sys-color-on-surface-variant)",
+    fill: "var(--md-sys-color-on-surface-variant)",
+    background: "var(--md-sys-color-surface-container-highest)",
+    transition: "border-color var(--motion-fast) var(--ease-standard)",
+    _focusWithin: {
+      borderColor: "var(--md-sys-color-primary)",
+      boxShadow:
+        "0 0 0 3px color-mix(in srgb, var(--md-sys-color-primary) 28%, transparent)",
+    },
+  },
+});
+
+const SearchInput = styled("input", {
+  base: {
+    flex: 1,
+    minWidth: 0,
+    border: "none",
+    outline: "none",
+    background: "transparent",
+    color: "var(--md-sys-color-on-surface)",
+    fontSize: "0.875rem",
+    "&::placeholder": {
+      color: "var(--md-sys-color-on-surface-variant)",
+    },
+  },
+});
+
+const TabStrip = styled("div", {
+  base: {
+    display: "flex",
+    flexShrink: 0,
+    gap: "var(--space-1)",
+    overflowX: "auto",
+    paddingBottom: "var(--space-2)",
+    borderBottom: "var(--hairline)",
+    scrollbarWidth: "none",
+  },
+});
+
+const TabButton = styled("button", {
+  base: {
+    display: "grid",
+    placeItems: "center",
+    flexShrink: 0,
+    width: "34px",
+    height: "34px",
+    cursor: "pointer",
+    border: "none",
+    borderRadius: "var(--radius-control)",
+    background: "transparent",
+    fill: "var(--md-sys-color-on-surface-variant)",
+    transition: "var(--transitions-fast) all",
+    _hover: {
+      fill: "var(--md-sys-color-primary)",
+      background:
+        "color-mix(in srgb, var(--md-sys-color-primary) 16%, transparent)",
+    },
+    _focusVisible: {
+      outline: "2px solid var(--md-sys-color-primary)",
+    },
   },
 });
 
@@ -301,51 +436,10 @@ const scrollContainer = cva({
   base: {},
   variants: {
     component: {
-      serverRail: {
-        display: "flex",
-        flexDirection: "column",
-        flexShrink: 0,
-        width: "40px",
-        gap: "var(--gap-sm)",
-      },
       emoji: {
         flexGrow: 1,
       },
     },
-  },
-});
-
-const ServerItem = (props: {
-  style: unknown;
-  tabIndex: number;
-  item: Server;
-  onClick: (e: MouseEvent) => void;
-}) => (
-  <ServerOption
-    style={props.style as never}
-    tabIndex={props.tabIndex}
-    role="listitem"
-    onMouseDown={(e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      e.stopImmediatePropagation();
-    }}
-    onClick={props.onClick}
-  >
-    <Avatar
-      size={32}
-      src={props.item.animatedIconURL}
-      fallback={props.item.name}
-    />
-  </ServerOption>
-);
-
-const ServerOption = styled("div", {
-  base: {
-    width: "100%",
-    cursor: "pointer",
-    display: "flex",
-    justifyContent: "center",
   },
 });
 
@@ -421,18 +515,32 @@ const EmojiItem = (props: { style: unknown; tabIndex: number; item: Item }) => {
       tabIndex={props.tabIndex}
       role="listitem"
       onClick={() => {
+        const pua =
+          UNICODE_EMOJI_PACK_PUA[
+            state.settings.getValue("appearance:unicode_emoji")!
+          ] ?? "";
+
         if (props.item.t === 2) {
+          pushRecentEmoji(props.item.emoji.id);
           onTextReplacement(`:${props.item.emoji.id}:`);
         }
 
         if (props.item.t === 4) {
+          pushRecentEmoji(props.item.text);
+          onTextReplacement(`${pua}${props.item.text}`);
+        }
+
+        if (props.item.t === 5) {
           onTextReplacement(
-            `${UNICODE_EMOJI_PACK_PUA[state.settings.getValue("appearance:unicode_emoji")!] ?? ""}${props.item.text}`,
+            isCustomEmojiId(props.item.value)
+              ? `:${props.item.value}:`
+              : `${pua}${props.item.value}`,
           );
+          pushRecentEmoji(props.item.value);
         }
       }}
       onMouseEnter={() => {
-        if (props.item.t === 2 || props.item.t === 4)
+        if (props.item.t === 2 || props.item.t === 4 || props.item.t === 5)
           setHoveredItem(props.item);
       }}
     >
@@ -448,6 +556,9 @@ const EmojiItem = (props: { style: unknown; tabIndex: number; item: Item }) => {
         </Match>
         <Match when={props.item.t === 3}>
           <span>{(props.item as Item & { t: 3 }).title}</span>
+        </Match>
+        <Match when={props.item.t === 5}>
+          <Emoji emoji={(props.item as Item & { t: 5 }).value} />
         </Match>
         <Match when={props.item.t === 4}>
           <Ripple />
@@ -472,6 +583,7 @@ const EmojiOption = styled("div", {
       2: {},
       3: {},
       4: {},
+      5: {},
     },
   },
   compoundVariants: [
@@ -483,20 +595,38 @@ const EmojiOption = styled("div", {
         width: "100% !important",
         display: "flex",
         alignItems: "center",
-        paddingInline: "var(--gap-md)",
+        paddingInline: "var(--space-2)",
         zIndex: 1,
+        fontSize: "0.75rem",
+        fontWeight: 700,
+        letterSpacing: "0.04em",
+        textTransform: "uppercase",
+        color: "var(--md-sys-color-on-surface-variant)",
       },
     },
     {
-      type: [2, 4],
+      type: [2, 4, 5],
       css: {
         width: "100%",
         cursor: "pointer",
         position: "relative",
-        padding: "var(--gap-sm)",
-        borderRadius: "var(--borderRadius-sm)",
-
+        overflow: "hidden",
+        padding: "6px",
+        borderRadius: "var(--radius-control)",
+        transition: "background var(--motion-fast) var(--ease-standard)",
+        display: "grid",
+        placeItems: "center",
         "--emoji-size": "100%",
+
+        _hover: {
+          background:
+            "color-mix(in srgb, var(--md-sys-color-primary) 16%, transparent)",
+        },
+        _focusVisible: {
+          outline: "2px solid var(--md-sys-color-primary)",
+          outlineOffset: "-2px",
+        },
+
         "& img": {
           width: "100%",
           height: "100%",

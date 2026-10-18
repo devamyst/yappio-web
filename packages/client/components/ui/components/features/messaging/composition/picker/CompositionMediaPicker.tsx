@@ -189,7 +189,7 @@ function Picker(
  */
 const Base = styled("div", {
   base: {
-    width: "400px",
+    width: "360px",
     height: "400px",
     maxWidth: "100%",
     maxHeight: "calc(100% - max(env(keyboard-inset-height), 72px))",
@@ -214,12 +214,13 @@ const Container = styled("div", {
     alignItems: "stretch",
 
     overflow: "hidden",
-    padding: "var(--gap-md) 0",
+    padding: "var(--space-3) 0",
 
-    borderRadius: "var(--borderRadius-lg)",
+    borderRadius: "var(--radius-card)",
+    border: "var(--hairline)",
     color: "var(--md-sys-color-on-surface)",
     fill: "var(--md-sys-color-on-surface)",
-    boxShadow: "0 0 3px var(--md-sys-color-shadow)",
+    boxShadow: "var(--elev-3)",
     background: "var(--md-sys-color-surface-container)",
   },
 });

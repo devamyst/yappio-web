@@ -12,26 +12,26 @@ const Base = styled("div", {
     display: "flex",
     userSelect: "none",
     alignItems: "center",
-    margin: "17px 16px 17px 16px",
+    margin: "20px 16px",
     justifyContent: "center",
 
     "& time": {
-      marginTop: "-2px",
-      fontSize: "0.6875rem",
-      lineHeight: "0.6875rem",
+      fontSize: "0.75rem",
+      lineHeight: "1rem",
       fontWeight: 600,
-      paddingInline: "5px 5px",
+      padding: "2px 12px",
+      border: "var(--hairline)",
 
-      borderRadius: "var(--borderRadius-md)",
+      borderRadius: "var(--radius-pill)",
 
-      color: "var(--md-sys-color-outline)",
-      background: "var(--md-sys-color-surface-container)",
+      color: "var(--md-sys-color-on-surface-variant)",
+      background: "var(--md-sys-color-surface-container-high)",
     },
   },
   variants: {
     unread: {
       true: {
-        borderTop: "thin solid var(--md-sys-color-error)",
+        borderTop: "2px solid var(--md-sys-color-primary)",
         justifyContent: "flex-end",
       },
       false: {
@@ -51,11 +51,12 @@ const Unread = styled("div", {
   base: {
     fontSize: "0.625rem",
     fontWeight: 700,
-    color: "var(--md-sys-color-on-error)",
-    background: "var(--md-sys-color-error)",
+    color: "var(--md-sys-color-on-primary)",
+    background: "var(--md-sys-color-primary)",
 
-    padding: "1px 6px",
+    padding: "2px 8px",
     marginTop: "-1px",
+    letterSpacing: "0.04em",
     borderRadius: "60px",
   },
 });
