@@ -25,7 +25,6 @@ const page = css({
   background: "var(--md-sys-color-surface-container-lowest)",
   fontFamily: "inherit",
   scrollBehavior: "smooth",
-  "& a": { color: "inherit" },
   "& h1, & h2, & h3, & p": { margin: 0 },
 });
 
@@ -189,7 +188,11 @@ const blobViolet = css({
 
 const heroBg = css({
   position: "absolute",
-  inset: 0,
+  top: "-96px",
+  bottom: 0,
+  left: "50%",
+  width: "100vw",
+  transform: "translateX(-50%)",
   overflow: "hidden",
   zIndex: 0,
   pointerEvents: "none",
@@ -490,6 +493,7 @@ const footer = css({
   fontSize: "14px",
   color: "var(--md-sys-color-on-surface-variant)",
   "& nav": { display: "flex", gap: "20px" },
+  "& nav a": { color: "inherit", textDecoration: "none" },
   "& nav a:hover": { color: "var(--md-sys-color-primary)" },
 });
 
