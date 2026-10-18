@@ -12,6 +12,7 @@ import { ChannelPermissionsEditor } from "./channel/permissions/ChannelPermissio
 import Overview from "./server/Overview";
 import { ListServerBans } from "./server/bans/ListBans";
 import { EmojiList } from "./server/emojis/EmojiList";
+import { ServerMembers } from "./server/members/ServerMembers";
 import { ListServerInvites } from "./server/invites/ListServerInvites";
 import { ServerRoleEditor } from "./server/roles/ServerRoleEditor";
 import { ServerRoleOverview } from "./server/roles/ServerRoleOverview";
@@ -64,6 +65,8 @@ const Config: SettingsConfiguration<Server> = {
         return <Overview server={server} />;
       case "emojis":
         return <EmojiList server={server} />;
+      case "members":
+        return <ServerMembers server={server} />;
       case "roles":
         return <ServerRoleOverview context={server} />;
       case "invites":
@@ -117,7 +120,11 @@ const Config: SettingsConfiguration<Server> = {
           title: <Trans>User Management</Trans>,
           entries: [
             {
-              hidden: true,
+              hidden: !(
+                server.havePermission("KickMembers") ||
+                server.havePermission("BanMembers") ||
+                server.havePermission("ManageServer")
+              ),
               id: "members",
               icon: <Symbol size={20}>group</Symbol>,
               title: <Trans>Members</Trans>,
