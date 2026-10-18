@@ -12,17 +12,14 @@ import { useNavigate } from "@revolt/routing";
 import {
   Button,
   CategoryButton,
-  Column,
   Header,
   iconSize,
   main,
 } from "@revolt/ui";
+import { Symbol } from "@revolt/ui/components/utils/Symbol";
 
-import MdAddCircle from "@material-design-icons/svg/filled/add_circle.svg?component-solid";
-import MdExplore from "@material-design-icons/svg/filled/explore.svg?component-solid";
 import MdGroups3 from "@material-design-icons/svg/filled/groups_3.svg?component-solid";
 import MdHome from "@material-design-icons/svg/filled/home.svg?component-solid";
-import MdSettings from "@material-design-icons/svg/filled/settings.svg?component-solid";
 
 import Wordmark from "../../public/assets/web/wordmark.svg?component-solid";
 
@@ -48,42 +45,100 @@ const content = cva({
   base: {
     ...main.raw(),
 
-    padding: "48px 0",
+    padding: "var(--space-7) var(--space-4)",
 
-    gap: "32px",
+    gap: "var(--space-6)",
     alignItems: "center",
     justifyContent: "center",
   },
 });
 
-/**
- * Layout of the buttons
- */
-const Buttons = styled("div", {
+const Hero = styled("div", {
   base: {
-    gap: "8px",
-    padding: "8px",
     display: "flex",
-    flexWrap: "wrap",
-    justifyContent: "center",
-    borderRadius: "var(--borderRadius-lg)",
-
-    color: "var(--md-sys-color-on-surface-variant)",
-    background: "var(--md-sys-color-surface-variant)",
+    flexDirection: "column",
+    alignItems: "center",
+    gap: "var(--space-2)",
+    textAlign: "center",
   },
 });
 
-/**
- * Make sure the columns are separated
- */
-const SeparatedColumn = styled(Column, {
+const Tagline = styled("p", {
   base: {
-    justifyContent: "stretch",
-    marginInline: "0.25em",
-    width: "260px",
-    "& > *": {
-      flexGrow: 1,
+    fontSize: "16px",
+    color: "var(--md-sys-color-on-surface-variant)",
+  },
+});
+
+const Cards = styled("div", {
+  base: {
+    display: "grid",
+    gridTemplateColumns: "repeat(3, minmax(0, 1fr))",
+    gap: "var(--space-3)",
+    width: "100%",
+    maxWidth: "720px",
+
+    _phone: {
+      gridTemplateColumns: "1fr",
     },
+  },
+});
+
+const ActionCard = styled("button", {
+  base: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "flex-start",
+    gap: "var(--space-2)",
+    padding: "var(--space-4)",
+    minHeight: "128px",
+    textAlign: "left",
+    cursor: "pointer",
+    color: "var(--md-sys-color-on-surface)",
+    borderRadius: "var(--radius-card)",
+    background: "var(--md-sys-color-surface-container-high)",
+    boxShadow: "var(--elev-1)",
+    transition:
+      "background var(--motion-fast) var(--ease-standard), transform var(--motion-med) var(--ease-emph)",
+
+    "&:hover": {
+      background: "var(--md-sys-color-surface-container-highest)",
+      transform: "translateY(-2px)",
+    },
+  },
+});
+
+const CardIcon = styled("div", {
+  base: {
+    width: "40px",
+    height: "40px",
+    display: "grid",
+    placeItems: "center",
+    borderRadius: "var(--radius-control)",
+    color: "var(--md-sys-color-on-primary-container)",
+    background: "var(--md-sys-color-primary-container)",
+  },
+});
+
+const CardTitle = styled("span", {
+  base: {
+    fontSize: "16px",
+    fontWeight: 700,
+    letterSpacing: "-0.01em",
+  },
+});
+
+const CardText = styled("span", {
+  base: {
+    fontSize: "13px",
+    color: "var(--md-sys-color-on-surface-variant)",
+  },
+});
+
+const Extras = styled("div", {
+  base: {
+    width: "100%",
+    maxWidth: "720px",
   },
 });
 
@@ -96,7 +151,6 @@ export function HomePage() {
   const client = useClient();
   const instance = useInstance();
 
-  // check if we're stoat.chat; if so, check if the user is in the Lounge
   const showLoungeButton = instance.isStoat;
   const isInLounge =
     client()!.servers.get("01F7ZSBSFHQ8TA81725KQCSDDP") !== undefined;
@@ -110,98 +164,104 @@ export function HomePage() {
         <Trans>Home</Trans>
       </Header>
       <div use:scrollable={{ class: content() }}>
-        <Column>
+        <Hero>
           <Wordmark
             class={css({
-              width: "160px",
+              width: "200px",
               fill: "var(--md-sys-color-on-surface)",
             })}
           />
-        </Column>
-        <Buttons>
-          <SeparatedColumn>
-            <CategoryButton
-              onClick={() =>
-                openModal({
-                  type: "create_group_or_server",
-                  client: client()!,
-                })
-              }
-              description={
-                <Trans>
-                  Invite all of your friends, some cool bots, and throw a big
-                  party.
-                </Trans>
-              }
-              icon={<MdAddCircle />}
-            >
-              <Trans>Create a group or server</Trans>
-            </CategoryButton>
-            <Switch fallback={null}>
-              <Match when={showLoungeButton && isInLounge}>
-                <CategoryButton
-                  onClick={() => navigate("/server/01F7ZSBSFHQ8TA81725KQCSDDP")}
-                  description={
-                    <Trans>
-                      You can report issues and discuss improvements with us
-                      directly here.
-                    </Trans>
-                  }
-                  icon={<MdGroups3 />}
-                >
-                  <Trans>Go to the Yappio Lounge</Trans>
-                </CategoryButton>
-              </Match>
-              <Match when={showLoungeButton && !isInLounge}>
-                <CategoryButton
-                  onClick={() => {
-                    client()
-                      .api.get("/invites/Testers")
-                      .then((invite) =>
-                        PublicChannelInvite.from(client(), invite),
-                      )
-                      .then((invite) => openModal({ type: "invite", invite }));
-                  }}
-                  description={
-                    <Trans>
-                      You can report issues and discuss improvements with us
-                      directly here.
-                    </Trans>
-                  }
-                  icon={<MdGroups3 />}
-                >
-                  <Trans>Join the Yappio Lounge</Trans>
-                </CategoryButton>
-              </Match>
-            </Switch>
-          </SeparatedColumn>
-          <SeparatedColumn>
-            <Show when={instance.isStoat}>
+          <Tagline>
+            <Trans>Where your people hang out.</Trans>
+          </Tagline>
+        </Hero>
+        <Cards>
+          <ActionCard
+            type="button"
+            onClick={() => openModal({ type: "add_friend", client: client()! })}
+          >
+            <CardIcon>
+              <Symbol size={24}>person_add</Symbol>
+            </CardIcon>
+            <CardTitle>
+              <Trans>Add a friend</Trans>
+            </CardTitle>
+            <CardText>
+              <Trans>Send a request with their username and tag.</Trans>
+            </CardText>
+          </ActionCard>
+          <ActionCard
+            type="button"
+            onClick={() =>
+              openModal({ type: "create_or_join_server", client: client()! })
+            }
+          >
+            <CardIcon>
+              <Symbol size={24}>group_add</Symbol>
+            </CardIcon>
+            <CardTitle>
+              <Trans>Join a server</Trans>
+            </CardTitle>
+            <CardText>
+              <Trans>Got an invite? Paste it and hop in.</Trans>
+            </CardText>
+          </ActionCard>
+          <ActionCard
+            type="button"
+            onClick={() =>
+              openModal({ type: "create_group_or_server", client: client()! })
+            }
+          >
+            <CardIcon>
+              <Symbol size={24}>add_circle</Symbol>
+            </CardIcon>
+            <CardTitle>
+              <Trans>Create a server</Trans>
+            </CardTitle>
+            <CardText>
+              <Trans>Start your own place for friends and bots.</Trans>
+            </CardText>
+          </ActionCard>
+        </Cards>
+        <Extras>
+          <Switch fallback={null}>
+            <Match when={showLoungeButton && isInLounge}>
               <CategoryButton
-                onClick={() => navigate("/discover")}
+                onClick={() => navigate("/server/01F7ZSBSFHQ8TA81725KQCSDDP")}
                 description={
                   <Trans>
-                    Find a community based on your hobbies or interests.
+                    You can report issues and discuss improvements with us
+                    directly here.
                   </Trans>
                 }
-                icon={<MdExplore />}
+                icon={<MdGroups3 />}
               >
-                <Trans>Discover Yappio</Trans>
+                <Trans>Go to the Yappio Lounge</Trans>
               </CategoryButton>
-            </Show>
-            <CategoryButton
-              onClick={() => openModal({ type: "settings", config: "user" })}
-              description={
-                <Trans>
-                  You can also click the gear icon in the bottom left.
-                </Trans>
-              }
-              icon={<MdSettings />}
-            >
-              <Trans>Open settings</Trans>
-            </CategoryButton>
-          </SeparatedColumn>
-        </Buttons>
+            </Match>
+            <Match when={showLoungeButton && !isInLounge}>
+              <CategoryButton
+                onClick={() => {
+                  client()
+                    .api.get("/invites/Testers")
+                    .then((invite) =>
+                      PublicChannelInvite.from(client(), invite),
+                    )
+                    .then((invite) => openModal({ type: "invite", invite }));
+                }}
+                description={
+                  <Trans>
+                    You can report issues and discuss improvements with us
+                    directly here.
+                  </Trans>
+                }
+                icon={<MdGroups3 />}
+              >
+                <Trans>Join the Yappio Lounge</Trans>
+              </CategoryButton>
+            </Match>
+          </Switch>
+        </Extras>
         <Show when={IS_DEV}>
           <Button onPress={() => navigate("/dev")}>
             Open Development Page
