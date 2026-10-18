@@ -30,6 +30,7 @@ import { Symbol } from "@revolt/ui/components/utils/Symbol";
 import MdClose from "@material-design-icons/svg/outlined/close.svg?component-solid";
 
 import { SidebarBase } from "./common";
+import { EmptyAction, EmptyState } from "./EmptyState";
 
 interface Props {
   /**
@@ -204,6 +205,17 @@ export const HomeSidebar = (props: Props) => {
               )}
             </VirtualContainer>
           </Deferred>
+          <Show when={props.conversations().length === 0}>
+            <EmptyState
+              title={<Trans>No conversations yet</Trans>}
+              hint={<Trans>Add a friend and say hi.</Trans>}
+              action={
+                <EmptyAction type="button" onClick={() => navigate("/friends")}>
+                  <Trans>Find friends</Trans>
+                </EmptyAction>
+              }
+            />
+          </Show>
         </List>
       </div>
     </SidebarBase>
