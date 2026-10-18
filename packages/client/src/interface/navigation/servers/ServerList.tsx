@@ -125,7 +125,7 @@ export const ServerList = (props: Props) => {
           >
             <TileWrap>
               <Tile data-tile="" selected={!props.selectedServer()} brand>
-                <LogoImage src="/assets/web/android-chrome-192x192.png" />
+                <LogoImage src="/assets/web/yappio-192.png" />
               </Tile>
               <Show when={homeNotifications()}>
                 <Badge>{homeNotifications() > 99 ? "99+" : homeNotifications()}</Badge>

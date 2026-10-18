@@ -50,8 +50,22 @@ const Base = styled("div", {
     display: "flex",
     userSelect: "none",
     flexDirection: "column",
-    margin: "18px 16px 10px 16px",
+    margin: "var(--space-4) var(--space-4) var(--space-3)",
+    gap: "var(--space-1)",
 
     color: "var(--md-sys-color-on-surface)",
+
+    "&& > :first-child": {
+      fontSize: "30px",
+      lineHeight: "38px",
+      fontWeight: 800,
+      letterSpacing: "-0.01em",
+    },
+
+    "&& > :nth-child(2)": {
+      fontSize: "15px",
+      fontWeight: 400,
+      color: "var(--md-sys-color-on-surface-variant)",
+    },
   },
 });

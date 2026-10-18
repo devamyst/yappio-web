@@ -127,8 +127,9 @@ const Parent = styled("div", {
     flexShrink: 0,
 
     display: "flex",
-    gap: "var(--gap-md)",
-    margin: "0 0 var(--gap-md) 0",
+    alignItems: "flex-end",
+    gap: "var(--space-2)",
+    margin: "0 var(--space-4) var(--space-4)",
     maxHeight: "var(--layout-height-message-box)",
   },
 });

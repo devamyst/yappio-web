@@ -58,12 +58,12 @@ export default defineConfig({
         theme_color: "#15131f",
         icons: [
           {
-            src: `${base}assets/web/android-chrome-192x192.png`,
+            src: `${base}assets/web/yappio-192.png`,
             type: "image/png",
             sizes: "192x192",
           },
           {
-            src: `${base}assets/web/android-chrome-512x512.png`,
+            src: `${base}assets/web/yappio-512.png`,
             type: "image/png",
             sizes: "512x512",
           },

@@ -14,15 +14,17 @@ export const FloatingIndicator = styled("div", {
     userSelect: "none",
     alignItems: "center",
 
-    width: "100%",
+    width: "calc(100% - var(--space-4))",
+    marginInline: "var(--space-2)",
     gap: "var(--gap-md)",
-    padding: "var(--gap-md)",
+    padding: "var(--space-2) var(--space-3)",
     borderRadius: "var(--radius-pill)",
 
     cursor: "pointer",
     backdropFilter: "var(--effects-blur-md)",
 
     ...typography.raw({ size: "small" }),
+    fontSize: "13px",
 
     fill: "var(--md-sys-color-on-primary)",
     color: "var(--md-sys-color-on-primary)",

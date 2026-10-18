@@ -157,7 +157,7 @@ const base = cva({
     alignItems: "center",
     margin: "0 var(--gap-md)",
     padding: "0 var(--gap-md)",
-    borderRadius: "var(--borderRadius-xl)",
+    borderRadius: "var(--radius-control)",
 
     color: "var(--color)",
     fill: "var(--color)",
@@ -203,8 +203,8 @@ const base = cva({
         background: "transparent",
       },
       selected: {
-        "--color": "var(--md-sys-color-on-primary-container)",
-        background: "var(--md-sys-color-primary-container)",
+        "--color": "var(--md-sys-color-on-surface)",
+        background: "var(--md-sys-color-surface-container-highest)",
       },
     },
   },

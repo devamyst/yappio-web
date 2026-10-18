@@ -169,21 +169,8 @@ export function ServerMemberSidebar(props: Props) {
     return elements;
   });
 
-  const onlineMembers = createMemo(
-    () => elements().filter((ele) => ele.t === 1 && ele.isOnline).length,
-  );
-
   return (
     <Container>
-      <Show when={!props.isLargeServer}>
-        <MemberTitle bottomMargin="yes">
-          <Row align>
-            <UserStatus size="0.7em" status="Online" />
-            {onlineMembers()} members online
-          </Row>
-        </MemberTitle>
-      </Show>
-
       <Deferred>
         <VirtualContainer
           items={elements()}
