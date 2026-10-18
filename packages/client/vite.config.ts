@@ -54,8 +54,8 @@ export default defineConfig({
         scope: pwaScope,
         display_override: ["window-controls-overlay"],
         display: "standalone",
-        background_color: "#15131f",
-        theme_color: "#15131f",
+        background_color: "#1e1f22",
+        theme_color: "#1e1f22",
         icons: [
           {
             src: `${base}assets/web/yappio-192.png`,
