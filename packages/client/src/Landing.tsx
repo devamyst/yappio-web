@@ -11,7 +11,10 @@ import Wordmark from "../public/assets/web/wordmark.svg?component-solid";
 const keyframes = `
 @keyframes yl-up { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
 @keyframes yl-ring { 0%, 100% { box-shadow: 0 0 0 3px var(--md-sys-color-primary), 0 0 18px rgb(200 244 60 / 0.35); } 50% { box-shadow: 0 0 0 3px var(--md-sys-color-primary), 0 0 30px rgb(200 244 60 / 0.6); } }
-@media (prefers-reduced-motion: reduce) { .yl-anim, .yl-ring { animation: none !important; } }
+@keyframes yl-blob { 0%, 100% { transform: translate(0, 0) scale(1); } 50% { transform: translate(40px, -30px) scale(1.15); } }
+@keyframes yl-float { 0%, 100% { transform: translateY(0) rotate(var(--r, 0deg)); } 50% { transform: translateY(-10px) rotate(var(--r, 0deg)); } }
+@keyframes yl-shine { 0% { background-position: 0% 50%; } 100% { background-position: 200% 50%; } }
+@media (prefers-reduced-motion: reduce) { .yl-anim, .yl-ring, .yl-blob, .yl-float, .yl-shine { animation: none !important; } }
 `;
 
 const page = css({
@@ -114,11 +117,11 @@ const heroText = css({
 });
 
 const h1 = css({
-  fontSize: "clamp(36px, 6vw, 60px)",
-  lineHeight: 1.05,
+  fontSize: "clamp(42px, 8vw, 76px)",
+  lineHeight: 1,
   fontWeight: 800,
-  letterSpacing: "-0.03em",
-  "& em": { fontStyle: "normal", color: "var(--md-sys-color-primary)" },
+  letterSpacing: "-0.04em",
+  "& em": { fontStyle: "normal" },
 });
 
 const lead = css({
@@ -144,6 +147,170 @@ const glow = css({
     "radial-gradient(ellipse at center, rgb(200 244 60 / 0.2), transparent 65%)",
   pointerEvents: "none",
   zIndex: 0,
+});
+
+const blobBase = {
+  position: "absolute",
+  borderRadius: "50%",
+  filter: "blur(70px)",
+  pointerEvents: "none",
+  zIndex: 0,
+  animation: "yl-blob 14s ease-in-out infinite",
+} as const;
+
+const blobLime = css({
+  ...blobBase,
+  width: "420px",
+  height: "420px",
+  top: "-120px",
+  left: "-120px",
+  background: "rgb(200 244 60 / 0.28)",
+});
+
+const blobTeal = css({
+  ...blobBase,
+  width: "380px",
+  height: "380px",
+  top: "120px",
+  right: "-140px",
+  background: "rgb(91 212 160 / 0.22)",
+  animationDelay: "-5s",
+});
+
+const blobViolet = css({
+  ...blobBase,
+  width: "320px",
+  height: "320px",
+  bottom: "-100px",
+  left: "35%",
+  background: "rgb(140 120 255 / 0.18)",
+  animationDelay: "-9s",
+});
+
+const heroBg = css({
+  position: "absolute",
+  inset: 0,
+  overflow: "hidden",
+  zIndex: 0,
+  pointerEvents: "none",
+  maskImage: "linear-gradient(to bottom, #000 70%, transparent)",
+});
+
+const hl = css({
+  color: "var(--md-sys-color-primary)",
+  background:
+    "linear-gradient(90deg, var(--md-sys-color-primary), #5bd4a0, var(--md-sys-color-primary))",
+  backgroundSize: "200% 100%",
+  WebkitBackgroundClip: "text",
+  backgroundClip: "text",
+  WebkitTextFillColor: "transparent",
+  animation: "yl-shine 6s linear infinite",
+  textDecoration: "underline",
+  textDecorationColor: "rgb(200 244 60 / 0.4)",
+  textDecorationThickness: "6px",
+  textUnderlineOffset: "6px",
+});
+
+const floatCard = css({
+  position: "absolute",
+  zIndex: 2,
+  padding: "10px 14px",
+  borderRadius: "var(--radius-card)",
+  fontSize: "13px",
+  fontWeight: 600,
+  background: "var(--md-sys-color-surface-container-highest)",
+  border: "1px solid var(--md-sys-color-outline-variant)",
+  boxShadow: "var(--elev-3)",
+  animation: "yl-float 6s ease-in-out infinite",
+  display: "flex",
+  alignItems: "center",
+  gap: "8px",
+  "@media (max-width: 560px)": { display: "none" },
+});
+
+const mockWrap = css({ position: "relative", paddingBlock: "24px" });
+
+const stats = css({
+  display: "grid",
+  gridTemplateColumns: "repeat(3, minmax(0, 1fr))",
+  gap: "16px",
+  "@media (max-width: 560px)": { gridTemplateColumns: "1fr" },
+});
+
+const stat = css({
+  padding: "24px",
+  borderRadius: "var(--radius-card)",
+  background:
+    "linear-gradient(145deg, color-mix(in srgb, var(--md-sys-color-primary) 14%, var(--md-sys-color-surface-container)), var(--md-sys-color-surface-container))",
+  border: "1px solid var(--md-sys-color-outline-variant)",
+  transition: "transform var(--motion-med) var(--ease-emph)",
+  "&:hover": { transform: "translateY(-4px)" },
+  "& strong": {
+    display: "block",
+    fontSize: "40px",
+    fontWeight: 800,
+    letterSpacing: "-0.03em",
+    color: "var(--md-sys-color-primary)",
+  },
+  "& span": { fontSize: "14px", color: "var(--md-sys-color-on-surface-variant)" },
+});
+
+const teaserRow = css({
+  display: "flex",
+  gap: "12px",
+  overflowX: "auto",
+  paddingBlock: "8px",
+  marginTop: "24px",
+  scrollSnapType: "x proximity",
+  scrollbarWidth: "none",
+});
+
+const teaser = css({
+  flex: "0 0 200px",
+  scrollSnapAlign: "start",
+  borderRadius: "var(--radius-card)",
+  overflow: "hidden",
+  background: "var(--md-sys-color-surface-container)",
+  border: "1px solid var(--md-sys-color-outline-variant)",
+  transition: "transform var(--motion-med) var(--ease-emph)",
+  "&:hover": { transform: "translateY(-4px)" },
+  "& div": { height: "72px" },
+  "& p": { padding: "12px 14px", fontWeight: 700, fontSize: "14px" },
+  "& small": {
+    display: "block",
+    padding: "0 14px 14px",
+    color: "var(--md-sys-color-on-surface-variant)",
+    fontSize: "12px",
+  },
+});
+
+const band = css({
+  position: "relative",
+  overflow: "hidden",
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  gap: "20px",
+  textAlign: "center",
+  padding: "64px 24px",
+  borderRadius: "var(--radius-modal)",
+  background:
+    "linear-gradient(135deg, #c8f43c 0%, #7fe3a0 55%, #5bd4a0 100%)",
+  color: "#10130a",
+  "& h2": {
+    fontSize: "clamp(28px, 5vw, 44px)",
+    fontWeight: 800,
+    letterSpacing: "-0.03em",
+    color: "#10130a",
+  },
+  "& p": { color: "#2b3318", maxWidth: "460px", fontSize: "16px" },
+});
+
+const bandBtn = css({
+  ...btnBase,
+  background: "#10130a",
+  color: "#c8f43c",
+  "&:hover": { transform: "translateY(-2px) scale(1.03)" },
 });
 
 const mock = css({
@@ -437,12 +604,17 @@ export function Landing() {
 
         <main>
           <section class={hero}>
+            <div class={heroBg} aria-hidden="true">
+              <div class={`${blobLime} yl-blob`} />
+              <div class={`${blobTeal} yl-blob`} />
+              <div class={`${blobViolet} yl-blob`} />
+            </div>
             <div class={glow} aria-hidden="true" />
             <div class={heroText} style={{ position: "relative", "z-index": 1 }}>
               <Up>
                 <h1 class={h1}>
                   <Trans>
-                    Where your people <em>hang out</em>
+                    Where your people <em class={hl}>hang out</em>
                   </Trans>
                 </h1>
               </Up>
@@ -466,6 +638,28 @@ export function Landing() {
             </div>
 
             <Up delay={0.25}>
+              <div class={mockWrap}>
+              <div
+                class={`${floatCard} yl-float`}
+                aria-hidden="true"
+                style={{ top: "-8px", right: "-10px", "--r": "3deg" }}
+              >
+                <Symbol size={18}>mic</Symbol>
+                <Trans>3 in Lounge</Trans>
+              </div>
+              <div
+                class={`${floatCard} yl-float`}
+                aria-hidden="true"
+                style={{
+                  bottom: "-6px",
+                  left: "-14px",
+                  "--r": "-3deg",
+                  "animation-delay": "-3s",
+                }}
+              >
+                <Symbol size={18}>favorite</Symbol>
+                <Trans>New friend request</Trans>
+              </div>
               <div class={mock} aria-hidden="true">
                 <div class={rail}>
                   <span class={railDot} data-on />
@@ -510,7 +704,37 @@ export function Landing() {
                   </div>
                 </div>
               </div>
+              </div>
             </Up>
+          </section>
+
+          <section class={section}>
+            <div class={stats}>
+              <Up>
+                <div class={stat}>
+                  <strong>0</strong>
+                  <span>
+                    <Trans>dollars, ever. No paywalled basics.</Trans>
+                  </span>
+                </div>
+              </Up>
+              <Up delay={0.08}>
+                <div class={stat}>
+                  <strong>100%</strong>
+                  <span>
+                    <Trans>open source, read every line.</Trans>
+                  </span>
+                </div>
+              </Up>
+              <Up delay={0.16}>
+                <div class={stat}>
+                  <strong>1</strong>
+                  <span>
+                    <Trans>place for chat, calls and files.</Trans>
+                  </span>
+                </div>
+              </Up>
+            </div>
           </section>
 
           <section class={section} aria-labelledby="yl-features">
@@ -541,6 +765,41 @@ export function Landing() {
             </div>
           </section>
 
+          <section class={section} aria-labelledby="yl-discover">
+            <Up>
+              <h2 id="yl-discover" class={h2}>
+                <Trans>Find somewhere new</Trans>
+              </h2>
+              <p class={sub}>
+                <Trans>
+                  Discover lists public servers by topic. A few kinds of places
+                  you will find:
+                </Trans>
+              </p>
+            </Up>
+            <div class={teaserRow}>
+              <For
+                each={[
+                  ["Gaming", "#7aa2ff", "#b07aff"],
+                  ["Music", "#ff9a7a", "#ffd36b"],
+                  ["Art", "#c8f43c", "#5bd4a0"],
+                  ["Coding", "#5bd4a0", "#7aa2ff"],
+                  ["Study", "#ffd36b", "#ff7ab0"],
+                ]}
+              >
+                {([name, a, b]) => (
+                  <div class={teaser}>
+                    <div style={{ background: `linear-gradient(135deg, ${a}, ${b})` }} />
+                    <p>{name}</p>
+                    <small>
+                      <Trans>Public servers</Trans>
+                    </small>
+                  </div>
+                )}
+              </For>
+            </div>
+          </section>
+
           <section class={section} aria-labelledby="yl-open">
             <Up>
               <div class={openSource}>
@@ -560,6 +819,24 @@ export function Landing() {
                   class={btnPrimary}
                 >
                   <Trans>View the source</Trans>
+                </a>
+              </div>
+            </Up>
+          </section>
+
+          <section class={section} aria-labelledby="yl-cta">
+            <Up>
+              <div class={band}>
+                <h2 id="yl-cta">
+                  <Trans>Ready to yap?</Trans>
+                </h2>
+                <p>
+                  <Trans>
+                    Make an account in under a minute and bring your people.
+                  </Trans>
+                </p>
+                <a href="/login/create" class={bandBtn}>
+                  <Trans>Create account</Trans>
                 </a>
               </div>
             </Up>

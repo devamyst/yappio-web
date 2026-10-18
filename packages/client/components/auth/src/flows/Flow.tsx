@@ -24,6 +24,7 @@ export const FlowBase = styled("div", {
     padding: "var(--space-7) var(--space-7)",
     borderRadius: "var(--radius-modal)",
     boxShadow: "var(--elev-3)",
+    borderTop: "3px solid var(--md-sys-color-primary)",
     marginTop: "var(--space-4)",
     marginBottom: "var(--space-4)",
     justifySelf: "center",
@@ -33,6 +34,10 @@ export const FlowBase = styled("div", {
       width: "100%",
     },
 
+    "& .title": {
+      letterSpacing: "-0.02em",
+    },
+
     _phone: {
       flexGrow: 1,
       maxWidth: "none",
@@ -40,6 +45,7 @@ export const FlowBase = styled("div", {
       padding: "var(--space-5) var(--space-4)",
       borderRadius: 0,
       boxShadow: "none",
+      borderTop: "3px solid var(--md-sys-color-primary)",
     },
   },
 });

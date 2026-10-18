@@ -1,4 +1,4 @@
-import { Match, Show, Switch } from "solid-js";
+import { For, Match, Show, Switch, createMemo } from "solid-js";
 
 import { Trans } from "@lingui/solid/macro";
 import { PublicChannelInvite } from "stoat.js";
@@ -9,6 +9,7 @@ import { IS_DEV, useClient } from "@revolt/client";
 import { useInstance } from "@revolt/instance";
 import { useModals } from "@revolt/modal";
 import { useNavigate } from "@revolt/routing";
+import { useState } from "@revolt/state";
 import {
   Button,
   CategoryButton,
@@ -55,6 +56,17 @@ const content = cva({
 
 const Hero = styled("div", {
   base: {
+    position: "relative",
+    overflow: "hidden",
+    width: "100%",
+    maxWidth: "720px",
+    borderRadius: "var(--radius-modal)",
+    border: "1px solid var(--md-sys-color-outline-variant)",
+    boxShadow: "var(--elev-2)",
+    backgroundSize: "200% 200%",
+    animation: "home-drift 16s ease-in-out infinite",
+    "@media (prefers-reduced-motion: reduce)": { animation: "none" },
+    _phone: { padding: "var(--space-6) var(--space-4)" },
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
@@ -62,14 +74,74 @@ const Hero = styled("div", {
     textAlign: "center",
     padding: "var(--space-6) var(--space-8)",
     background:
-      "radial-gradient(ellipse 60% 70% at 50% 40%, rgb(200 244 60 / 0.16) 0%, transparent 70%)",
+      "radial-gradient(ellipse 50% 80% at 15% 20%, rgb(200 244 60 / 0.3) 0%, transparent 70%), radial-gradient(ellipse 50% 80% at 90% 90%, rgb(91 212 160 / 0.26) 0%, transparent 70%), radial-gradient(ellipse 40% 60% at 70% 0%, rgb(140 120 255 / 0.2) 0%, transparent 70%), var(--md-sys-color-surface-container-high)",
+  },
+});
+
+const Shortcuts = styled("div", {
+  base: {
+    width: "100%",
+    maxWidth: "720px",
+    display: "flex",
+    flexDirection: "column",
+    gap: "var(--space-2)",
+  },
+});
+
+const ShortcutRow = styled("div", {
+  base: {
+    display: "flex",
+    gap: "var(--space-2)",
+    overflowX: "auto",
+    paddingBottom: "4px",
+    scrollbarWidth: "none",
+  },
+});
+
+const Chip = styled("button", {
+  base: {
+    display: "inline-flex",
+    alignItems: "center",
+    gap: "var(--space-2)",
+    flexShrink: 0,
+    height: "40px",
+    padding: "0 var(--space-4)",
+    cursor: "pointer",
+    fontSize: "14px",
+    fontWeight: 600,
+    maxWidth: "220px",
+    color: "var(--md-sys-color-on-surface)",
+    background: "var(--md-sys-color-surface-container-high)",
+    border: "1px solid var(--md-sys-color-outline-variant)",
+    borderRadius: "var(--radius-pill)",
+    transition:
+      "transform var(--motion-fast) var(--ease-standard), border-color var(--motion-fast)",
+    "&:hover": {
+      transform: "translateY(-2px)",
+      borderColor: "var(--md-sys-color-primary)",
+    },
+    "& span:last-child": {
+      overflow: "hidden",
+      textOverflow: "ellipsis",
+      whiteSpace: "nowrap",
+    },
+  },
+});
+
+const ShortLabel = styled("span", {
+  base: {
+    fontSize: "12px",
+    fontWeight: 700,
+    letterSpacing: "0.06em",
+    textTransform: "uppercase",
+    color: "var(--md-sys-color-on-surface-variant)",
   },
 });
 
 const Tagline = styled("p", {
   base: {
-    fontSize: "17px",
-    fontWeight: 500,
+    fontSize: "20px",
+    fontWeight: 700,
     color: "var(--md-sys-color-on-surface)",
     opacity: 0.9,
   },
@@ -123,8 +195,9 @@ const CardIcon = styled("div", {
     display: "grid",
     placeItems: "center",
     borderRadius: "var(--radius-control)",
-    color: "var(--md-sys-color-on-primary-container)",
-    background: "var(--md-sys-color-primary-container)",
+    color: "var(--md-sys-color-on-primary)",
+    background: "var(--md-sys-color-primary)",
+    boxShadow: "0 4px 14px rgb(200 244 60 / 0.3)",
   },
 });
 
@@ -140,6 +213,63 @@ const CardText = styled("span", {
   base: {
     fontSize: "13px",
     color: "var(--md-sys-color-on-surface-variant)",
+  },
+});
+
+const Checklist = styled("section", {
+  base: {
+    width: "100%",
+    maxWidth: "720px",
+    display: "flex",
+    flexDirection: "column",
+    gap: "var(--space-2)",
+    padding: "var(--space-4)",
+    borderRadius: "var(--radius-card)",
+    background: "var(--md-sys-color-surface-container-high)",
+    border: "1px solid var(--md-sys-color-outline-variant)",
+  },
+});
+
+const CheckItem = styled("button", {
+  base: {
+    display: "flex",
+    alignItems: "center",
+    gap: "var(--space-3)",
+    minHeight: "44px",
+    padding: "0 var(--space-3)",
+    textAlign: "left",
+    cursor: "pointer",
+    fontSize: "14px",
+    fontWeight: 600,
+    color: "var(--md-sys-color-on-surface)",
+    borderRadius: "var(--radius-control)",
+    transition: "background var(--motion-fast) var(--ease-standard)",
+
+    "&:hover": {
+      background: "var(--md-sys-color-surface-container-highest)",
+    },
+  },
+});
+
+const CheckDot = styled("span", {
+  base: {
+    width: "22px",
+    height: "22px",
+    flexShrink: 0,
+    display: "grid",
+    placeItems: "center",
+    borderRadius: "50%",
+    border: "2px solid var(--md-sys-color-outline)",
+    color: "var(--md-sys-color-on-primary)",
+  },
+  variants: {
+    done: {
+      true: {
+        background: "var(--md-sys-color-primary)",
+        borderColor: "var(--md-sys-color-primary)",
+      },
+      false: {},
+    },
   },
 });
 
@@ -159,12 +289,44 @@ export function HomePage() {
   const client = useClient();
   const instance = useInstance();
 
+  const steps = createMemo(() => [
+    {
+      label: <Trans>Add a friend</Trans>,
+      done: client()!.users
+        .toList()
+        .some((user) => user.relationship === "Friend"),
+      run: () => openModal({ type: "add_friend", client: client()! }),
+    },
+    {
+      label: <Trans>Join a server</Trans>,
+      done: client()!.servers.size > 0,
+      run: () =>
+        openModal({ type: "create_or_join_server", client: client()! }),
+    },
+    {
+      label: <Trans>Set an avatar</Trans>,
+      done: !!client()!.user?.avatar,
+      run: () => openModal({ type: "settings", config: "user" }),
+    },
+  ]);
+  const allDone = () => steps().every((step) => step.done);
+
+  const state = useState();
+  const recentServers = () =>
+    state.ordering.orderedServers(client()!).slice(0, 6);
+  const recentChats = () =>
+    state.ordering
+      .orderedConversations(client()!)
+      .filter((c) => c.type === "DirectMessage" || c.type === "Group")
+      .slice(0, 6);
+
   const showLoungeButton = instance.isStoat;
   const isInLounge =
     client()!.servers.get("01F7ZSBSFHQ8TA81725KQCSDDP") !== undefined;
 
   return (
     <Base>
+      <style>{`@keyframes home-drift{0%,100%{background-position:0% 0%}50%{background-position:100% 100%}}`}</style>
       <Header placement="primary">
         <HeaderIcon>
           <MdHome {...iconSize(22)} />
@@ -232,7 +394,79 @@ export function HomePage() {
             </CardText>
           </ActionCard>
         </Cards>
+        <Show when={recentChats().length || recentServers().length}>
+          <Shortcuts>
+            <Show when={recentChats().length}>
+              <ShortLabel>
+                <Trans>Jump back in</Trans>
+              </ShortLabel>
+              <ShortcutRow>
+                <For each={recentChats()}>
+                  {(channel) => (
+                    <Chip type="button" onClick={() => navigate(channel.path)}>
+                      <Symbol size={18}>
+                        {channel.type === "Group" ? "group" : "alternate_email"}
+                      </Symbol>
+                      <span>{channel.displayName ?? channel.name}</span>
+                    </Chip>
+                  )}
+                </For>
+              </ShortcutRow>
+            </Show>
+            <Show when={recentServers().length}>
+              <ShortLabel>
+                <Trans>Your servers</Trans>
+              </ShortLabel>
+              <ShortcutRow>
+                <For each={recentServers()}>
+                  {(server) => (
+                    <Chip type="button" onClick={() => navigate(server.path)}>
+                      <Symbol size={18}>dns</Symbol>
+                      <span>{server.name}</span>
+                    </Chip>
+                  )}
+                </For>
+              </ShortcutRow>
+            </Show>
+          </Shortcuts>
+        </Show>
+        <Show when={!allDone()}>
+          <Checklist aria-label="Getting started">
+            <CardTitle>
+              <Trans>Getting started</Trans>
+            </CardTitle>
+            <For each={steps()}>
+              {(step) => (
+                <CheckItem type="button" onClick={step.run}>
+                  <CheckDot done={step.done}>
+                    <Show when={step.done}>
+                      <Symbol size={14}>check</Symbol>
+                    </Show>
+                  </CheckDot>
+                  <span
+                    class={css({ flexGrow: 1 })}
+                    style={{
+                      "text-decoration": step.done ? "line-through" : "none",
+                      opacity: step.done ? 0.6 : 1,
+                    }}
+                  >
+                    {step.label}
+                  </span>
+                </CheckItem>
+              )}
+            </For>
+          </Checklist>
+        </Show>
         <Extras>
+          <CategoryButton
+            onClick={() => navigate("/discover")}
+            description={
+              <Trans>Browse public servers by topic and find a new home.</Trans>
+            }
+            icon={<Symbol size={24}>explore</Symbol>}
+          >
+            <Trans>Discover servers</Trans>
+          </CategoryButton>
           <Switch fallback={null}>
             <Match when={showLoungeButton && isInLounge}>
               <CategoryButton

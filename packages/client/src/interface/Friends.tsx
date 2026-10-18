@@ -126,6 +126,13 @@ export function Friends() {
               <Show when={tab.id === "pending" && lists().incoming.length}>
                 <TabBadge>{pending()}</TabBadge>
               </Show>
+              <Show when={tab.id === "online" || tab.id === "all"}>
+                <TabCount>
+                  {tab.id === "online"
+                    ? lists().online.length
+                    : lists().friends.length}
+                </TabCount>
+              </Show>
             </Tab>
           ))}
         </Tabs>
@@ -225,7 +232,7 @@ const Tab = styled("button", {
     fontSize: "14px",
     fontWeight: 500,
     color: "var(--md-sys-color-on-surface-variant)",
-    borderRadius: "var(--radius-control)",
+    borderRadius: "var(--radius-pill)",
     transition:
       "background var(--motion-fast) var(--ease-standard), color var(--motion-fast)",
 
@@ -243,7 +250,8 @@ const Tab = styled("button", {
       true: {
         fontWeight: 600,
         color: "var(--md-sys-color-on-surface)",
-        background: "var(--md-sys-color-surface-container-highest)",
+        background:
+          "color-mix(in srgb, var(--md-sys-color-primary) 22%, var(--md-sys-color-surface-container-high))",
       },
       false: {},
     },
@@ -264,6 +272,14 @@ const TabBadge = styled("span", {
   },
 });
 
+const TabCount = styled("span", {
+  base: {
+    fontSize: "12px",
+    fontWeight: 600,
+    opacity: 0.7,
+  },
+});
+
 const AddButton = styled("button", {
   base: {
     height: "32px",
@@ -274,7 +290,7 @@ const AddButton = styled("button", {
     fontWeight: 600,
     color: "var(--md-sys-color-on-primary)",
     background: "var(--md-sys-color-primary)",
-    borderRadius: "var(--radius-control)",
+    borderRadius: "var(--radius-pill)",
     transition: "filter var(--motion-fast) var(--ease-standard)",
 
     "&:hover": {

@@ -1,5 +1,6 @@
 import { JSX } from "solid-js";
 
+import { Trans } from "@lingui/solid/macro";
 import { css } from "styled-system/css";
 import { styled } from "styled-system/jsx";
 
@@ -97,6 +98,20 @@ export function AuthPage(props: { children: JSX.Element }) {
       >
         <Nav>
           <Wordmark class={brandMark} />
+          <a
+            href="/"
+            class={css({
+              marginInlineStart: "auto",
+              marginInlineEnd: "var(--space-3)",
+              fontSize: "14px",
+              fontWeight: 600,
+              textDecoration: "none",
+              color: "var(--md-sys-color-on-surface-variant)",
+              "&:hover": { color: "var(--md-sys-color-primary)" },
+            })}
+          >
+            <Trans>Back to home</Trans>
+          </a>
           <IconButton
             variant="tonal"
             onPress={() =>
