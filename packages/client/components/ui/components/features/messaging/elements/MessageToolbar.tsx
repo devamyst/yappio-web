@@ -132,8 +132,8 @@ const Base = styled("div", {
     padding: "3px",
 
     display: "none",
-    borderRadius: "var(--radius-control)",
-    boxShadow: "var(--elev-2)",
+    borderRadius: "var(--radius-xs)",
+    boxShadow: "var(--elev-1)",
     border: "var(--hairline)",
 
     fill: "var(--md-sys-color-on-surface-variant)",
@@ -154,9 +154,8 @@ const tool = cva({
     placeItems: "center",
     transition: "var(--transitions-fast) all",
     _hover: {
-      fill: "var(--md-sys-color-primary)",
-      background:
-        "color-mix(in srgb, var(--md-sys-color-primary) 16%, transparent)",
+      fill: "var(--md-sys-color-on-surface)",
+      background: "var(--md-sys-color-surface-container-highest)",
     },
     _focusVisible: {
       outline: "2px solid var(--md-sys-color-primary)",

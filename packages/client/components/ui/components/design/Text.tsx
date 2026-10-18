@@ -32,6 +32,7 @@ export const typography = cva({
       _messages: {
         fontWeight: 400,
         fontSize: "var(--message-size)",
+        lineHeight: 1.5,
       },
 
       _status: {

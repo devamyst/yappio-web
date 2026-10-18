@@ -148,7 +148,7 @@ const base = cva({
     flexShrink: 0,
 
     fontWeight: 500,
-    fontSize: "15px",
+    fontSize: "16px",
     userSelect: "none",
     cursor: "pointer",
 
@@ -159,9 +159,14 @@ const base = cva({
     alignItems: "center",
     margin: "0 var(--gap-md)",
     padding: "0 var(--gap-md)",
-    borderRadius: "var(--radius-control)",
+    borderRadius: "4px",
 
     color: "var(--color)",
+
+    "&:hover": {
+      background: "var(--md-sys-color-surface-container-high)",
+      "--color": "var(--md-sys-color-on-surface)",
+    },
     fill: "var(--color)",
 
     "& > svg": {
@@ -176,11 +181,11 @@ const base = cva({
   variants: {
     size: {
       normal: {
-        height: "42px",
+        height: "44px",
         gap: "var(--gap-md)",
       },
       thin: {
-        height: "32px",
+        height: "34px",
         gap: "var(--gap-sm)",
 
         // implicitly align center since we won't stack anything
@@ -189,11 +194,11 @@ const base = cva({
     },
     attention: {
       normal: {
-        "--color": "var(--md-sys-color-outline)",
+        "--color": "var(--md-sys-color-on-surface-variant)",
         background: "transparent",
       },
       muted: {
-        "--color": "var(--md-sys-color-outline-variant)",
+        "--color": "var(--md-sys-color-outline)",
         background: "transparent",
 
         "& img": {
@@ -253,10 +258,11 @@ const AlertPill = styled("span", {
     fontWeight: 800,
     lineHeight: 1,
     borderRadius: "var(--radius-pill)",
-    color: "var(--md-sys-color-on-primary)",
-    background: "var(--md-sys-color-primary)",
+    color: "#ffffff",
+    background: "#da373c",
 
     "&[data-dot]": {
+      background: "#ffffff",
       minWidth: "8px",
       width: "8px",
       height: "8px",

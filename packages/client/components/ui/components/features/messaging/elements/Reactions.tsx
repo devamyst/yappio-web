@@ -224,18 +224,13 @@ const ReactionBase = styled("div", {
     minHeight: "28px",
     padding: "2px 10px",
     fontSize: "0.875rem",
-    borderRadius: "var(--radius-pill)",
-    border: "1px solid var(--md-sys-color-outline-variant)",
+    borderRadius: "var(--radius-control)",
+    border: "1px solid transparent",
 
     transition: "var(--transitions-fast) all",
     fontWeight: 600,
     _hover: {
-      transform: "translateY(-1px)",
-      borderColor: "var(--md-sys-color-primary)",
-      boxShadow: "var(--elev-1)",
-    },
-    "@media (prefers-reduced-motion: reduce)": {
-      _hover: { transform: "none" },
+      borderColor: "var(--md-sys-color-outline)",
     },
     fontFeatureSettings: "'tnum' 1",
 
@@ -249,9 +244,8 @@ const ReactionBase = styled("div", {
     active: {
       true: {
         color: "var(--md-sys-color-on-surface)",
-        background:
-          "color-mix(in srgb, var(--md-sys-color-primary) 18%, transparent)",
-        borderColor: "var(--md-sys-color-primary)",
+        background: "rgb(88 101 242 / 0.15)",
+        borderColor: "#5865f2",
       },
       false: {
         color: "var(--md-sys-color-on-surface)",

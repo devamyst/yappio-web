@@ -168,8 +168,9 @@ const button = cva({
     alignItems: "center",
     justifyContent: "center",
 
-    fontWeight: 500,
+    fontWeight: 600,
     fontFamily: "inherit",
+    borderRadius: "3px !important",
 
     cursor: "pointer",
     border: "none",
@@ -196,8 +197,11 @@ const button = cva({
         },
       },
       tonal: {
-        background: "var(--md-sys-color-surface-container-highest)",
-        "--color": "var(--md-sys-color-on-surface)",
+        background: "var(--md-sys-color-secondary-container)",
+        "--color": "var(--md-sys-color-on-secondary-container)",
+        "&:hover:not([disabled])": {
+          background: "var(--md-sys-color-surface-container-highest)",
+        },
       },
       outlined: {
         border: "1px solid var(--md-sys-color-outline-variant)",
@@ -302,8 +306,8 @@ const button = cva({
         _phone: { minHeight: "44px" },
       },
       md: {
-        height: "56px",
-        "--padding-inline": "24px",
+        height: "38px",
+        "--padding-inline": "20px",
       },
       lg: {
         height: "96px",

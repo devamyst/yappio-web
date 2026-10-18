@@ -21,11 +21,11 @@ const Base = styled("div", {
   base: {
     display: "flex",
     flexDirection: "column",
-    padding: "6px",
+    padding: "8px",
     overflow: "hidden",
     minWidth: "200px",
-    borderRadius: "12px",
-    background: "var(--md-sys-color-surface-container-lowest)",
+    borderRadius: "4px",
+    background: "var(--yappio-popover-bg, #111214)",
     border: "var(--hairline)",
     animation: "popIn var(--motion-fast) var(--ease-standard)",
     color: "var(--md-sys-color-on-surface)",
@@ -49,8 +49,8 @@ export function ContextMenu(props: ComponentProps<typeof Base>) {
 export const ContextMenuDivider = styled("div", {
   base: {
     height: "1px",
-    margin: "4px 6px",
-    background: "color-mix(in srgb, var(--md-sys-color-outline-variant) 70%, transparent)",
+    margin: "4px",
+    background: "var(--md-sys-color-outline-variant)",
   },
 });
 
@@ -60,13 +60,14 @@ export const ContextMenuItem = styled("a", {
     gap: "var(--gap-md)",
     alignItems: "center",
     minHeight: "32px",
-    padding: "6px 10px",
-    borderRadius: "var(--radius-control)",
+    padding: "6px 8px",
+    borderRadius: "2px",
     transition: "background var(--motion-fast) var(--ease-standard)",
 
     "&:hover": {
-      background:
-        "color-mix(in srgb, var(--md-sys-color-primary) 16%, transparent)",
+      background: "#5865f2",
+      color: "#ffffff",
+      fill: "#ffffff",
     },
 
     "& span": {
@@ -82,8 +83,9 @@ export const ContextMenuItem = styled("a", {
   variants: {
     selected: {
       true: {
-        background:
-          "color-mix(in srgb, var(--md-sys-color-primary) 16%, transparent)",
+        background: "#5865f2",
+        color: "#ffffff",
+        fill: "#ffffff",
       },
       false: {},
     },
@@ -112,8 +114,9 @@ export const ContextMenuItem = styled("a", {
         fill: "var(--md-sys-color-error)",
         color: "var(--md-sys-color-error)",
         "&:hover": {
-          background:
-            "color-mix(in srgb, var(--md-sys-color-error) 16%, transparent)",
+          background: "#da373c",
+          color: "#ffffff",
+          fill: "#ffffff",
         },
       },
     },

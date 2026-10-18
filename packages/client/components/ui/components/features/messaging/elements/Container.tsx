@@ -130,7 +130,7 @@ const base = cva({
     display: "flex",
     flexDirection: "column",
 
-    padding: "2px 0",
+    padding: "4px 0",
     background: "transparent",
     borderRadius: "0",
     minHeight: "1em",
@@ -188,7 +188,7 @@ const base = cva({
 
         "&:hover": {
           background:
-            "color-mix(in srgb, var(--md-sys-color-on-surface) 4%, transparent)",
+            "rgb(4 4 5 / 0.05)",
         },
       },
       hide: {},

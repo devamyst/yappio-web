@@ -51,6 +51,9 @@ export function LoadTheme() {
       "--yappio-wordmark-filter": activeTheme.darkMode
         ? "brightness(0) invert(1)"
         : "brightness(0) opacity(0.88)",
+      "--yappio-input-bg": activeTheme.darkMode ? "#383a40" : "#ebedef",
+      "--yappio-popover-bg": activeTheme.darkMode ? "#111214" : "#ffffff",
+      "--yappio-scrollbar-thumb": activeTheme.darkMode ? "#1a1b1e" : "#c1c3c7",
       // mount --mdui-color triplet variables
       ...createMduiColourTriplets(activeTheme, "--mdui-color-"),
     };

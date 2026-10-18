@@ -103,7 +103,7 @@ const Base = styled("div", {
     borderStartRadius: "var(--radius-card)",
 
     display: "flex",
-    background: "var(--md-sys-color-surface-container-high)",
+    background: "var(--yappio-input-bg, #383a40)",
     color: "var(--md-sys-color-on-surface)",
   },
   variants: {
