@@ -159,10 +159,10 @@ const iconButton2 = cva({
     },
     _compositionSendMessage: {
       true: {
-        width: "48px",
+        width: "44px",
         aspectRatio: "unset",
         height: "100% !important",
-        borderEndRadius: "var(--borderRadius-xl)",
+        borderRadius: "0",
       },
     },
   },
@@ -191,11 +191,9 @@ const iconButton2 = cva({
       variant: "standard",
       disabled: true,
       css: {
-        // todo: check these are correct
-        "--color":
-          "color-mix(in srgb, 38% var(--md-sys-color-on-surface), transparent)",
-        background:
-          "color-mix(in srgb, 10% var(--md-sys-color-on-surface), transparent)",
+        "--colour":
+          "color-mix(in srgb, var(--md-sys-color-on-surface) 38%, transparent)",
+        background: "transparent",
       },
     },
 
