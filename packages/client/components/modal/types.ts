@@ -31,6 +31,19 @@ import type { ChangelogResponse } from "./modals/Changelog";
 
 export type Modals =
   | {
+      type: "admin_confirm";
+      title: string;
+      description?: string;
+      actionLabel: string;
+      targetName: string;
+      targetId: string;
+      typeToConfirm?: boolean;
+      destructive?: boolean;
+      askDays?: boolean;
+      run: (reason: string, days: number | null) => Promise<unknown>;
+      onDone?: () => void;
+    }
+  | {
       type: "publish_listing";
       server?: Server;
       listing?: Listing;
