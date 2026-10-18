@@ -23,7 +23,7 @@ export function ConversationStart(props: Props) {
         <Text class="headline" size="large">
           <Show
             when={props.channel.type === "TextChannel"}
-            fallback={props.channel.name ?? props.channel.recipient?.username}
+            fallback={props.channel.name ?? props.channel.recipient?.displayName}
           >
             <Trans>Welcome to #{props.channel.name}</Trans>
           </Show>

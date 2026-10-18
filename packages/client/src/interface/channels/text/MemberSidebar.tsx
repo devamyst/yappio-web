@@ -354,7 +354,7 @@ function Member(props: {
   return (
     <div
       style={{
-        opacity: (props.user ?? props.member?.user)?.online ? 1 : 0.5,
+        opacity: (props.user ?? props.member?.user)?.online ? 1 : 0.7,
       }}
       use:floating={floatingUserMenus(
         (props.user ?? props.member?.user)!,
