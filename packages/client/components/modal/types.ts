@@ -186,6 +186,10 @@ export type Modals =
       client: Client;
     }
   | {
+      type: "block_user";
+      user: User;
+    }
+  | {
       type: "kick_member";
       member: ServerMember;
     }

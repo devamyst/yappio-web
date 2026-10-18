@@ -43,7 +43,7 @@ export function UserPanel() {
     <Panel>
       <Identity ref={setAnchor} type="button" aria-label={t`Set status`}>
         <Avatar
-          size={36}
+          size={32}
           src={user()?.animatedAvatarURL}
           fallback={user()?.username}
           holepunch="bottom-right"
@@ -64,8 +64,8 @@ export function UserPanel() {
           title={voice.microphone() ? t`Mute` : t`Unmute`}
           onClick={() => voice.toggleMute()}
         >
-          <Show when={voice.microphone()} fallback={<Symbol size={22}>mic_off</Symbol>}>
-            <Symbol size={22}>mic</Symbol>
+          <Show when={voice.microphone()} fallback={<Symbol size={20}>mic_off</Symbol>}>
+            <Symbol size={20}>mic</Symbol>
           </Show>
         </PanelButton>
         <PanelButton
@@ -78,9 +78,9 @@ export function UserPanel() {
         >
           <Show
             when={voice.deafen() || !voice.listenPermission}
-            fallback={<Symbol size={22}>headset</Symbol>}
+            fallback={<Symbol size={20}>headset</Symbol>}
           >
-            <Symbol size={22}>headset_off</Symbol>
+            <Symbol size={20}>headset_off</Symbol>
           </Show>
         </PanelButton>
         <PanelButton
@@ -89,7 +89,7 @@ export function UserPanel() {
           title={t`Settings`}
           onClick={() => openModal({ type: "settings", config: "user" })}
         >
-          <Symbol size={22}>settings</Symbol>
+          <Symbol size={20}>settings</Symbol>
         </PanelButton>
       </Actions>
     </Panel>
@@ -102,8 +102,8 @@ const Panel = styled("div", {
     flexShrink: 0,
     display: "flex",
     alignItems: "center",
-    gap: "var(--space-1)",
-    padding: "0 var(--space-2)",
+    gap: "2px",
+    padding: "0 var(--space-1)",
     color: "var(--md-sys-color-on-surface)",
     background: "var(--md-sys-color-surface-container-lowest)",
   },
@@ -116,8 +116,8 @@ const Identity = styled("button", {
     height: "40px",
     display: "flex",
     alignItems: "center",
-    gap: "var(--space-2)",
-    padding: "0 var(--space-1)",
+    gap: "var(--space-1)",
+    padding: "0 4px",
     textAlign: "left",
     cursor: "pointer",
     color: "inherit",
@@ -163,14 +163,14 @@ const Actions = styled("div", {
   base: {
     display: "flex",
     flexShrink: 0,
-    gap: "2px",
+    gap: 0,
   },
 });
 
 const PanelButton = styled("button", {
   base: {
-    width: "36px",
-    height: "36px",
+    width: "30px",
+    height: "34px",
     display: "grid",
     placeItems: "center",
     cursor: "pointer",

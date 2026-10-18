@@ -370,7 +370,7 @@ function Member(props: {
       <MenuButton
         size="normal"
         attention={
-          (props.user ?? props.member?.user)?.online ? "active" : "muted"
+          (props.user ?? props.member?.user)?.online ? "active" : "normal"
         }
         icon={
           <Avatar
@@ -392,7 +392,7 @@ function Member(props: {
               colour={
                 (props.user ?? props.member?.user)?.online
                   ? user().colour!
-                  : undefined
+                  : "var(--md-sys-color-on-surface-variant)"
               }
             />
           </OverflowingText>

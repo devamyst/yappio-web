@@ -167,7 +167,7 @@ export function UserContextMenu(props: {
    * Block user
    */
   function blockUser() {
-    props.user.blockUser();
+    openModal({ type: "block_user", user: props.user });
   }
 
   /**

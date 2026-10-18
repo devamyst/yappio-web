@@ -39,6 +39,7 @@ import { Error2Modal } from "./modals/Error2";
 import { ImageViewerModal } from "./modals/ImageViewer";
 import { InviteModal } from "./modals/Invite";
 import { JoinServerModal } from "./modals/JoinServer";
+import { BlockUserModal } from "./modals/BlockUser";
 import { KickMemberModal } from "./modals/KickMember";
 import { LeaveServerModal } from "./modals/LeaveServer";
 import { LinkWarningModal } from "./modals/LinkWarning";
@@ -152,6 +153,8 @@ export function RenderModal(props: ActiveModal & { onClose: () => void }) {
       return <InviteModal {...modalProps} />;
     case "join_server":
       return <JoinServerModal {...modalProps} />;
+    case "block_user":
+      return <BlockUserModal {...modalProps} />;
     case "kick_member":
       return <KickMemberModal {...modalProps} />;
     case "leave_server":
