@@ -49,11 +49,14 @@ export function UserCard(
   }
 
   onMount(() => {
-    if (isMobile) openFull();
+    if (isMobile && !window.matchMedia("(max-width: 600px)").matches)
+      openFull();
   });
 
   return (
-    <Show when={!isMobile}>
+    <Show
+      when={!isMobile || window.matchMedia("(max-width: 600px)").matches}
+    >
       <div
         use:invisibleScrollable={{ class: base() }}
         on:pointerdown={(e) => {

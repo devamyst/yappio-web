@@ -354,7 +354,10 @@ function Member(props: {
   return (
     <div
       style={{
-        opacity: (props.user ?? props.member?.user)?.online ? 1 : 0.7,
+        opacity: (props.user ?? props.member?.user)?.online ? 1 : 0.8,
+        color: (props.user ?? props.member?.user)?.online
+          ? undefined
+          : "var(--md-sys-color-on-surface-variant)",
       }}
       use:floating={floatingUserMenus(
         (props.user ?? props.member?.user)!,
@@ -384,7 +387,14 @@ function Member(props: {
       >
         <NameStatusStack>
           <OverflowingText>
-            <Username username={user().username} colour={user().colour!} />
+            <Username
+              username={user().username}
+              colour={
+                (props.user ?? props.member?.user)?.online
+                  ? user().colour!
+                  : undefined
+              }
+            />
           </OverflowingText>
           <Show when={status()}>
             <Tooltip

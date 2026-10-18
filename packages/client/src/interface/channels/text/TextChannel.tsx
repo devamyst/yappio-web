@@ -257,10 +257,9 @@ export function TextChannel(props: ChannelPageProps) {
             use:scrollable={{
               direction: "y",
               showOnHover: true,
-              class: sidebar(),
-            }}
-            style={{
-              width: sidebarState().state !== "default" ? "360px" : "",
+              class: sidebar({
+                wide: sidebarState().state !== "default",
+              }),
             }}
           >
             <Switch
@@ -325,6 +324,7 @@ const Content = styled("div", {
     flexGrow: 1,
     minWidth: 0,
     minHeight: 0,
+    position: "relative",
   },
 });
 
@@ -339,6 +339,22 @@ const sidebar = cva({
     borderRadius: "var(--borderRadius-lg)",
     // color: "var(--colours-sidebar-channels-foreground)",
     // background: "var(--colours-sidebar-channels-background)",
+    "@media (max-width: 768px)": {
+      position: "absolute",
+      top: 0,
+      right: 0,
+      bottom: 0,
+      zIndex: 5,
+      maxWidth: "88vw",
+      background: "var(--md-sys-color-surface-container-low)",
+      boxShadow: "var(--elev-3)",
+    },
+  },
+  variants: {
+    wide: {
+      true: { width: "360px" },
+      false: {},
+    },
   },
 });
 
@@ -349,6 +365,7 @@ const WideSidebarContainer = styled("div", {
   base: {
     paddingRight: "var(--gap-md)",
     width: "360px",
+    maxWidth: "88vw",
   },
 });
 

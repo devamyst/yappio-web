@@ -177,7 +177,8 @@ function Floating(props: FloatingElement & { mouseX: number; mouseY: number }) {
   onMount(() => phoneQuery.addEventListener("change", onPhoneChange));
   onCleanup(() => phoneQuery.removeEventListener("change", onPhoneChange));
 
-  const asSheet = () => isPhone() && !!props.show()?.contextMenu;
+  const asSheet = () =>
+    isPhone() && (!!props.show()?.contextMenu || !!props.show()?.userCard);
 
   return (
     <Motion
@@ -217,12 +218,27 @@ function Floating(props: FloatingElement & { mouseX: number; mouseY: number }) {
             </TooltipBase>
           </Match>
           <Match when={props.show()?.userCard}>
-            <UserCard
-              user={props.show()!.userCard!.user}
-              member={props.show()!.userCard!.member}
-              bot={props.show()!.userCard!.bot}
-              onClose={props.hide}
-            />
+            <Show
+              when={asSheet()}
+              fallback={
+                <UserCard
+                  user={props.show()!.userCard!.user}
+                  member={props.show()!.userCard!.member}
+                  bot={props.show()!.userCard!.bot}
+                  onClose={props.hide}
+                />
+              }
+            >
+              <Sheet tall>
+                <SheetHandle />
+                <UserCard
+                  user={props.show()!.userCard!.user}
+                  member={props.show()!.userCard!.member}
+                  bot={props.show()!.userCard!.bot}
+                  onClose={props.hide}
+                />
+              </Sheet>
+            </Show>
           </Match>
           <Match when={props.show()?.contextMenu}>
             <Show
@@ -254,6 +270,14 @@ const SheetScrim = styled("div", {
 });
 
 const Sheet = styled("div", {
+  variants: {
+    tall: {
+      true: {
+        maxHeight: "85vh",
+        "& > :not(:first-child)": { maxHeight: "none", overflow: "visible" },
+      },
+    },
+  },
   base: {
     maxHeight: "70vh",
     overflowY: "auto",

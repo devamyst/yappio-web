@@ -6,8 +6,8 @@ import { type Message } from "stoat.js";
 import { cva } from "styled-system/css";
 import { styled } from "styled-system/jsx";
 
+import { useClient } from "@revolt/client";
 import { floatingUserMenusFromMessage } from "@revolt/app/menus/UserContextMenu";
-import { renderSimpleMarkdown } from "@revolt/markdown";
 import { Avatar, typography } from "@revolt/ui/components/design";
 import { NonBreakingText } from "@revolt/ui/components/utils";
 
@@ -106,12 +106,29 @@ const Link = styled("a", {
  * Message being replied to
  */
 export function MessageReply(props: Props) {
+  const client = useClient();
   const renderReplyContent = (content: string) => {
-    if (content.length > 128) {
-      content = content.slice(0, 128) + "...";
+    let text = content
+      .replace(/<@([0-9A-Z]{26})>/g, (_, id: string) => {
+        const user = client().users.get(id);
+        return "@" + (user?.displayName ?? user?.username ?? "user");
+      })
+      .replace(/<%[0-9A-Z]{26}>/g, "@role")
+      .replace(/:[0-9A-Z]{26}:/g, ":emoji:")
+      .replace(/```[^\n]*\n?([\s\S]*?)```/g, "$1")
+      .replace(/!?\[([^\]]*)\]\([^)]*\)/g, "$1")
+      .replace(/^\s{0,3}(#{1,6}|>+|[-*+]|\d+\.)\s+/gm, "")
+      .replace(/(\*\*|__|~~|\|\|)(.+?)\1/g, "$2")
+      .replace(/(\*|_)(.+?)\1/g, "$2")
+      .replace(/`([^`]*)`/g, "$1")
+      .replace(/\s+/g, " ")
+      .trim();
+
+    if (text.length > 128) {
+      text = text.slice(0, 128) + "…";
     }
 
-    return renderSimpleMarkdown(content.replace(/\n/g, " "));
+    return text;
   };
 
   return (
