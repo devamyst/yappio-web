@@ -20,7 +20,6 @@ const Base = styled("div", {
     placeItems: "center",
 
     "& span": {
-      padding: "0.6em",
       fontWeight: 600,
       userSelect: "none",
       boxShadow: "0 0 8px #00000044",
