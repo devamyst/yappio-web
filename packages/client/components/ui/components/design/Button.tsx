@@ -294,10 +294,12 @@ const button = cva({
       xs: {
         height: "32px",
         "--padding-inline": "12px",
+        _phone: { minHeight: "44px" },
       },
       sm: {
         height: "38px",
         "--padding-inline": "16px",
+        _phone: { minHeight: "44px" },
       },
       md: {
         height: "56px",

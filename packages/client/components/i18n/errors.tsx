@@ -93,6 +93,8 @@ export function useError() {
           return t`Failed to process the image you provided.`;
         case "InternalError":
           return t`An internal error occurred. (${err.location})`;
+        case "IncorrectData":
+          return t`Something in the form is not right. Check what you entered and try again.`;
         case "InvalidCredentials":
           return t`Provided email or password is wrong.`;
         case "InvalidSession":
