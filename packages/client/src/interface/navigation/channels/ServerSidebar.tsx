@@ -195,7 +195,10 @@ export const ServerSidebar = (props: Props) => {
       use:floating={props.menuGenerator(props.server)}
     >
       <ServerHeader banner={!!props.server.banner}>
-        <Show when={props.server.banner}>
+        <Show
+          when={props.server.banner}
+          fallback={<Banner data-fallback="" />}
+        >
           <Banner
             style={{ "background-image": `url('${props.server.bannerURL}')` }}
           />
@@ -361,6 +364,12 @@ const Banner = styled("div", {
       position: "absolute",
       inset: 0,
       background: "rgb(0 0 0 / 0.35)",
+    },
+    "&[data-fallback]": {
+      opacity: 1,
+      backgroundImage:
+        "linear-gradient(135deg, color-mix(in srgb, var(--md-sys-color-primary) 18%, var(--md-sys-color-surface-container-low)), var(--md-sys-color-surface-container-low) 70%)",
+      "&:after": { display: "none" },
     },
   },
 });

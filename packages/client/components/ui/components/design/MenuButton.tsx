@@ -7,7 +7,6 @@ import { styled } from "styled-system/jsx";
 import { useState } from "@revolt/state";
 import { SlideState } from "../navigation/SlideDrawer";
 import { Ripple } from "./Ripple";
-import { Unreads } from "./Unreads";
 
 export type Props = {
   /**
@@ -85,13 +84,16 @@ export function MenuButton(
       {local.icon}
       <Content>{local.children}</Content>
       <Show when={local.alert}>
-        <span class="hover-hide">
-          <Unreads
-            count={typeof local.alert === "number" ? local.alert : 0}
-            size={typeof local.alert === "number" ? "0.85rem" : "0.4rem"}
-            unread
-          />
-        </span>
+        <AlertPill
+          class="hover-hide"
+          data-dot={typeof local.alert === "number" ? undefined : ""}
+        >
+          {typeof local.alert === "number" && local.alert > 0
+            ? local.alert > 99
+              ? "99+"
+              : local.alert
+            : ""}
+        </AlertPill>
       </Show>
       {local.actions && (
         <Actions class="hover-show" onClick={(e) => e.stopPropagation()}>
@@ -235,5 +237,30 @@ const Actions = styled("div", {
     alignItems: "center",
     flexDirection: "row",
     gap: "var(--gap-sm)",
+  },
+});
+
+const AlertPill = styled("span", {
+  base: {
+    minWidth: "18px",
+    height: "18px",
+    padding: "0 6px",
+    flexShrink: 0,
+    display: "inline-flex",
+    alignItems: "center",
+    justifyContent: "center",
+    fontSize: "11px",
+    fontWeight: 800,
+    lineHeight: 1,
+    borderRadius: "var(--radius-pill)",
+    color: "var(--md-sys-color-on-primary)",
+    background: "var(--md-sys-color-primary)",
+
+    "&[data-dot]": {
+      minWidth: "8px",
+      width: "8px",
+      height: "8px",
+      padding: 0,
+    },
   },
 });

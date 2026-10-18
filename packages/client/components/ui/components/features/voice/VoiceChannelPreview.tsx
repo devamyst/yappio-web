@@ -151,6 +151,9 @@ function CommonUser(props: {
       <Ripple />
       <Avatar size={24} src={user().avatar} fallback={user().username} />{" "}
       <PreviewUsername>{user().username}</PreviewUsername>
+      <Show when={rest.speaking}>
+        <SpeakingDot />
+      </Show>
       <Row gap="sm">
         <VoiceStatefulUserIcons {...iconProps} userId={rest.userId} />
       </Row>
@@ -195,6 +198,18 @@ const previewUser = cva({
         },
       },
     },
+  },
+});
+
+const SpeakingDot = styled("span", {
+  base: {
+    width: "8px",
+    height: "8px",
+    flexShrink: 0,
+    borderRadius: "50%",
+    background: "var(--md-sys-color-primary)",
+    boxShadow:
+      "0 0 8px color-mix(in srgb, var(--md-sys-color-primary) 80%, transparent)",
   },
 });
 
