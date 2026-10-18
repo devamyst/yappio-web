@@ -151,7 +151,7 @@ const PhoneBar = styled("div", {
     zIndex: 3,
     margin: "-12px -12px 0",
     padding: "var(--space-2) var(--space-3)",
-    background: "var(--md-sys-color-surface-container)",
+    background: "var(--md-sys-color-surface)",
 
     _phone: {
       display: "flex",
@@ -186,7 +186,7 @@ const base = css({
   flex: "1 1 800px",
   flexDirection: "row",
   display: "flex",
-  background: "var(--md-sys-color-surface-container)",
+  background: "var(--md-sys-color-surface)",
 
   "& > a": {
     textDecoration: "none",

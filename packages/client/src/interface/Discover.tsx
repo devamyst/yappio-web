@@ -342,7 +342,7 @@ const Page = styled("div", {
     display: "flex",
     flexDirection: "column",
     position: "relative",
-    background: "var(--md-sys-color-surface-container)",
+    background: "var(--md-sys-color-surface)",
   },
 });
 
