@@ -127,7 +127,7 @@ export function ChannelHeader(props: Props) {
             <Symbol>alternate_email</Symbol>
           </HeaderIcon>
           <OverflowingText>
-            <TextWithEmoji content={props.channel.recipient?.username} />
+            <TextWithEmoji content={props.channel.recipient?.displayName} />
           </OverflowingText>
           <UserStatus status={props.channel.recipient?.presence} size="8px" />
         </Match>
