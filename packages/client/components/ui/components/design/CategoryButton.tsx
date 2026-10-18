@@ -136,7 +136,7 @@ const Base = styled("a", {
 
     gap: "16px",
     padding: "13px",
-    borderRadius: "var(--borderRadius-md)",
+    borderRadius: "var(--radius-control)",
 
     userSelect: "none",
     cursor: "pointer",
@@ -156,8 +156,8 @@ const Base = styled("a", {
         "--color": "var(--md-sys-color-on-primary)",
       },
       tonal: {
-        background: "var(--md-sys-color-secondary-container)",
-        "--color": "var(--md-sys-color-on-secondary-container)",
+        background: "var(--md-sys-color-surface-container-high)",
+        "--color": "var(--md-sys-color-on-surface)",
       },
       tertiary: {
         background: "var(--md-sys-color-tertiary-container)",
@@ -289,7 +289,7 @@ CategoryButton.Group = styled("div", {
     flexDirection: "column",
     gap: "var(--gap-xs)",
 
-    borderRadius: "var(--borderRadius-xl)",
+    borderRadius: "var(--radius-card)",
     overflow: "hidden",
   },
 });
