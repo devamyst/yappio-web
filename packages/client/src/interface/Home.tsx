@@ -50,7 +50,7 @@ const content = cva({
 
     gap: "var(--space-6)",
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "safe center",
   },
 });
 
@@ -110,6 +110,7 @@ const Chip = styled("button", {
     fontSize: "14px",
     fontWeight: 600,
     maxWidth: "220px",
+    _phone: { height: "44px" },
     color: "var(--md-sys-color-on-surface)",
     background: "var(--md-sys-color-surface-container-high)",
     border: "1px solid var(--md-sys-color-outline-variant)",

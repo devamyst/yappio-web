@@ -489,8 +489,8 @@ const Chips = styled("div", {
     flex: "1 1 240px",
     overflowX: "auto",
     scrollbarWidth: "none",
-    padding: "2px 16px",
-    margin: "0 -16px",
+    padding: "2px 8px 2px 16px",
+    margin: "0 0 0 -16px",
     maskImage:
       "linear-gradient(90deg, transparent 0, #000 16px, #000 calc(100% - 24px), transparent 100%)",
     WebkitMaskImage:
@@ -513,6 +513,7 @@ const Chip = styled("button", {
     background: "var(--md-sys-color-surface-container-high)",
     transition: "background var(--motion-fast) var(--ease-standard)",
 
+    _phone: { height: "44px" },
     "&:hover": { background: "var(--md-sys-color-surface-container-highest)" },
     "&[aria-pressed=true]": {
       fontWeight: 700,
@@ -536,6 +537,8 @@ const SortSelect = styled("select", {
     borderRadius: "var(--radius-control)",
     color: "var(--md-sys-color-on-surface)",
     background: "var(--md-sys-color-surface-container-high)",
+
+    _phone: { height: "44px" },
 
     "&:focus-visible": {
       outline: "2px solid var(--md-sys-color-primary)",
