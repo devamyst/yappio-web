@@ -135,7 +135,7 @@ const Base = styled("a", {
     position: "relative",
 
     gap: "16px",
-    padding: "13px",
+    padding: "15px",
     borderRadius: "var(--radius-control)",
 
     userSelect: "none",
@@ -289,7 +289,7 @@ CategoryButton.Group = styled("div", {
     flexDirection: "column",
     gap: 0,
 
-    borderRadius: "16px",
+    borderRadius: "8px",
     border: "1px solid var(--md-sys-color-outline-variant)",
     background: "var(--md-sys-color-surface-container-low)",
     overflow: "hidden",

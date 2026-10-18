@@ -180,14 +180,13 @@ export const tile = cva({
   base: {
     display: "grid",
     aspectRatio: "16/9",
-    borderRadius: "16px",
+    borderRadius: "8px",
     width: "var(--vc-tile-width)",
     maxWidth: "calc(var(--vc-h) * 16 / 9)",
     cursor: "pointer",
 
     color: "var(--md-sys-color-on-surface)",
-    background:
-      "color-mix(in srgb, var(--md-sys-color-primary) 8%, var(--md-sys-color-surface-container-high))",
+    background: "var(--md-sys-color-surface-container-lowest)",
 
     overflow: "hidden",
     outlineWidth: "2px",
@@ -203,9 +202,7 @@ export const tile = cva({
   variants: {
     speaking: {
       true: {
-        outlineColor: "var(--md-sys-color-primary)",
-        boxShadow:
-          "0 0 0 4px color-mix(in srgb, var(--md-sys-color-primary) 28%, transparent), 0 0 24px color-mix(in srgb, var(--md-sys-color-primary) 35%, transparent)",
+        outlineColor: "#23a55a",
       },
     },
     focus: {

@@ -227,7 +227,7 @@ const ScrimSurface = styled("div", {
 const Container = styled("div", {
   base: {
     position: "relative",
-    padding: "24px",
+    padding: "26px",
     minWidth: "min(440px, 100%)",
     maxWidth: "560px",
     borderRadius: "var(--radius-modal)",
@@ -242,7 +242,7 @@ const Container = styled("div", {
     flexDirection: "column",
 
     color: "var(--md-sys-color-on-surface)",
-    background: "var(--md-sys-color-surface-container-high)",
+    background: "var(--md-sys-color-surface)",
   },
 });
 

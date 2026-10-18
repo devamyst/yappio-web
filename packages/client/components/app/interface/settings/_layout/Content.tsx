@@ -82,7 +82,7 @@ export function SettingsContent(props: {
             </PhoneBar>
             <Show when={props.page() !== "account"}>
               <Text
-                class={`title ${css({ fontSize: "24px", fontWeight: 800, letterSpacing: "-0.02em", paddingBottom: "var(--space-2)" })}`}
+                class={`title ${css({ fontSize: "20px", fontWeight: 700, paddingBottom: "var(--space-3)" })}`}
                 size="large"
               >
                 <Breadcrumbs

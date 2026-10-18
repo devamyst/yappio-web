@@ -105,7 +105,7 @@ const Panel = styled("div", {
     gap: "2px",
     padding: "0 var(--space-1)",
     color: "var(--md-sys-color-on-surface)",
-    background: "var(--md-sys-color-surface-container-lowest)",
+    background: "var(--md-sys-color-surface-dim)",
   },
 });
 
