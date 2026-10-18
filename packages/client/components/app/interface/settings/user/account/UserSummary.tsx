@@ -13,14 +13,16 @@ export function UserSummary(props: {
   user: User;
   showBadges?: boolean;
   bannerUrl?: string;
+  avatarUrl?: string;
+  name?: string;
   onEdit?: () => void;
 }) {
   const dayjs = useTime();
   const bannerStyle = () =>
     props.bannerUrl
       ? {
-          "background-image": `linear-gradient(color-mix(in srgb, var(--md-sys-color-surface-container-low) 70%, transparent), color-mix(in srgb, var(--md-sys-color-surface-container-low) 70%, transparent)), url("${props.bannerUrl}")`,
-          color: "black",
+          "background-image": `linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.7)), url("${props.bannerUrl}")`,
+          color: "white",
         }
       : {
           background: `linear-gradient(135deg, var(--md-sys-color-surface-container-high), color-mix(in srgb, var(--md-sys-color-primary) 38%, var(--md-sys-color-surface)))`,
@@ -31,9 +33,13 @@ export function UserSummary(props: {
     <CategoryButton.Group>
       <AccountBox style={bannerStyle()}>
         <ProfileDetails>
-          <Avatar src={props.user.animatedAvatarURL} size={58} />
+          <Avatar
+            src={props.avatarUrl ?? props.user.animatedAvatarURL}
+            fallback={props.name ?? props.user.displayName}
+            size={58}
+          />
           <Username>
-            <span>{props.user.displayName}</span>
+            <span>{props.name || props.user.displayName}</span>
             <span>
               {props.user.username}#{props.user.discriminator}
             </span>
@@ -100,7 +106,8 @@ const Username = styled("div", {
     display: "flex",
     flexDirection: "column",
 
-    color: "var(--md-sys-color-on-secondary-container)",
+    color: "inherit",
+    minWidth: 0,
 
     // Display Name
     "& :nth-child(1)": {

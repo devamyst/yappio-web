@@ -1,4 +1,4 @@
-import { For } from "solid-js";
+import { For, createSignal } from "solid-js";
 
 import { Trans } from "@lingui/solid/macro";
 
@@ -20,12 +20,21 @@ export function EditProfile() {
   const client = useClient();
   const { openModal } = useModals();
   const profile = createOwnProfileResource();
+  const [preview, setPreview] = createSignal<{
+    name: string;
+    avatar?: string;
+    banner?: string;
+  }>();
 
   return (
     <Column gap="lg">
       <UserSummary
         user={client().user!}
-        bannerUrl={profile.data?.animatedBannerURL}
+        bannerUrl={
+          preview() ? preview()!.banner : profile.data?.animatedBannerURL
+        }
+        avatarUrl={preview()?.avatar}
+        name={preview()?.name}
       />
 
       <CategoryButton.Group>
@@ -60,10 +69,14 @@ export function EditProfile() {
       </CategoryButton.Group>
 
       <Column>
-        <Text class="title" size="large">
+        <Text class="title" size="medium">
           <Trans>Edit Global Profile</Trans>
         </Text>
-        <UserProfileEditor user={client().user!} profile={profile.data} />
+        <UserProfileEditor
+          user={client().user!}
+          profile={profile.data}
+          onPreview={setPreview}
+        />
       </Column>
     </Column>
   );

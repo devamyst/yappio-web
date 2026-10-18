@@ -21,6 +21,11 @@ import { useSettingsNavigation } from "../../Settings";
 interface Props {
   user: User;
   profile?: UserProfile;
+  onPreview?: (preview: {
+    name: string;
+    avatar?: string;
+    banner?: string;
+  }) => void;
 }
 
 export function UserProfileEditor(props: Props) {
@@ -42,6 +47,21 @@ export function UserProfileEditor(props: Props) {
     bio: createFormControl(""),
   });
   /* eslint-enable solid/reactivity */
+
+  const previewUrl = (value: string | File[] | null) =>
+    Array.isArray(value)
+      ? value[0]
+        ? URL.createObjectURL(value[0])
+        : undefined
+      : (value ?? undefined);
+
+  createEffect(() => {
+    props.onPreview?.({
+      name: editGroup.controls.displayName.value,
+      avatar: previewUrl(editGroup.controls.avatar.value),
+      banner: previewUrl(editGroup.controls.banner.value),
+    });
+  });
 
   const [initialBio, setInitialBio] = createSignal<readonly [string]>();
 

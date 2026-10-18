@@ -140,8 +140,18 @@ export function FileInput(props: Props) {
             rounded={props.imageRounded ?? true}
           >
             <Ripple />
-            <Show when={local.file}>
+            <Show
+              when={local.file}
+              fallback={
+                <Placeholder>
+                  <Symbol>add_photo_alternate</Symbol>
+                </Placeholder>
+              }
+            >
               <img src={imageSrc()} />
+              <HoverOverlay>
+                <Symbol>edit</Symbol>
+              </HoverOverlay>
             </Show>
           </ImagePreview>
 
@@ -161,6 +171,35 @@ export function FileInput(props: Props) {
   );
 }
 
+const Placeholder = styled("div", {
+  base: {
+    position: "absolute",
+    inset: 0,
+    display: "grid",
+    placeItems: "center",
+    color: "var(--md-sys-color-on-surface-variant)",
+  },
+});
+
+const HoverOverlay = styled("div", {
+  base: {
+    position: "absolute",
+    inset: 0,
+    display: "grid",
+    placeItems: "center",
+    borderRadius: "inherit",
+    color: "white",
+    background: "rgba(0, 0, 0, 0.55)",
+    opacity: 0,
+    transition: "opacity var(--motion-fast) var(--ease-standard)",
+    pointerEvents: "none",
+
+    "@media (prefers-reduced-motion: reduce)": {
+      transition: "none",
+    },
+  },
+});
+
 const ImagePreview = styled("div", {
   base: {
     cursor: "pointer",
@@ -168,6 +207,11 @@ const ImagePreview = styled("div", {
     height: "96px",
 
     backgroundColor: "var(--md-sys-color-surface-dim)",
+    border: "2px dashed var(--md-sys-color-outline-variant)",
+
+    "&:hover > div:last-child, &:focus-visible > div:last-child": {
+      opacity: 1,
+    },
 
     "& img": {
       display: "block",
