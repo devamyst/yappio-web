@@ -271,7 +271,7 @@ const button = cva({
      */
     shape: {
       round: {
-        borderRadius: "var(--borderRadius-full)",
+        borderRadius: "var(--radius-control)",
       },
       square: {},
     },
