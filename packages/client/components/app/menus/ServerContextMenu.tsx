@@ -5,7 +5,9 @@ import dayjs from "dayjs";
 import { Server } from "stoat.js";
 
 import { useClient } from "@revolt/client";
+import { useIsAdmin } from "@revolt/common/lib/useIsAdmin";
 import { useModals } from "@revolt/modal";
+import { useNavigate } from "@revolt/routing";
 import { useState } from "@revolt/state";
 import { Column, Text, Time } from "@revolt/ui";
 
@@ -40,6 +42,8 @@ export function ServerContextMenu(props: { server: Server }) {
   const state = useState();
   const client = useClient();
   const { openModal } = useModals();
+  const navigate = useNavigate();
+  const isAdmin = useIsAdmin(() => state.auth.getSession()?.token);
 
   /**
    * Mark server as read
@@ -286,6 +290,15 @@ export function ServerContextMenu(props: { server: Server }) {
         }
       >
         <ContextMenuDivider />
+      </Show>
+
+      <Show when={isAdmin()}>
+        <ContextMenuButton
+          icon={MdSettings}
+          onClick={() => navigate(`/admin?server=${props.server.id}`)}
+        >
+          <Trans>Open in Admin</Trans>
+        </ContextMenuButton>
       </Show>
 
       <ContextMenuButton icon={MdReport} onClick={report} destructive>

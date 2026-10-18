@@ -150,7 +150,11 @@ export class Layout extends AbstractStore<"layout", TypeLayout> {
    * Set the last active path in the app
    */
   setLastActivePath(pathname: string) {
-    if (pathname.startsWith("/settings") || pathname.startsWith("/invite"))
+    if (
+      pathname.startsWith("/settings") ||
+      pathname.startsWith("/invite") ||
+      pathname.startsWith("/admin")
+    )
       return;
 
     const params = paramsFromPathname(pathname);

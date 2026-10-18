@@ -6,9 +6,12 @@ import { css } from "styled-system/css";
 
 import { useClient, useClientLifecycle } from "@revolt/client";
 import { YAPPIO_SOURCE_URL } from "@revolt/common";
+import { useIsAdmin } from "@revolt/common/lib/useIsAdmin";
 import { useInstance } from "@revolt/instance";
 import { useUser } from "@revolt/markdown/users";
 import { useModals } from "@revolt/modal";
+import { useNavigate } from "@revolt/routing";
+import { useState } from "@revolt/state";
 import { ColouredText, Column, Text, iconSize } from "@revolt/ui";
 import { Symbol } from "@revolt/ui/components/utils/Symbol";
 
@@ -116,6 +119,9 @@ const Config: SettingsConfiguration<{ server: Server }> = {
     const { pop, openModal } = useModals();
     const { logout } = useClientLifecycle();
     const { limits, config } = useInstance();
+    const navigate = useNavigate();
+    const state = useState();
+    const isAdmin = useIsAdmin(() => state.auth.getSession()?.token);
 
     return {
       context: null!,
@@ -230,6 +236,21 @@ const Config: SettingsConfiguration<{ server: Server }> = {
               id: "bots",
               icon: <MdSmartToy {...iconSize(20)} />,
               title: <Trans>My Bots</Trans>,
+            },
+          ],
+        },
+        {
+          title: "Yappio",
+          hidden: !isAdmin(),
+          entries: [
+            {
+              id: "admin",
+              icon: <Symbol size={20}>admin_panel_settings</Symbol>,
+              title: <Trans>Admin</Trans>,
+              onClick() {
+                pop();
+                navigate("/admin");
+              },
             },
           ],
         },

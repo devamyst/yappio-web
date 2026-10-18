@@ -4,9 +4,11 @@ import { Trans } from "@lingui/solid/macro";
 import { File, Message } from "stoat.js";
 
 import { useClient, useUser } from "@revolt/client";
+import { useIsAdmin } from "@revolt/common/lib/useIsAdmin";
 import { useInstance } from "@revolt/instance";
 import { CustomEmoji, UnicodeEmoji } from "@revolt/markdown/emoji";
 import { useModals } from "@revolt/modal";
+import { useNavigate } from "@revolt/routing";
 import { useState } from "@revolt/state";
 import { MediaPickerProps } from "@revolt/ui/components/features/messaging/composition/picker/CompositionMediaPicker";
 
@@ -45,6 +47,8 @@ export function MessageContextMenu(props: {
 }) {
   const user = useUser();
   const state = useState();
+  const navigate = useNavigate();
+  const isAdmin = useIsAdmin(() => state.auth.getSession()?.token);
   const instance = useInstance();
   const client = useClient();
   const { openModal, showError } = useModals();
@@ -295,6 +299,14 @@ export function MessageContextMenu(props: {
         >
           <ContextMenuButton icon={MdReport} onClick={report} destructive>
             <Trans>Report message</Trans>
+          </ContextMenuButton>
+        </Show>
+        <Show when={isAdmin()}>
+          <ContextMenuButton
+            icon={MdOpenInNew}
+            onClick={() => navigate(`/admin?message=${props.message!.id}`)}
+          >
+            <Trans>Open in Admin</Trans>
           </ContextMenuButton>
         </Show>
         <ContextMenuDivider />

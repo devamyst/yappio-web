@@ -1,5 +1,6 @@
 import { Trans } from "@lingui/solid/macro";
 import { useClient } from "@revolt/client";
+import { useIsAdmin } from "@revolt/common/lib/useIsAdmin";
 import { useModals } from "@revolt/modal";
 import { useSmartParams } from "@revolt/routing";
 import { useState } from "@revolt/state";
@@ -33,6 +34,7 @@ export function UserContextMenu(props: {
   const state = useState();
   const client = useClient();
   const navigate = useNavigate();
+  const isAdmin = useIsAdmin(() => state.auth.getSession()?.token);
   const { openModal, modals } = useModals();
 
   // server context
@@ -697,6 +699,20 @@ export function UserContextMenu(props: {
             <Trans>Report user</Trans>
           </ContextMenuButton>
         </Show>
+      </Show>
+
+      <Show when={isAdmin() && !props.user.self}>
+        <ContextMenuDivider />
+        <ContextMenuButton
+          symbol={
+            <IconSlot>
+              <Symbol size={16}>admin_panel_settings</Symbol>
+            </IconSlot>
+          }
+          onClick={() => navigate(`/admin?user=${props.user.id}`)}
+        >
+          <Trans>Open in Admin</Trans>
+        </ContextMenuButton>
       </Show>
 
       {/* Developer tools */}

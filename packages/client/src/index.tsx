@@ -44,6 +44,7 @@ import AuthPage from "./Auth";
 import Interface from "./Interface";
 import "./index.css";
 import { DevelopmentPage } from "./interface/Development";
+import { Admin } from "./interface/Admin";
 import { Discover } from "./interface/Discover";
 import { Friends } from "./interface/Friends";
 import { HomePage } from "./interface/Home";
@@ -159,6 +160,7 @@ const routes = () => (
       <Route path="/pwa" component={PWARedirect} />
       <Route path="/dev" component={DevelopmentPage} />
       <Route path="/discover/*" component={Discover} />
+      <Route path="/admin/*" component={Admin} />
       <Route path="/settings" component={SettingsRedirect} />
       <Route path="/invite/:code" component={InviteRedirect} />
       <Route path="/bot/:code" component={BotRedirect} />
