@@ -99,19 +99,21 @@ export function MessageToolbar() {
 
 const Base = styled("div", {
   base: {
-    top: "-18px",
+    top: "-16px",
     right: "16px",
+    zIndex: 2,
     position: "absolute",
 
     alignItems: "center",
 
     display: "none",
     overflow: "hidden",
-    borderRadius: "var(--borderRadius-xs)",
-    boxShadow: "0 0 3px var(--md-sys-color-shadow)",
+    borderRadius: "var(--radius-control)",
+    boxShadow: "var(--elev-2)",
+    border: "var(--hairline)",
 
-    fill: "var(--md-sys-color-on-secondary-container)",
-    background: "var(--md-sys-color-secondary-container)",
+    fill: "var(--md-sys-color-on-surface-variant)",
+    background: "var(--md-sys-color-surface-container-high)",
   },
 });
 
@@ -119,6 +121,13 @@ const tool = cva({
   base: {
     cursor: "pointer",
     position: "relative",
-    padding: "var(--gap-sm)",
+    padding: "6px",
+    display: "grid",
+    placeItems: "center",
+    transition: "var(--transitions-fast) all",
+    _hover: {
+      fill: "var(--md-sys-color-on-surface)",
+      background: "var(--md-sys-color-surface-container-highest)",
+    },
   },
 });
