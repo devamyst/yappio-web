@@ -135,7 +135,12 @@ class Lifecycle {
           break;
         case State.Connected: {
           const before = this.client.events.ping();
-          this.client.events.send({ type: "Ping", data: +new Date() });
+          try {
+            this.client.events.send({ type: "Ping", data: +new Date() });
+          } catch {
+            this.client.events.disconnect();
+            break;
+          }
           setTimeout(() => {
             if (
               this.state() === State.Connected &&
