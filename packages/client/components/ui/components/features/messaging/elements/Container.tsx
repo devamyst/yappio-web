@@ -149,6 +149,7 @@ const base = cva({
     tail: {
       true: {
         marginTop: 0,
+        paddingBlock: "2px",
       },
     },
     mentioned: {
@@ -201,6 +202,13 @@ const base = cva({
       },
     },
   },
+  compoundVariants: [
+    {
+      tail: true,
+      isLink: false,
+      css: { marginTop: "0 !important" },
+    },
+  ],
   defaultVariants: {
     isLink: false,
     sendStatus: "sent",
