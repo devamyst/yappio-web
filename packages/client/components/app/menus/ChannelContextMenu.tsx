@@ -1,18 +1,23 @@
 import { Match, Show, Switch } from "solid-js";
 
 import { Trans } from "@lingui/solid/macro";
-import { Channel } from "stoat.js";
+import { Channel, Permission } from "stoat.js";
 
 import { useInstance } from "@revolt/instance";
 import { useModals } from "@revolt/modal";
 import { useState } from "@revolt/state";
 
+import { startSelecting } from "../interface/channels/text/messageSelection";
+
 import MdBadge from "@material-design-icons/svg/outlined/badge.svg?component-solid";
 import MdDelete from "@material-design-icons/svg/outlined/delete.svg?component-solid";
 import MdGroupAdd from "@material-design-icons/svg/outlined/group_add.svg?component-solid";
 import MdLibraryAdd from "@material-design-icons/svg/outlined/library_add.svg?component-solid";
+import MdLock from "@material-design-icons/svg/outlined/lock.svg?component-solid";
+import MdLockOpen from "@material-design-icons/svg/outlined/lock_open.svg?component-solid";
 import MdLogout from "@material-design-icons/svg/outlined/logout.svg?component-solid";
 import MdMarkChatRead from "@material-design-icons/svg/outlined/mark_chat_read.svg?component-solid";
+import MdChecklist from "@material-design-icons/svg/outlined/checklist.svg?component-solid";
 import MdSettings from "@material-design-icons/svg/outlined/settings.svg?component-solid";
 import MdShare from "@material-design-icons/svg/outlined/share.svg?component-solid";
 
@@ -29,7 +34,7 @@ import { NotificationContextMenu } from "./shared/NotificationContextMenu";
 export function ChannelContextMenu(props: { channel: Channel }) {
   const state = useState();
   const instance = useInstance();
-  const { openModal } = useModals();
+  const { openModal, showError } = useModals();
 
   /**
    * Mark channel as read
@@ -98,6 +103,44 @@ export function ChannelContextMenu(props: { channel: Channel }) {
   }
 
 
+  const isTextChannel = () => props.channel.type === "TextChannel";
+
+  const isLocked = () =>
+    ((props.channel.defaultPermissions?.d ?? 0n) & Permission.SendMessage) !==
+    0n;
+
+  const canModerate = () =>
+    isTextChannel() && props.channel.havePermission("ManageMessages");
+
+  const canLock = () =>
+    isTextChannel() && props.channel.havePermission("ManagePermissions");
+
+  function toggleLock() {
+    const current = props.channel.defaultPermissions;
+    const allow = current?.a ?? 0n;
+    const deny = current?.d ?? 0n;
+
+    props.channel
+      .setPermissions(
+        "default",
+        isLocked()
+          ? { allow: Number(allow), deny: Number(deny & ~Permission.SendMessage) }
+          : {
+              allow: Number(allow & ~Permission.SendMessage),
+              deny: Number(deny | Permission.SendMessage),
+            },
+      )
+      .catch(showError);
+  }
+
+  function purge() {
+    openModal({ type: "purge_messages", channel: props.channel });
+  }
+
+  function selectMessages() {
+    startSelecting(props.channel.id);
+  }
+
   /**
    * Copy channel link to clipboard
    */
@@ -165,6 +208,31 @@ export function ChannelContextMenu(props: { channel: Channel }) {
             </Match>
           </Switch>
         </ContextMenuButton>
+      </Show>
+
+      <Show when={canModerate() || canLock()}>
+        <Show when={canLock()}>
+          <ContextMenuButton
+            icon={isLocked() ? MdLockOpen : MdLock}
+            onClick={toggleLock}
+          >
+            <Show
+              when={isLocked()}
+              fallback={<Trans>Lock channel</Trans>}
+            >
+              <Trans>Unlock channel</Trans>
+            </Show>
+          </ContextMenuButton>
+        </Show>
+        <Show when={canModerate()}>
+          <ContextMenuButton icon={MdChecklist} onClick={selectMessages}>
+            <Trans>Select messages</Trans>
+          </ContextMenuButton>
+          <ContextMenuButton icon={MdDelete} onClick={purge} destructive>
+            <Trans>Purge last messages</Trans>
+          </ContextMenuButton>
+        </Show>
+        <ContextMenuDivider />
       </Show>
 
       <Show

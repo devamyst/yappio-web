@@ -20,7 +20,9 @@ import isEqual from "lodash.isequal";
 import { Channel, Message as MessageInterface } from "stoat.js";
 import { styled } from "styled-system/jsx";
 
+import { Trans } from "@lingui/solid/macro";
 import { useClient, useClientLifecycle } from "@revolt/client";
+import { useModals } from "@revolt/modal";
 import { State } from "@revolt/client/Controller";
 import { useTime } from "@revolt/i18n";
 import { useState } from "@revolt/state";
@@ -37,6 +39,13 @@ import {
   ListView2Update,
 } from "@revolt/ui/components/utils/ListView2";
 import { Message } from "./Message";
+import {
+  MAX_SELECTED,
+  isSelecting,
+  selectedMessages,
+  stopSelecting,
+  toggleSelected,
+} from "./messageSelection";
 import { useMessageCache } from "./MessageCache";
 
 /**
@@ -959,6 +968,7 @@ export function Messages(props: Props) {
           </div>
         </Deferred>
       </ListView2>
+      <SelectionBar channel={props.channel} />
       <Show when={!atEnd()}>
         <AnchorToEnd>
           <JumpToBottom onClick={jumpToBottom} />
@@ -967,6 +977,137 @@ export function Messages(props: Props) {
     </>
   );
 }
+
+function SelectableMessage(props: {
+  message: MessageInterface;
+  children: JSX.Element;
+}) {
+  const active = () => isSelecting(props.message.channelId);
+  const checked = () => selectedMessages().has(props.message.id);
+
+  return (
+    <SelectWrap data-selected={active() && checked() ? "" : undefined}>
+      {props.children}
+      <Show when={active()}>
+        <SelectOverlay
+          role="checkbox"
+          aria-checked={checked()}
+          onClick={() => toggleSelected(props.message.id)}
+        >
+          <SelectBox data-checked={checked() ? "" : undefined}>
+            <Show when={checked()}>&#10003;</Show>
+          </SelectBox>
+        </SelectOverlay>
+      </Show>
+    </SelectWrap>
+  );
+}
+
+function SelectionBar(props: { channel: Channel }) {
+  const { openModal } = useModals();
+  const count = () => selectedMessages().size;
+
+  return (
+    <Show when={isSelecting(props.channel.id)}>
+      <SelectBar>
+        <span>
+          <Trans>
+            {count()} of {MAX_SELECTED} selected
+          </Trans>
+        </span>
+        <SelectButton onClick={stopSelecting}>
+          <Trans>Cancel</Trans>
+        </SelectButton>
+        <SelectButton
+          data-danger=""
+          disabled={count() < 1}
+          onClick={() =>
+            openModal({
+              type: "purge_messages",
+              channel: props.channel,
+              ids: [...selectedMessages()],
+              onDone: stopSelecting,
+            })
+          }
+        >
+          <Trans>Delete</Trans>
+        </SelectButton>
+      </SelectBar>
+    </Show>
+  );
+}
+
+const SelectWrap = styled("div", {
+  base: {
+    position: "relative",
+    '&[data-selected]': {
+      background: "color-mix(in srgb, #5865f2 10%, transparent)",
+    },
+  },
+});
+
+const SelectOverlay = styled("div", {
+  base: {
+    position: "absolute",
+    inset: 0,
+    zIndex: 5,
+    cursor: "pointer",
+    display: "flex",
+    alignItems: "center",
+    paddingInlineStart: "var(--gap-md)",
+  },
+});
+
+const SelectBox = styled("div", {
+  base: {
+    width: "20px",
+    height: "20px",
+    borderRadius: "4px",
+    border: "2px solid var(--md-sys-color-outline)",
+    background: "var(--md-sys-color-surface)",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    fontSize: "14px",
+    lineHeight: 1,
+    color: "#ffffff",
+    '&[data-checked]': {
+      background: "#5865f2",
+      borderColor: "#5865f2",
+    },
+  },
+});
+
+const SelectBar = styled("div", {
+  base: {
+    zIndex: 30,
+    position: "relative",
+    display: "flex",
+    alignItems: "center",
+    gap: "var(--gap-md)",
+    padding: "8px 12px",
+    borderRadius: "8px",
+    background: "var(--md-sys-color-surface-container-high)",
+    border: "var(--hairline)",
+    color: "var(--md-sys-color-on-surface)",
+    margin: "0 var(--gap-md) var(--gap-md)",
+    "& > span": { flexGrow: 1 },
+  },
+});
+
+const SelectButton = styled("button", {
+  base: {
+    cursor: "pointer",
+    border: "none",
+    borderRadius: "4px",
+    padding: "6px 14px",
+    fontWeight: 500,
+    color: "var(--md-sys-color-on-surface)",
+    background: "var(--md-sys-color-surface-container-highest)",
+    '&[data-danger]': { background: "#da373c", color: "#ffffff" },
+    '&:disabled': { opacity: 0.5, cursor: "not-allowed" },
+  },
+});
 
 /**
  * Anchor to the end of the messages list
@@ -1023,17 +1164,19 @@ function Entry(
   return (
     <Switch>
       <Match when={local.t === 0}>
-        <Message
-          {...(other as ListEntry & { t: 0 })}
-          highlight={
-            (other as ListEntry & { t: 0 }).message.id ===
-            local.highlightedMessageId()
-          }
-          editing={
-            (other as ListEntry & { t: 0 }).message.id ===
-            local.editingMessageId
-          }
-        />
+        <SelectableMessage message={(other as ListEntry & { t: 0 }).message}>
+          <Message
+            {...(other as ListEntry & { t: 0 })}
+            highlight={
+              (other as ListEntry & { t: 0 }).message.id ===
+              local.highlightedMessageId()
+            }
+            editing={
+              (other as ListEntry & { t: 0 }).message.id ===
+              local.editingMessageId
+            }
+          />
+        </SelectableMessage>
       </Match>
       <Match when={local.t === 1}>
         <MessageDivider {...(other as ListEntry & { t: 1 })} />
