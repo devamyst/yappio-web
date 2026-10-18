@@ -6,7 +6,9 @@ import { useLingui } from "@lingui/solid/macro";
 import { css } from "styled-system/css";
 import { styled } from "styled-system/jsx";
 
+import { useState } from "@revolt/state";
 import { Breadcrumbs, IconButton, Text } from "@revolt/ui";
+import { Symbol } from "@revolt/ui/components/utils/Symbol";
 
 import MdClose from "@material-design-icons/svg/outlined/close.svg?component-solid";
 
@@ -27,6 +29,7 @@ export function SettingsContent(props: {
 }) {
   const { navigate } = useSettingsNavigation();
   const { t } = useLingui();
+  const { diagDrawer } = useState();
 
   const hints = (): Record<string, string> => ({
     account: t`Your login, email and security.`,
@@ -59,6 +62,24 @@ export function SettingsContent(props: {
       <Show when={props.page()}>
         <InnerContent class="settings_cont">
           <InnerColumn>
+            <PhoneBar>
+              <PhoneBarButton
+                type="button"
+                aria-label={t`All settings`}
+                onClick={() => diagDrawer()?.setShown(false)}
+              >
+                <Symbol>menu</Symbol>
+              </PhoneBarButton>
+              <Show when={props.onClose}>
+                <PhoneBarButton
+                  type="button"
+                  aria-label={t`Close`}
+                  onClick={() => props.onClose?.()}
+                >
+                  <Symbol>close</Symbol>
+                </PhoneBarButton>
+              </Show>
+            </PhoneBar>
             <Show when={props.page() !== "account"}>
               <Text
                 class={`title ${css({ fontSize: "24px", fontWeight: 800, letterSpacing: "-0.02em", paddingBottom: "var(--space-2)" })}`}
@@ -120,6 +141,36 @@ export function SettingsContent(props: {
     </div>
   );
 }
+
+const PhoneBar = styled("div", {
+  base: {
+    display: "none",
+    justifyContent: "space-between",
+    position: "sticky",
+    top: 0,
+    zIndex: 3,
+    margin: "-12px -12px 0",
+    padding: "var(--space-2) var(--space-3)",
+    background: "var(--md-sys-color-surface-container)",
+
+    _phone: {
+      display: "flex",
+    },
+  },
+});
+
+const PhoneBarButton = styled("button", {
+  base: {
+    width: "44px",
+    height: "44px",
+    display: "grid",
+    placeItems: "center",
+    cursor: "pointer",
+    color: "var(--md-sys-color-on-surface)",
+    borderRadius: "50%",
+    background: "var(--md-sys-color-surface-container-highest)",
+  },
+});
 
 const hint = css({
   margin: "calc(var(--space-2) * -1) 0 var(--space-2)",
