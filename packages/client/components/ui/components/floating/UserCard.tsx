@@ -17,12 +17,15 @@ const base = cva({
 
     color: "var(--md-sys-color-on-surface)",
     background: "var(--md-sys-color-surface-container-high)",
-    boxShadow: "0 0 3px var(--md-sys-color-shadow)",
+    boxShadow: "var(--elev-3)",
+    border: "var(--hairline)",
+    animation: "popIn var(--motion-fast) var(--ease-standard)",
 
     width: "340px",
     height: "400px",
 
-    borderRadius: "var(--borderRadius-xl)",
+    borderRadius: "var(--radius-card)",
+    overflow: "hidden",
   },
 });
 
