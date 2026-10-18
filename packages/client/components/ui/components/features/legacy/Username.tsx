@@ -24,7 +24,7 @@ export function Username(props: Props) {
   const [local, remote] = splitProps(props, ["username", "colour"]);
 
   return (
-    <span {...remote} class={typography({ class: "label", size: "large" })}>
+    <span {...remote} class={typography({ class: "label", size: "large" })} style={{ "font-weight": 700 }}>
       <ColouredText colour={local.colour!}>{local.username}</ColouredText>
     </span>
   );

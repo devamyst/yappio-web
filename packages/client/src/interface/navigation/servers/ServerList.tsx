@@ -261,7 +261,7 @@ export const ServerList = (props: Props) => {
           >
             <TileWrap>
               <Tile data-tile="" action>
-                <Symbol size={24}>add</Symbol>
+                <Symbol size={28}>add</Symbol>
               </Tile>
             </TileWrap>
           </a>
@@ -273,7 +273,7 @@ export const ServerList = (props: Props) => {
             >
               <TileWrap>
                 <Tile data-tile="" action>
-                  <Symbol size={24}>explore</Symbol>
+                  <Symbol size={30}>explore</Symbol>
                 </Tile>
               </TileWrap>
             </a>
@@ -327,7 +327,7 @@ const entryContainer = cva({
         "height var(--motion-med) var(--ease-emph), opacity var(--motion-fast)",
       left: 0,
       borderRadius: "0 4px 4px 0",
-      background: "var(--md-sys-color-on-surface)",
+      background: "var(--md-sys-color-primary)",
     },
 
     "&:hover:before": {
@@ -376,24 +376,35 @@ const Tile = styled("div", {
     borderRadius: "50%",
     transition:
       "border-radius var(--motion-med) var(--ease-emph), background var(--motion-med) var(--ease-standard), color var(--motion-fast)",
-    color: "var(--md-sys-color-on-surface)",
-    background: "var(--md-sys-color-surface-container-high)",
+    color: "#1a2200",
+    fontWeight: 700,
+    background:
+      "linear-gradient(145deg, #dfff7a 0%, #c8f43c 55%, #a9d12a 100%)",
+    boxShadow: "0 0 0 1px rgb(255 255 255 / 0.12)",
   },
   variants: {
     selected: {
       true: {
         borderRadius: "var(--radius-server)",
-        background: "var(--md-sys-color-surface-container-highest)",
+        boxShadow:
+          "0 0 0 2px var(--md-sys-color-surface-container-lowest), 0 0 0 4px var(--md-sys-color-primary)",
       },
       false: {},
     },
     brand: {
-      true: {},
+      true: {
+        background: "var(--md-sys-color-surface-container-high)",
+        boxShadow:
+          "0 0 0 2px rgb(200 244 60 / 0.55), 0 0 16px rgb(200 244 60 / 0.35)",
+      },
       false: {},
     },
     action: {
       true: {
         color: "var(--md-sys-color-primary)",
+        background: "var(--md-sys-color-surface-container-high)",
+        boxShadow:
+          "0 0 0 1px rgb(200 244 60 / 0.5), 0 0 12px rgb(200 244 60 / 0.25)",
 
         "&:hover": {
           color: "var(--md-sys-color-on-primary)",
@@ -409,6 +420,8 @@ const Tile = styled("div", {
       selected: true,
       css: {
         background: "var(--md-sys-color-primary)",
+        boxShadow:
+          "0 0 0 2px var(--md-sys-color-surface-container-lowest), 0 0 0 4px var(--md-sys-color-primary), 0 0 20px rgb(200 244 60 / 0.5)",
       },
     },
   ],

@@ -276,7 +276,8 @@ const Category = styled("div", {
     justifyContent: "space-between",
     paddingTop: "var(--space-4)",
     paddingBottom: "var(--space-1)",
-    color: "var(--md-sys-color-on-surface-variant)",
+    color: "var(--md-sys-color-on-surface)",
+    opacity: 0.85,
 
     ...typography.raw({ class: "label", size: "small" }),
     fontSize: "12px",

@@ -153,7 +153,7 @@ const base = cva({
     },
     mentioned: {
       true: {
-        background: "rgb(200 244 60 / 0.07)",
+        background: "rgb(200 244 60 / 0.12)",
         boxShadow: "inset 2px 0 0 var(--md-sys-color-primary)",
       },
     },
@@ -278,7 +278,7 @@ const infoText = cva({
     alignItems: "center",
     gap: "var(--gap-sm)",
 
-    color: "var(--md-sys-color-outline)",
+    color: "var(--md-sys-color-on-surface-variant)",
 
     ...typography.raw({ class: "body", size: "small" }),
   },

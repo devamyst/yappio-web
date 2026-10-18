@@ -64,8 +64,8 @@ export function UserPanel() {
           title={voice.microphone() ? t`Mute` : t`Unmute`}
           onClick={() => voice.toggleMute()}
         >
-          <Show when={voice.microphone()} fallback={<Symbol size={20}>mic_off</Symbol>}>
-            <Symbol size={20}>mic</Symbol>
+          <Show when={voice.microphone()} fallback={<Symbol size={22}>mic_off</Symbol>}>
+            <Symbol size={22}>mic</Symbol>
           </Show>
         </PanelButton>
         <PanelButton
@@ -78,9 +78,9 @@ export function UserPanel() {
         >
           <Show
             when={voice.deafen() || !voice.listenPermission}
-            fallback={<Symbol size={20}>headset</Symbol>}
+            fallback={<Symbol size={22}>headset</Symbol>}
           >
-            <Symbol size={20}>headset_off</Symbol>
+            <Symbol size={22}>headset_off</Symbol>
           </Show>
         </PanelButton>
         <PanelButton
@@ -89,7 +89,7 @@ export function UserPanel() {
           title={t`Settings`}
           onClick={() => openModal({ type: "settings", config: "user" })}
         >
-          <Symbol size={20}>settings</Symbol>
+          <Symbol size={22}>settings</Symbol>
         </PanelButton>
       </Actions>
     </Panel>

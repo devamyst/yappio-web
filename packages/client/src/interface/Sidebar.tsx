@@ -53,6 +53,8 @@ const SidebarColumn = styled("div", {
     minHeight: 0,
     width: "var(--layout-width-channel-sidebar)",
     background: "var(--md-sys-color-surface-container-low)",
+    borderRight: "1px solid rgb(255 255 255 / 0.08)",
+    boxShadow: "2px 0 12px rgb(0 0 0 / 0.25)",
 
     _phone: {
       flexGrow: 1,

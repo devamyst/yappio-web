@@ -60,13 +60,18 @@ const Hero = styled("div", {
     alignItems: "center",
     gap: "var(--space-2)",
     textAlign: "center",
+    padding: "var(--space-6) var(--space-8)",
+    background:
+      "radial-gradient(ellipse 60% 70% at 50% 40%, rgb(200 244 60 / 0.16) 0%, transparent 70%)",
   },
 });
 
 const Tagline = styled("p", {
   base: {
-    fontSize: "16px",
-    color: "var(--md-sys-color-on-surface-variant)",
+    fontSize: "17px",
+    fontWeight: 500,
+    color: "var(--md-sys-color-on-surface)",
+    opacity: 0.9,
   },
 });
 
@@ -97,12 +102,15 @@ const ActionCard = styled("button", {
     color: "var(--md-sys-color-on-surface)",
     borderRadius: "var(--radius-card)",
     background: "var(--md-sys-color-surface-container-high)",
+    border: "1px solid rgb(255 255 255 / 0.08)",
     boxShadow: "var(--elev-1)",
     transition:
       "background var(--motion-fast) var(--ease-standard), transform var(--motion-med) var(--ease-emph)",
 
     "&:hover": {
-      background: "var(--md-sys-color-surface-container-highest)",
+      background:
+        "color-mix(in srgb, var(--md-sys-color-primary) 10%, var(--md-sys-color-surface-container-highest))",
+      borderColor: "rgb(200 244 60 / 0.55)",
       transform: "translateY(-2px)",
     },
   },
