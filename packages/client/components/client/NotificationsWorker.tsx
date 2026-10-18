@@ -16,6 +16,23 @@ import { useNavigate, useSmartParams } from "@revolt/routing";
 import { useState } from "@revolt/state";
 
 import { useClient, useNotifications, useSound } from ".";
+import { MessageToasts, showMessageToast } from "./MessageToasts";
+
+const APP_ICON = "/assets/web/android-chrome-512x512.png";
+
+function stripMarkdown(input: string) {
+  return input
+    .replace(/```[\s\S]*?```/g, " ")
+    .replace(/!?\[([^\]]*)\]\([^)]*\)/g, "$1")
+    .replace(/(\*\*|__|~~|\*|_|`|\|\|)/g, "")
+    .replace(/^\s*(>|#{1,3})\s+/gm, "")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function clip(input: string, max = 120) {
+  return input.length > max ? `${input.slice(0, max - 1)}…` : input;
+}
 
 /**
  * Process and display desktop notifications
@@ -64,23 +81,30 @@ export function NotificationsWorker() {
     )
       return;
 
+    const displayName =
+      message.masquerade?.name ??
+      message.member?.nickname ??
+      message.author?.displayName ??
+      message.username ??
+      "";
+
     // Generate the title
     let title;
     switch (message.channel!.type) {
       case "SavedMessages":
         return;
       case "DirectMessage":
-        title = `@${message.username}`;
+        title = displayName;
         break;
       case "Group":
         if (message.author?.id === "00000000000000000000000000") {
           title = message.channel?.name;
         } else {
-          title = `@${message.username} - ${message.channel?.name}`;
+          title = `${displayName} (${message.channel?.name})`;
         }
         break;
       case "TextChannel":
-        title = `@${message.username} (#${message.channel?.name}, ${message.channel?.server?.name})`;
+        title = `${displayName} (#${message.channel?.name}, ${message.channel?.server?.name})`;
         break;
     }
 
@@ -92,7 +116,7 @@ export function NotificationsWorker() {
     // Find body/icon
     let body, icon;
     if (message.content) {
-      body = message.contentPlain;
+      body = clip(stripMarkdown(message.contentPlain));
       icon = message.avatarURL;
     } else if (message.systemMessage) {
       switch (message.systemMessage.type) {
@@ -189,7 +213,29 @@ export function NotificationsWorker() {
           break;
       }
     } else if (message.attachments?.length) {
-      body = t`Sent ${message.attachments!.length} attachments`;
+      body = message.attachments.every((x) => x.metadata.type === "Image")
+        ? t`Sent an image`
+        : t`Sent an attachment`;
+      icon = message.avatarURL;
+    }
+
+    const isDirect =
+      message.channel!.type === "DirectMessage" ||
+      message.channel!.type === "Group";
+    if (document.hasFocus() && body && (message.mentioned || isDirect)) {
+      showMessageToast({
+        id: message.channelId,
+        name: displayName,
+        where:
+          message.channel!.type === "TextChannel"
+            ? `(#${message.channel!.name}, ${message.channel!.server?.name})`
+            : message.channel!.type === "Group"
+              ? `(${message.channel!.name})`
+              : undefined,
+        body,
+        avatar: icon,
+        path: message.path,
+      });
     }
 
     // Don't continue if we don't have notification permissions
@@ -202,7 +248,7 @@ export function NotificationsWorker() {
     sound.playSound("message");
 
     const notification = new Notification(title!, {
-      icon,
+      icon: icon ?? APP_ICON,
       // @ts-expect-error this does exist on some platforms
       image,
       body,
@@ -238,5 +284,5 @@ export function NotificationsWorker() {
 
   onCleanup(() => document.removeEventListener("click", tryRequest));
 
-  return null;
+  return <MessageToasts />;
 }

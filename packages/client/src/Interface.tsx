@@ -18,6 +18,7 @@ import { Titlebar } from "@revolt/app/interface/desktop/Titlebar";
 import { useClient, useClientLifecycle } from "@revolt/client";
 import { State, TransitionType } from "@revolt/client/Controller";
 import { NotificationsWorker } from "@revolt/client/NotificationsWorker";
+import { TabStatus } from "@revolt/client/TabStatus";
 import { useModals } from "@revolt/modal";
 import { Navigate, useBeforeLeave, useLocation } from "@revolt/routing";
 import { useState } from "@revolt/state";
@@ -176,6 +177,7 @@ const Interface = (props: { children: JSX.Element }) => {
         </Show>
 
         <NotificationsWorker />
+        <TabStatus />
       </AppRoot>
     </MessageCache>
     </Show>
