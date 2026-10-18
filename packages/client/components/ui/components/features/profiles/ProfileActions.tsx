@@ -77,8 +77,17 @@ export function ProfileActions(props: {
           Cancel friend request
         </Button>
       </Show>
-      <Show when={props.user.relationship === "Friend"}>
-        <Button onPress={openDm}>Message</Button>
+      <Show
+        when={
+          !props.user.self &&
+          ["Friend", "None", "Incoming", "Outgoing"].includes(
+            props.user.relationship,
+          )
+        }
+      >
+        <Button onPress={openDm}>
+          <Trans>Send message</Trans>
+        </Button>
       </Show>
       <Show when={publicBot()}>
         <Button

@@ -37,12 +37,20 @@ export function ProfileBanner(props: {
     }, 2000);
   }
 
+  const bannerImage = () => {
+    if (props.bannerUrl)
+      return `linear-gradient(rgba(0, 0, 0, 0.2),rgba(0, 0, 0, 0.7)), url('${props.bannerUrl}')`;
+    let hash = 0;
+    for (const char of props.user.id) hash = (hash * 31 + char.charCodeAt(0)) % 360;
+    return `linear-gradient(rgba(0, 0, 0, 0.1),rgba(0, 0, 0, 0.45)), linear-gradient(135deg, hsl(${hash} 55% 42%), hsl(${(hash + 55) % 360} 60% 20%))`;
+  };
+
   const pronouns = () => props.member?.pronouns ?? props.user.pronouns;
 
   return (
     <Banner
       style={{
-        "background-image": `linear-gradient(rgba(0, 0, 0, 0.2),rgba(0, 0, 0, 0.7)), url('${props.bannerUrl}')`,
+        "background-image": bannerImage(),
       }}
       isLink={typeof props.onClick !== "undefined"}
       onClick={props.onClick}
