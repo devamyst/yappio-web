@@ -155,6 +155,7 @@ const Actions = styled("div", {
     alignSelf: "center",
 
     borderRadius: "var(--borderRadius-full)",
-    background: "var(--md-sys-color-surface-container)",
+    background: "var(--md-sys-color-surface-container-high)",
+    boxShadow: "var(--elev-2)",
   },
 });

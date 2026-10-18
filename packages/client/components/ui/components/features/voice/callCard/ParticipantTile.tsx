@@ -181,18 +181,18 @@ export const tile = cva({
     display: "grid",
     aspectRatio: "16/9",
     transition: "all .3s ease, width 0s, height 0s",
-    borderRadius: "var(--borderRadius-lg)",
+    borderRadius: "var(--radius-card)",
     width: "var(--vc-tile-width)",
     maxWidth: "calc(var(--vc-h) * 16 / 9)",
     cursor: "pointer",
 
     color: "var(--md-sys-color-on-surface)",
-    background: "#0002",
+    background: "var(--md-sys-color-surface-container-high)",
 
     overflow: "hidden",
-    outlineWidth: "3px",
+    outlineWidth: "2px",
     outlineStyle: "solid",
-    outlineOffset: "-3px",
+    outlineOffset: "-2px",
     outlineColor: "transparent",
   },
   variants: {

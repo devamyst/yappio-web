@@ -154,7 +154,8 @@ const MiniCard = styled("div", {
     gap: "var(--gap-md)",
     padding: "var(--gap-md)",
 
-    borderRadius: "var(--borderRadius-lg)",
-    background: "var(--md-sys-color-secondary-container)",
+    borderRadius: "var(--radius-card)",
+    boxShadow: "var(--elev-3)",
+    background: "var(--md-sys-color-surface-container-high)",
   },
 });
