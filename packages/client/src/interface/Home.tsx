@@ -111,7 +111,7 @@ const Chip = styled("button", {
     color: "var(--md-sys-color-on-surface)",
     background: "var(--md-sys-color-surface-container-high)",
     border: "1px solid var(--md-sys-color-outline-variant)",
-    borderRadius: "var(--radius-pill)",
+    borderRadius: "4px",
     transition:
       "transform var(--motion-fast) var(--ease-standard), border-color var(--motion-fast)",
     "&:hover": {

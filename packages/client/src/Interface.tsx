@@ -194,7 +194,7 @@ const ReconnectPill = styled("div", {
     gap: "var(--space-2)",
     padding: "6px 8px 6px 14px",
     maxWidth: "calc(100vw - 32px)",
-    borderRadius: "var(--radius-pill)",
+    borderRadius: "4px",
     fontSize: "13px",
     fontWeight: 600,
     color: "var(--md-sys-color-on-surface)",
@@ -222,7 +222,7 @@ const ReconnectButton = styled("button", {
   base: {
     cursor: "pointer",
     padding: "4px 12px",
-    borderRadius: "var(--radius-pill)",
+    borderRadius: "4px",
     fontSize: "13px",
     fontWeight: 700,
     color: "var(--md-sys-color-on-primary)",

@@ -175,7 +175,7 @@ export function ServerMemberSidebar(props: Props) {
         <VirtualContainer
           items={elements()}
           scrollTarget={props.scrollTargetElement}
-          itemSize={{ height: 42 }}
+          itemSize={{ height: 44 }}
         >
           {(item) => (
             <div
@@ -230,7 +230,7 @@ export function GroupMemberSidebar(props: Props) {
               a.displayName.localeCompare(b.displayName),
           )}
           scrollTarget={props.scrollTargetElement}
-          itemSize={{ height: 42 }}
+          itemSize={{ height: 44 }}
         >
           {(item) => (
             <div

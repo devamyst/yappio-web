@@ -260,7 +260,7 @@ const Tab = styled("button", {
     fontSize: "14px",
     fontWeight: 500,
     color: "var(--md-sys-color-on-surface-variant)",
-    borderRadius: "var(--radius-pill)",
+    borderRadius: "4px",
     transition:
       "background var(--motion-fast) var(--ease-standard), color var(--motion-fast)",
 
@@ -279,8 +279,9 @@ const Tab = styled("button", {
       true: {
         fontWeight: 600,
         color: "var(--md-sys-color-on-surface)",
-        background:
-          "color-mix(in srgb, var(--md-sys-color-primary) 22%, var(--md-sys-color-surface-container-high))",
+        background: "#5865f2",
+        color: "#ffffff",
+        "&:hover": { background: "#5865f2" },
       },
       false: {},
     },
@@ -295,8 +296,8 @@ const TabBadge = styled("span", {
     fontSize: "11px",
     fontWeight: 700,
     lineHeight: "18px",
-    color: "var(--md-sys-color-on-error)",
-    background: "var(--md-sys-color-error)",
+    color: "#ffffff",
+    background: "#da373c",
     borderRadius: "var(--radius-pill)",
   },
 });
@@ -321,13 +322,13 @@ const AddButton = styled("button", {
     cursor: "pointer",
     fontSize: "14px",
     fontWeight: 600,
-    color: "var(--md-sys-color-on-primary)",
-    background: "var(--md-sys-color-primary)",
-    borderRadius: "var(--radius-pill)",
-    transition: "filter var(--motion-fast) var(--ease-standard)",
+    color: "#ffffff",
+    background: "#248046",
+    borderRadius: "4px",
+    transition: "background var(--motion-fast) var(--ease-standard)",
 
     "&:hover": {
-      filter: "brightness(1.08)",
+      background: "#1a6334",
     },
 
     _phone: {
