@@ -14,7 +14,11 @@ const ErrorContainer = styled("span", {
     color: "var(--md-sys-color-error)",
     display: "flex",
     alignItems: "center",
-    gap: "0.25em",
+    gap: "0.4em",
+    padding: "10px 12px",
+    borderRadius: "var(--radius-control)",
+    background:
+      "color-mix(in srgb, var(--md-sys-color-error) 12%, transparent)",
 
     "& a": {
       color: "var(--md-sys-color-primary)",
@@ -63,6 +67,7 @@ const useFieldConfiguration = () => {
       "toggle-password": true,
       showPasswordIcon: "visibility",
       hidePasswordIcon: "visibility_off",
+      hint: () => t`At least 8 characters. A longer phrase beats a short tricky one.`,
       name: () => t`New Password`,
       placeholder: () => t`Enter a new password.`,
     },
@@ -73,6 +78,7 @@ const useFieldConfiguration = () => {
       minLength: 2,
       type: "text" as const,
       autocomplete: "none",
+      hint: () => t`People find you as username#1234. The number is added for you.`,
       name: () => t`Username`,
       placeholder: () => t`Enter your preferred username.`,
     },
@@ -85,6 +91,17 @@ const useFieldConfiguration = () => {
     },
   };
 };
+
+const FieldHint = styled("span", {
+  base: {
+    display: "block",
+    marginTop: "6px",
+    paddingInline: "4px",
+    fontSize: "12px",
+    lineHeight: 1.4,
+    color: "var(--md-sys-color-on-surface-variant)",
+  },
+});
 
 interface FieldProps {
   /**
@@ -114,7 +131,7 @@ export function Fields(props: FieldProps) {
           field = { field: field };
         }
         return (
-          <>
+          <div>
             {field.field === "log-out" ? (
               <Checkbox name={field.field}>
                 {fieldConfiguration[field.field].name()}
@@ -122,7 +139,7 @@ export function Fields(props: FieldProps) {
             ) : (
               <TextField
                 required
-                {...fieldConfiguration[field.field]}
+                {...omitHint(fieldConfiguration[field.field])}
                 name={field.field}
                 label={fieldConfiguration[field.field].name()}
                 placeholder={fieldConfiguration[field.field].placeholder()}
@@ -130,11 +147,23 @@ export function Fields(props: FieldProps) {
                 value={field.value}
               />
             )}
-          </>
+            <Show when={"hint" in fieldConfiguration[field.field]}>
+              <FieldHint>
+                {(
+                  fieldConfiguration[field.field] as { hint: () => string }
+                ).hint()}
+              </FieldHint>
+            </Show>
+          </div>
         );
       }}
     </For>
   );
+}
+
+function omitHint<T extends object>(config: T) {
+  const { hint: _hint, ...rest } = config as T & { hint?: unknown };
+  return rest;
 }
 
 interface Props {
@@ -186,7 +215,7 @@ export function Form(props: Props) {
 
   return (
     <form onSubmit={onSubmit}>
-      <Column gap="lg">
+      <Column gap="xl">
         {props.children}
         <Show when={error()}>
           <ErrorContainer>

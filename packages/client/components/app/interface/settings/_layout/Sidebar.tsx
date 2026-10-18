@@ -156,7 +156,8 @@ const CategoryTitle = styled("span", {
     textTransform: "uppercase",
     fontSize: "0.75rem",
     fontWeight: 700,
-    margin: "0 8px",
+    letterSpacing: "0.06em",
+    margin: "8px 10px 4px",
     marginInlineEnd: "20px",
 
     color: "var(--md-sys-color-outline)",

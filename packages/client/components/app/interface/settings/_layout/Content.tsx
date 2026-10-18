@@ -34,7 +34,10 @@ export function SettingsContent(props: {
         <InnerContent class="settings_cont">
           <InnerColumn>
             <Show when={props.page() !== "account"}>
-              <Text class="title" size="large">
+              <Text
+                class={`title ${css({ fontSize: "24px", fontWeight: 800, letterSpacing: "-0.02em", paddingBottom: "var(--space-2)" })}`}
+                size="large"
+              >
                 <Breadcrumbs
                   elements={props.page()!.split("/")}
                   renderElement={(key) =>

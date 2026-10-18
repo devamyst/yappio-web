@@ -51,13 +51,19 @@ const SidebarButtonBase = styled("a", {
     minWidth: 0,
     display: "flex",
     alignItems: "center",
-    padding: "6px 8px",
-    borderRadius: "var(--radius-xs)",
+    padding: "8px 10px",
+    borderRadius: "var(--radius-control)",
     fontWeight: 500,
     marginInlineEnd: "12px",
     fontSize: "15px",
     userSelect: "none",
-    transition: "background-color 0.1s ease-in-out",
+    cursor: "pointer",
+    transition:
+      "background-color var(--motion-fast) var(--ease-standard), color var(--motion-fast) var(--ease-standard)",
+
+    "&:hover": {
+      background: "var(--md-sys-color-surface-container-high)",
+    },
     color: "var(--md-sys-color-on-surface)",
     fill: "var(--md-sys-color-on-surface)",
     background: "unset",
@@ -69,8 +75,10 @@ const SidebarButtonBase = styled("a", {
   variants: {
     "aria-selected": {
       true: {
-        background: "var(--md-sys-color-surface-container-highest)",
-        fontWeight: 600,
+        background:
+          "color-mix(in srgb, var(--md-sys-color-primary) 16%, var(--md-sys-color-surface-container-high))",
+        boxShadow: "inset 3px 0 0 var(--md-sys-color-primary)",
+        fontWeight: 700,
       },
     },
   },
