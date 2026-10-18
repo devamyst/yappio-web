@@ -328,7 +328,7 @@ function People(props: {
       <VirtualContainer
         items={props.users}
         scrollTarget={props.scrollTargetElement()}
-        itemSize={{ height: 60 }}
+        itemSize={{ height: 72 }}
       >
         {(item) => (
           <ContainerListEntry
@@ -366,8 +366,13 @@ const Empty = styled("div", {
     flexDirection: "column",
     alignItems: "center",
     gap: "var(--space-2)",
-    padding: "var(--space-7) 0",
+    padding: "var(--space-7) var(--space-4)",
+    textAlign: "center",
     color: "var(--md-sys-color-on-surface-variant)",
+    borderRadius: "var(--radius-card)",
+    border: "1px dashed var(--md-sys-color-outline-variant)",
+    background:
+      "radial-gradient(60% 80% at 50% 0%, color-mix(in srgb, var(--md-sys-color-primary) 8%, transparent), transparent)",
   },
 });
 
@@ -378,25 +383,32 @@ const ContainerListEntry = styled("div", {
 });
 
 const rowStyle = css({
-  base: {
-    height: "56px",
-    display: "flex",
-    alignItems: "center",
-    gap: "var(--space-3)",
-    padding: "0 var(--space-3)",
-    cursor: "pointer",
-    color: "var(--md-sys-color-on-surface)",
-    borderRadius: "var(--radius-control)",
-    borderTop: "var(--hairline)",
-    transition: "background var(--motion-fast) var(--ease-standard)",
+  height: "64px",
+  display: "flex",
+  alignItems: "center",
+  gap: "var(--space-3)",
+  padding: "0 var(--space-3)",
+  marginBottom: "8px",
+  cursor: "pointer",
+  color: "var(--md-sys-color-on-surface)",
+  borderRadius: "var(--radius-card)",
+  border: "1px solid var(--md-sys-color-outline-variant)",
+  background: "var(--md-sys-color-surface-container-low)",
+  transition:
+    "background var(--motion-fast) var(--ease-standard), transform var(--motion-fast) var(--ease-standard), border-color var(--motion-fast) var(--ease-standard)",
 
-    "&:hover": {
-      background: "var(--md-sys-color-surface-container-high)",
-    },
+  "&:hover": {
+    background: "var(--md-sys-color-surface-container-high)",
+    transform: "translateY(-1px)",
+    borderColor: "color-mix(in srgb, var(--md-sys-color-primary) 40%, transparent)",
+  },
 
-    "&:hover [data-actions], &:focus-within [data-actions]": {
-      opacity: 1,
-    },
+  "&:hover [data-actions], &:focus-within [data-actions]": {
+    opacity: 1,
+  },
+
+  "@media (prefers-reduced-motion: reduce)": {
+    "&:hover": { transform: "none" },
   },
 });
 
@@ -424,6 +436,8 @@ const RowActions = styled("div", {
     opacity: 0,
     transition: "opacity var(--motion-fast) var(--ease-standard)",
 
+    "&:has([data-tone=accept])": { opacity: 1 },
+
     _phone: {
       opacity: 1,
     },
@@ -440,10 +454,18 @@ const RoundButton = styled("button", {
     color: "var(--md-sys-color-on-surface-variant)",
     borderRadius: "50%",
     background: "var(--md-sys-color-surface-container-highest)",
-    transition: "color var(--motion-fast) var(--ease-standard)",
+    transition: "color var(--motion-fast) var(--ease-standard), background var(--motion-fast) var(--ease-standard)",
 
     "&:hover": {
       color: "var(--md-sys-color-on-surface)",
+    },
+    "&[data-tone=accept]": {
+      color: "var(--md-sys-color-on-primary)",
+      background: "var(--md-sys-color-primary)",
+    },
+    "&[data-tone=decline]:hover": {
+      color: "var(--md-sys-color-on-error)",
+      background: "var(--md-sys-color-error)",
     },
 
     _phone: {
@@ -510,6 +532,7 @@ function Entry(
         <Show when={local.user.relationship === "Incoming"}>
           <RoundButton
             type="button"
+            data-tone="accept"
             title={t`Accept`}
             aria-label={t`Accept`}
             onClick={(e) => {
@@ -518,6 +541,29 @@ function Entry(
             }}
           >
             <Symbol size={20}>check</Symbol>
+          </RoundButton>
+        </Show>
+        <Show
+          when={
+            local.user.relationship === "Incoming" ||
+            local.user.relationship === "Outgoing"
+          }
+        >
+          <RoundButton
+            type="button"
+            data-tone="decline"
+            title={
+              local.user.relationship === "Incoming" ? t`Decline` : t`Cancel`
+            }
+            aria-label={
+              local.user.relationship === "Incoming" ? t`Decline` : t`Cancel`
+            }
+            onClick={(e) => {
+              e.stopPropagation();
+              local.user.removeFriend();
+            }}
+          >
+            <Symbol size={20}>close</Symbol>
           </RoundButton>
         </Show>
         <Show when={local.user.relationship === "Friend"}>
