@@ -78,7 +78,7 @@ export function ChannelHeader(props: Props) {
           }
         >
           <HeaderIcon>
-            <Symbol>tag</Symbol>
+            <Symbol>{props.channel.type === "Group" ? "group" : "tag"}</Symbol>
           </HeaderIcon>
           <NonBreakingText
             class={
@@ -202,7 +202,12 @@ export function ChannelHeader(props: Props) {
         </Button>
       </Show>
 
-      <Show when={props.sidebarState}>
+      <Show
+        when={
+          props.sidebarState &&
+          !(layout() === "phone" && props.channel.type === "Group")
+        }
+      >
         <IconButton
           use:floating={{
             tooltip: {

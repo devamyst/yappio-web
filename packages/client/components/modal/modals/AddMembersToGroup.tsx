@@ -1,5 +1,5 @@
 import { createFormControl, createFormGroup } from "solid-forms";
-import { createMemo, createSignal } from "solid-js";
+import { Show, createMemo, createSignal } from "solid-js";
 
 import { Trans, useLingui } from "@lingui/solid/macro";
 
@@ -11,6 +11,7 @@ import {
   DialogProps,
   Form2,
   Row,
+  Text,
   TextField,
 } from "@revolt/ui";
 
@@ -87,6 +88,16 @@ export function AddMembersToGroupModal(
             placeholder={t`Search for users...`}
             onKeyUp={(e) => setFilter(e.currentTarget.value)}
           />
+
+          <Show when={users().length === 0}>
+            <Text class="body">
+              {filter() ? (
+                <Trans>No friends match your search.</Trans>
+              ) : (
+                <Trans>All of your friends are already in this group.</Trans>
+              )}
+            </Text>
+          </Show>
 
           <Form2.VirtualSelect
             items={users()}

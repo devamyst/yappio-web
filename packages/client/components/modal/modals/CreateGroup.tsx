@@ -1,5 +1,5 @@
 import { createFormControl, createFormGroup } from "solid-forms";
-import { createMemo, createSignal } from "solid-js";
+import { Show, createMemo, createSignal } from "solid-js";
 
 import { Trans, useLingui } from "@lingui/solid/macro";
 
@@ -102,6 +102,16 @@ export function CreateGroupModal(
             placeholder={t`Search for users...`}
             onKeyUp={(e) => setFilter(e.currentTarget.value)}
           />
+
+          <Show when={users().length === 0}>
+            <Text class="body">
+              {filter() ? (
+                <Trans>No friends match your search.</Trans>
+              ) : (
+                <Trans>Add some friends first, then you can group them.</Trans>
+              )}
+            </Text>
+          </Show>
 
           <Form2.VirtualSelect
             items={users()}

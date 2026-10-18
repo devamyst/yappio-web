@@ -111,7 +111,9 @@ export function Friends() {
         <HeaderIcon>
           <Symbol>group</Symbol>
         </HeaderIcon>
-        <Trans>Friends</Trans>
+        <PhoneHidden>
+          <Trans>Friends</Trans>
+        </PhoneHidden>
         <TabDivider />
         <Tabs role="tablist">
           {tabs.map((tab) => (
@@ -138,6 +140,7 @@ export function Friends() {
         </Tabs>
         <AddButton
           type="button"
+          aria-label={t`Add friend`}
           onClick={() =>
             openModal({
               type: "add_friend",
@@ -145,7 +148,12 @@ export function Friends() {
             })
           }
         >
-          <Trans>Add friend</Trans>
+          <PhoneHidden>
+            <Trans>Add friend</Trans>
+          </PhoneHidden>
+          <PhoneOnly>
+            <Symbol>person_add</Symbol>
+          </PhoneOnly>
         </AddButton>
       </Header>
 
@@ -200,8 +208,28 @@ export function Friends() {
   );
 }
 
+const PhoneHidden = styled("span", {
+  base: {
+    _phone: {
+      display: "none",
+    },
+  },
+});
+
+const PhoneOnly = styled("span", {
+  base: {
+    display: "none",
+    _phone: {
+      display: "inline-flex",
+    },
+  },
+});
+
 const TabDivider = styled("div", {
   base: {
+    _phone: {
+      display: "none",
+    },
     width: "1px",
     height: "20px",
     flexShrink: 0,
@@ -242,7 +270,8 @@ const Tab = styled("button", {
     },
 
     _phone: {
-      minHeight: "40px",
+      minHeight: "44px",
+      padding: "0 var(--space-2)",
     },
   },
   variants: {
@@ -277,6 +306,10 @@ const TabCount = styled("span", {
     fontSize: "12px",
     fontWeight: 600,
     opacity: 0.7,
+
+    _phone: {
+      display: "none",
+    },
   },
 });
 
@@ -298,7 +331,8 @@ const AddButton = styled("button", {
     },
 
     _phone: {
-      minHeight: "40px",
+      minHeight: "44px",
+      padding: "0 var(--space-3)",
     },
   },
 });
@@ -469,8 +503,8 @@ const RoundButton = styled("button", {
     },
 
     _phone: {
-      width: "40px",
-      height: "40px",
+      width: "44px",
+      height: "44px",
     },
   },
 });
@@ -498,7 +532,12 @@ function Entry(
       case "Blocked":
         return t`Blocked`;
       default:
-        return local.user.status?.text ?? local.user.presence ?? t`Offline`;
+        return (
+          local.user.status?.text ??
+          (local.user.online && local.user.presence !== "Invisible"
+            ? local.user.presence
+            : t`Offline`)
+        );
     }
   };
 
