@@ -1,5 +1,6 @@
 import { JSX } from "solid-js";
 
+import { css } from "styled-system/css";
 import { styled } from "styled-system/jsx";
 
 import { Titlebar } from "@revolt/app/interface/desktop/Titlebar";
@@ -8,6 +9,7 @@ import { IconButton, iconSize } from "@revolt/ui";
 
 import MdDarkMode from "@material-design-icons/svg/filled/dark_mode.svg?component-solid";
 
+import Wordmark from "../../../public/assets/web/wordmark.svg?component-solid";
 import background from "./background.jpg";
 import { FlowBase } from "./flows/Flow";
 
@@ -30,6 +32,11 @@ const Base = styled("div", {
     mdDown: {
       padding: "30px 20px",
     },
+
+    _phone: {
+      padding: 0,
+      justifyContent: "flex-start",
+    },
   },
 });
 
@@ -41,11 +48,8 @@ const Root = styled("div", {
     paddingBottom: "env(keyboard-inset-height)",
 
     color: "var(--md-sys-color-on-surface)",
-    background: "var(--md-sys-color-surface)",
-    // background: `var(--url)`,
-    // backgroundPosition: "center",
-    // backgroundRepeat: "no-repeat",
-    // backgroundSize: "cover",
+    background:
+      "radial-gradient(ellipse 60% 50% at 50% 0%, rgb(200 244 60 / 0.12), transparent 70%), var(--md-sys-color-surface-container-lowest)",
   },
 });
 
@@ -61,6 +65,18 @@ const Nav = styled("div", {
     justifyContent: "space-between",
 
     textDecoration: "none",
+
+    _phone: {
+      padding: "var(--space-3) var(--space-4)",
+    },
+  },
+});
+
+const brandMark = css({
+  base: {
+    height: "22px",
+    width: "auto",
+    fill: "var(--md-sys-color-on-surface)",
   },
 });
 
@@ -79,7 +95,7 @@ export function AuthPage(props: { children: JSX.Element }) {
         css={{ scrollbar: "hidden" }}
       >
         <Nav>
-          <div />
+          <Wordmark class={brandMark} />
           <IconButton
             variant="tonal"
             onPress={() =>
