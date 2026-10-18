@@ -266,8 +266,7 @@ export const ServerList = (props: Props) => {
             </TileWrap>
           </a>
         </Tooltip>
-        <Show when={instance.isStoat}>
-          <Tooltip placement="right" content={"Find new servers to join"}>
+        <Tooltip placement="right" content={"Find new servers to join"}>
             <a
               href={state.layout.getLastActiveDiscoverPath()}
               class={entryContainer()}
@@ -279,7 +278,7 @@ export const ServerList = (props: Props) => {
               </TileWrap>
             </a>
           </Tooltip>
-        </Show>
+        
       </div>
     </ServerListBase>
   );

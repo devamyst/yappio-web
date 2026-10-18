@@ -3,6 +3,7 @@ import { For, Match, Show, Switch, createResource } from "solid-js";
 import { Trans } from "@lingui/solid/macro";
 import { styled } from "styled-system/jsx";
 
+import { useClient } from "@revolt/client";
 import { Listing, discovery } from "@revolt/common/lib/discovery";
 import { useModals } from "@revolt/modal";
 
@@ -21,10 +22,17 @@ export function MyListings(props: {
   onPublish: () => void;
 }) {
   const { openModal, showError } = useModals();
+  const client = useClient();
 
   const [data, { refetch }] = createResource(
     () => props.token,
-    (token) => discovery.mine(token),
+    (token) =>
+      discovery.mine(
+        token,
+        client()
+          .servers.filter((entry) => entry.owner?.self)
+          .map((entry) => entry.id),
+      ),
   );
 
   async function unpublish(item: Listing) {

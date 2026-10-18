@@ -25,9 +25,17 @@ import type { SettingsConfigurations } from "@revolt/app";
 import { CategoryData } from "@revolt/app/menus/CategoryContextMenu";
 import { ScreenShareQualityName } from "@revolt/state/stores/Voice";
 
+import type { Listing } from "@revolt/common/lib/discovery";
+
 import type { ChangelogResponse } from "./modals/Changelog";
 
 export type Modals =
+  | {
+      type: "publish_listing";
+      server?: Server;
+      listing?: Listing;
+      onDone?: () => void;
+    }
   | {
       type: "add_bot";
       invite: PublicBot;

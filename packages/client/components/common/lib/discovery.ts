@@ -123,9 +123,9 @@ export const discovery = {
   listings: (params: ListingQuery) =>
     call<ListingsPage>("/listings" + query(params), undefined),
 
-  mine: (token: string) =>
+  mine: (token: string, serverIds: string[] = []) =>
     call<{ listings: Listing[]; servers: Target[]; bots: Target[] }>(
-      "/mine",
+      "/mine" + query({ servers: serverIds.join(",") }),
       token,
     ),
 
