@@ -60,9 +60,7 @@ export function AppearanceMenu() {
     <Column gap="lg">
       <MessagePreview>
         <Text>
-          Welcome to the new appearance menu, custom themes are not available
-          just yet but we are looking for feedback on how to best implement
-          them!
+          Pick a colour scheme and how messages look. Changes apply right away.
         </Text>
       </MessagePreview>
 
@@ -480,9 +478,9 @@ function EmojiPack(props: { pack: UnicodeEmojiPacks }) {
 
 const Preview = styled("div", {
   base: {
-    height: "126px",
+    minHeight: "126px",
     overflow: "hidden",
-    borderRadius: "var(--borderRadius-lg)",
+    borderRadius: "var(--radius-card)",
     background: "var(--md-sys-color-surface-container-lowest)",
   },
 });
