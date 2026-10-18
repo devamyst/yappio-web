@@ -4,6 +4,7 @@ import {
   JSX,
   Match,
   onCleanup,
+  Show,
   Switch,
 } from "solid-js";
 
@@ -23,6 +24,7 @@ import { LAYOUT_SECTIONS } from "@revolt/state/stores/Layout";
 import { LoadingScreen } from "@revolt/ui";
 
 import { SlideDrawer } from "../components/ui/components/navigation/SlideDrawer";
+import { Landing } from "./Landing";
 import { Sidebar } from "./interface/Sidebar";
 
 /**
@@ -33,7 +35,8 @@ const Interface = (props: { children: JSX.Element }) => {
   const client = useClient();
   const { openModal } = useModals();
   const { isLoggedIn, lifecycle } = useClientLifecycle();
-  const { pathname } = useLocation();
+  const location = useLocation();
+  const { pathname } = location;
 
   useBeforeLeave((e) => {
     if (!e.defaultPrevented) {
@@ -87,7 +90,11 @@ const Interface = (props: { children: JSX.Element }) => {
     state.setAppDrawer((sDrawer = undefined));
   });
 
+  const showLanding = () =>
+    !isLoggedIn() && location.pathname === "/" && !state.auth.getSession();
+
   return (
+    <Show when={!showLanding()} fallback={<Landing />}>
     <MessageCache client={client()}>
       <AppRoot ref={rootRef} class="app_root">
         <Titlebar />
@@ -136,6 +143,7 @@ const Interface = (props: { children: JSX.Element }) => {
         <NotificationsWorker />
       </AppRoot>
     </MessageCache>
+    </Show>
   );
 };
 
