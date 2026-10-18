@@ -21,7 +21,12 @@ export function ConversationStart(props: Props) {
     <Base>
       <Show when={props.channel.type !== "SavedMessages"}>
         <Text class="headline" size="large">
-          {props.channel.name ?? props.channel.recipient?.username}
+          <Show
+            when={props.channel.type === "TextChannel"}
+            fallback={props.channel.name ?? props.channel.recipient?.username}
+          >
+            <Trans>Welcome to #{props.channel.name}</Trans>
+          </Show>
         </Text>
       </Show>
       <Text class="title">

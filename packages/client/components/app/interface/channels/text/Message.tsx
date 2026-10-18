@@ -169,7 +169,7 @@ export function Message(props: Props) {
             use:floating={floatingUserMenusFromMessage(props.message)}
           >
             <Avatar
-              size={36}
+              size={40}
               src={
                 isHovering()
                   ? props.message.animatedAvatarURL

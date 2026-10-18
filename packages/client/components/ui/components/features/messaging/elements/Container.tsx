@@ -132,7 +132,7 @@ const base = cva({
 
     padding: "2px 0",
     background: "transparent",
-    borderRadius: "var(--borderRadius-md)",
+    borderRadius: "0",
     minHeight: "1em",
 
     transition: "background-color var(--transitions-fast)",
@@ -153,7 +153,8 @@ const base = cva({
     },
     mentioned: {
       true: {
-        background: "var(--md-sys-color-primary-container)",
+        background: "rgb(200 244 60 / 0.07)",
+        boxShadow: "inset 2px 0 0 var(--md-sys-color-primary)",
       },
     },
     highlight: {
@@ -186,7 +187,8 @@ const base = cva({
         marginTop: "var(--message-group-spacing) !important",
 
         "&:hover": {
-          background: "var(--md-sys-color-surface-container)",
+          background:
+            "color-mix(in srgb, var(--md-sys-color-on-surface) 4%, transparent)",
         },
       },
       hide: {},
@@ -212,7 +214,7 @@ const Info = styled("div", {
   base: {
     display: "flex",
     flexShrink: 0,
-    justifyContent: "end",
+    justifyContent: "center",
     padding: "2px var(--gap-sm)",
   },
   variants: {
@@ -224,7 +226,7 @@ const Info = styled("div", {
     compact: {
       true: {},
       false: {
-        width: "54px",
+        width: "72px",
       },
     },
   },
@@ -244,7 +246,7 @@ const Body = styled("div", {
 
     minWidth: 0,
     overflow: "hidden",
-    paddingInlineEnd: "var(--gap-lg)",
+    paddingInlineEnd: "var(--space-4)",
   },
   variants: {
     editing: {
