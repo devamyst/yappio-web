@@ -134,16 +134,16 @@ export class Theme extends AbstractStore<"theme", TypeTheme> {
       preset: "you",
       mode: "dark",
 
-      m3Accent: "#c8f43c",
+      m3Accent: "#5865f2",
       m3Contrast: 0.0,
       m3Variant: "tonal_spot",
 
-      interfaceFont: "Plus Jakarta Sans Variable",
+      interfaceFont: "Inter",
       monospaceFont: "Fira Code",
 
-      blur: true,
-      messageSize: 15,
-      messageGroupSpacing: 16,
+      blur: false,
+      messageSize: 16,
+      messageGroupSpacing: 20,
     };
   }
 
@@ -169,7 +169,10 @@ export class Theme extends AbstractStore<"theme", TypeTheme> {
       input.m3Accent &&
       input.m3Accent.match(/#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})/)
     ) {
-      data.m3Accent = input.m3Accent;
+      data.m3Accent =
+        input.m3Accent.toLowerCase() === "#c8f43c"
+          ? "#5865f2"
+          : input.m3Accent;
     }
 
     if (
@@ -211,7 +214,10 @@ export class Theme extends AbstractStore<"theme", TypeTheme> {
       typeof input.interfaceFont === "string" &&
       FONT_KEYS.includes(input.interfaceFont)
     ) {
-      data.interfaceFont = input.interfaceFont;
+      data.interfaceFont =
+        input.interfaceFont === "Plus Jakarta Sans Variable"
+          ? "Inter"
+          : input.interfaceFont;
     }
 
     return data;

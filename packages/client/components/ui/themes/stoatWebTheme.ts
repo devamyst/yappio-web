@@ -21,7 +21,7 @@ export function createStoatWebVariables(theme: SelectedTheme) {
     "--emoji-size-large": "96px",
 
     // effects
-    "--effects-blur-md": theme.blur ? "blur(20px)" : "unset",
+    "--effects-blur-md": "unset",
     "--effects-invert-black": theme.darkMode ? "invert(100%)" : "invert(0%)",
     "--effects-invert-light": theme.darkMode ? "invert(0%)" : "invert(1000%)",
 
@@ -30,17 +30,17 @@ export function createStoatWebVariables(theme: SelectedTheme) {
     "--transitions-medium": "var(--motion-med) var(--ease-standard)",
 
     // brand
-    "--brand-presence-online": "#3ABF7E",
+    "--brand-presence-online": "#23A55A",
     "--brand-presence-idle": "#F0B232",
     "--brand-presence-busy": "#F23F43",
-    "--brand-presence-focus": "#4799F0",
+    "--brand-presence-focus": "#00A8FC",
     "--brand-presence-invisible": "#80848E",
 
     // radius
-    "--radius-xs": "4px",
-    "--radius-control": "8px",
-    "--radius-card": "12px",
-    "--radius-modal": "16px",
+    "--radius-xs": "3px",
+    "--radius-control": "4px",
+    "--radius-card": "8px",
+    "--radius-modal": "8px",
     "--radius-pill": "999px",
     "--radius-server": "16px",
 

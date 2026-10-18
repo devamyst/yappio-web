@@ -10,11 +10,9 @@ import Wordmark from "../public/assets/web/wordmark.svg?component-solid";
 
 const keyframes = `
 @keyframes yl-up { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
-@keyframes yl-ring { 0%, 100% { box-shadow: 0 0 0 3px var(--md-sys-color-primary), 0 0 18px rgb(200 244 60 / 0.35); } 50% { box-shadow: 0 0 0 3px var(--md-sys-color-primary), 0 0 30px rgb(200 244 60 / 0.6); } }
-@keyframes yl-blob { 0%, 100% { transform: translate(0, 0) scale(1); } 50% { transform: translate(40px, -30px) scale(1.15); } }
+@keyframes yl-ring { 0%, 100% { box-shadow: 0 0 0 3px #23a55a; } 50% { box-shadow: 0 0 0 5px #23a55a; } }
 @keyframes yl-float { 0%, 100% { transform: translateY(0) rotate(var(--r, 0deg)); } 50% { transform: translateY(-10px) rotate(var(--r, 0deg)); } }
-@keyframes yl-shine { 0% { background-position: 0% 50%; } 100% { background-position: 200% 50%; } }
-@media (prefers-reduced-motion: reduce) { .yl-anim, .yl-ring, .yl-blob, .yl-float, .yl-shine { animation: none !important; } }
+@media (prefers-reduced-motion: reduce) { .yl-anim, .yl-ring, .yl-float { animation: none !important; } }
 `;
 
 const page = css({
@@ -22,7 +20,7 @@ const page = css({
   overflowY: "auto",
   overflowX: "hidden",
   color: "var(--md-sys-color-on-surface)",
-  background: "var(--md-sys-color-surface-container-lowest)",
+  background: "var(--md-sys-color-surface-container-low)",
   fontFamily: "inherit",
   scrollBehavior: "smooth",
   "& h1, & h2, & h3, & p": { margin: 0 },
@@ -37,6 +35,8 @@ const wrap = css({
 });
 
 const nav = css({
+  position: "relative",
+  zIndex: 1,
   display: "flex",
   alignItems: "center",
   justifyContent: "space-between",
@@ -46,8 +46,8 @@ const nav = css({
 const brand = css({
   height: "24px",
   width: "auto",
-  fill: "var(--md-sys-color-on-surface)",
-  filter: "var(--yappio-wordmark-filter, none)",
+  fill: "#ffffff",
+  filter: "brightness(0) invert(1)",
 });
 
 const btnBase = {
@@ -55,17 +55,16 @@ const btnBase = {
   alignItems: "center",
   justifyContent: "center",
   gap: "8px",
-  height: "48px",
+  height: "44px",
   paddingInline: "24px",
-  borderRadius: "var(--radius-pill)",
-  fontWeight: 700,
+  borderRadius: "3px",
+  fontWeight: 600,
   fontSize: "15px",
   textDecoration: "none",
   cursor: "pointer",
   whiteSpace: "nowrap",
   transition:
-    "transform var(--motion-fast) var(--ease-standard), background var(--motion-fast) var(--ease-standard), box-shadow var(--motion-fast) var(--ease-standard)",
-  "&:hover": { transform: "translateY(-2px)" },
+    "background var(--motion-fast) var(--ease-standard), color var(--motion-fast) var(--ease-standard)",
   "&:focus-visible": {
     outline: "2px solid var(--md-sys-color-primary)",
     outlineOffset: "3px",
@@ -74,20 +73,24 @@ const btnBase = {
 
 const btnPrimary = css({
   ...btnBase,
-  background: "var(--md-sys-color-primary)",
-  color: "var(--md-sys-color-on-primary)",
-  boxShadow: "0 6px 24px rgb(200 244 60 / 0.28)",
-  "&:hover": {
-    transform: "translateY(-2px)",
-    boxShadow: "0 8px 30px rgb(200 244 60 / 0.4)",
-  },
+  background: "#5865f2",
+  color: "#ffffff",
+  "&:hover": { background: "#4752c4" },
+  "&:active": { background: "#3c45a5" },
 });
 
-const btnGhost = css({
+const btnHero = css({
   ...btnBase,
-  color: "var(--md-sys-color-on-surface)",
-  background: "var(--md-sys-color-surface-container-high)",
-  border: "1px solid var(--md-sys-color-outline-variant)",
+  background: "#ffffff",
+  color: "#23272a",
+  "&:hover": { background: "#f2f3f5" },
+});
+
+const btnHeroGhost = css({
+  ...btnBase,
+  background: "rgb(255 255 255 / 0.16)",
+  color: "#ffffff",
+  "&:hover": { background: "rgb(255 255 255 / 0.26)" },
 });
 
 const btnSmall = css({ height: "40px", paddingInline: "18px", fontSize: "14px" });
@@ -117,17 +120,18 @@ const heroText = css({
 
 const h1 = css({
   fontSize: "clamp(42px, 8vw, 76px)",
-  lineHeight: 1,
+  lineHeight: 1.1,
   fontWeight: 800,
-  letterSpacing: "-0.04em",
+  letterSpacing: "-0.02em",
   "& em": { fontStyle: "normal" },
+  color: "#ffffff",
 });
 
 const lead = css({
   fontSize: "18px",
   lineHeight: 1.55,
   maxWidth: "480px",
-  color: "var(--md-sys-color-on-surface-variant)",
+  color: "rgb(255 255 255 / 0.9)",
 });
 
 const ctas = css({
@@ -135,55 +139,6 @@ const ctas = css({
   flexWrap: "wrap",
   gap: "12px",
   "@media (max-width: 860px)": { justifyContent: "center" },
-});
-
-const glow = css({
-  position: "absolute",
-  inset: "-10% -10% auto auto",
-  width: "70%",
-  height: "90%",
-  background:
-    "radial-gradient(ellipse at center, rgb(200 244 60 / 0.2), transparent 65%)",
-  pointerEvents: "none",
-  zIndex: 0,
-});
-
-const blobBase = {
-  position: "absolute",
-  borderRadius: "50%",
-  filter: "blur(70px)",
-  pointerEvents: "none",
-  zIndex: 0,
-  animation: "yl-blob 14s ease-in-out infinite",
-} as const;
-
-const blobLime = css({
-  ...blobBase,
-  width: "420px",
-  height: "420px",
-  top: "-120px",
-  left: "-120px",
-  background: "rgb(200 244 60 / 0.28)",
-});
-
-const blobTeal = css({
-  ...blobBase,
-  width: "380px",
-  height: "380px",
-  top: "120px",
-  right: "-140px",
-  background: "rgb(91 212 160 / 0.22)",
-  animationDelay: "-5s",
-});
-
-const blobViolet = css({
-  ...blobBase,
-  width: "320px",
-  height: "320px",
-  bottom: "-100px",
-  left: "35%",
-  background: "rgb(140 120 255 / 0.18)",
-  animationDelay: "-9s",
 });
 
 const heroBg = css({
@@ -196,21 +151,14 @@ const heroBg = css({
   overflow: "hidden",
   zIndex: 0,
   pointerEvents: "none",
-  maskImage: "linear-gradient(to bottom, #000 70%, transparent)",
+  background: "#5865f2",
 });
 
 const hl = css({
-  color: "var(--md-sys-color-primary)",
-  background:
-    "linear-gradient(90deg, var(--md-sys-color-primary), #5bd4a0, var(--md-sys-color-primary))",
-  backgroundSize: "200% 100%",
-  WebkitBackgroundClip: "text",
-  backgroundClip: "text",
-  WebkitTextFillColor: "transparent",
-  animation: "yl-shine 6s linear infinite",
+  fontStyle: "normal",
   textDecoration: "underline",
-  textDecorationColor: "rgb(200 244 60 / 0.4)",
-  textDecorationThickness: "6px",
+  textDecorationColor: "rgb(255 255 255 / 0.5)",
+  textDecorationThickness: "4px",
   textUnderlineOffset: "6px",
 });
 
@@ -221,9 +169,9 @@ const floatCard = css({
   borderRadius: "var(--radius-card)",
   fontSize: "13px",
   fontWeight: 600,
-  background: "var(--md-sys-color-surface-container-highest)",
+  background: "var(--md-sys-color-surface)",
   border: "1px solid var(--md-sys-color-outline-variant)",
-  boxShadow: "var(--elev-3)",
+  boxShadow: "var(--elev-2)",
   animation: "yl-float 6s ease-in-out infinite",
   display: "flex",
   alignItems: "center",
@@ -243,11 +191,8 @@ const stats = css({
 const stat = css({
   padding: "24px",
   borderRadius: "var(--radius-card)",
-  background:
-    "linear-gradient(145deg, color-mix(in srgb, var(--md-sys-color-primary) 14%, var(--md-sys-color-surface-container)), var(--md-sys-color-surface-container))",
+  background: "var(--md-sys-color-surface)",
   border: "1px solid var(--md-sys-color-outline-variant)",
-  transition: "transform var(--motion-med) var(--ease-emph)",
-  "&:hover": { transform: "translateY(-4px)" },
   "& strong": {
     display: "block",
     fontSize: "40px",
@@ -273,10 +218,8 @@ const teaser = css({
   scrollSnapAlign: "start",
   borderRadius: "var(--radius-card)",
   overflow: "hidden",
-  background: "var(--md-sys-color-surface-container)",
+  background: "var(--md-sys-color-surface)",
   border: "1px solid var(--md-sys-color-outline-variant)",
-  transition: "transform var(--motion-med) var(--ease-emph)",
-  "&:hover": { transform: "translateY(-4px)" },
   "& div": { height: "72px" },
   "& p": { padding: "12px 14px", fontWeight: 700, fontSize: "14px" },
   "& small": {
@@ -297,23 +240,22 @@ const band = css({
   textAlign: "center",
   padding: "64px 24px",
   borderRadius: "var(--radius-modal)",
-  background:
-    "linear-gradient(135deg, #c8f43c 0%, #7fe3a0 55%, #5bd4a0 100%)",
-  color: "#10130a",
+  background: "#5865f2",
+  color: "#ffffff",
   "& h2": {
     fontSize: "clamp(28px, 5vw, 44px)",
     fontWeight: 800,
-    letterSpacing: "-0.03em",
-    color: "#10130a",
+    letterSpacing: "-0.02em",
+    color: "#ffffff",
   },
-  "& p": { color: "#2b3318", maxWidth: "460px", fontSize: "16px" },
+  "& p": { color: "rgb(255 255 255 / 0.9)", maxWidth: "460px", fontSize: "16px" },
 });
 
 const bandBtn = css({
   ...btnBase,
-  background: "#10130a",
-  color: "#c8f43c",
-  "&:hover": { transform: "translateY(-2px) scale(1.03)" },
+  background: "#ffffff",
+  color: "#23272a",
+  "&:hover": { background: "#f2f3f5" },
 });
 
 const mock = css({
@@ -321,11 +263,11 @@ const mock = css({
   zIndex: 1,
   display: "flex",
   minHeight: "340px",
-  borderRadius: "var(--radius-modal)",
+  borderRadius: "8px",
   overflow: "hidden",
-  background: "var(--md-sys-color-surface-container)",
+  background: "var(--md-sys-color-surface)",
   border: "1px solid var(--md-sys-color-outline-variant)",
-  boxShadow: "var(--elev-3), 0 0 80px rgb(200 244 60 / 0.14)",
+  boxShadow: "var(--elev-3)",
 });
 
 const rail = css({
@@ -342,11 +284,11 @@ const rail = css({
 const railDot = css({
   width: "36px",
   height: "36px",
-  borderRadius: "12px",
+  borderRadius: "50%",
   background: "var(--md-sys-color-surface-container-highest)",
   "&[data-on]": {
-    background: "var(--md-sys-color-primary)",
-    borderRadius: "var(--radius-control)",
+    background: "#5865f2",
+    borderRadius: "16px",
   },
 });
 
@@ -379,14 +321,13 @@ const avatar = css({
 const bubble = css({
   maxWidth: "80%",
   padding: "9px 14px",
-  borderRadius: "16px 16px 16px 4px",
+  borderRadius: "8px",
   fontSize: "14px",
-  lineHeight: 1.4,
+  lineHeight: 1.5,
   background: "var(--md-sys-color-surface-container-highest)",
   "&[data-me]": {
-    borderRadius: "16px 16px 4px 16px",
-    background: "var(--md-sys-color-primary)",
-    color: "var(--md-sys-color-on-primary)",
+    background: "#5865f2",
+    color: "#ffffff",
     marginInlineStart: "auto",
   },
 });
@@ -407,7 +348,7 @@ const speakAvatar = css({
   width: "40px",
   height: "40px",
   borderRadius: "50%",
-  background: "linear-gradient(135deg, #c8f43c, #5bd4a0)",
+  background: "#23a55a",
   animation: "yl-ring 2s ease-in-out infinite",
 });
 
@@ -415,8 +356,8 @@ const section = css({ paddingBlock: "64px" });
 
 const h2 = css({
   fontSize: "clamp(26px, 4vw, 36px)",
-  fontWeight: 800,
-  letterSpacing: "-0.02em",
+  fontWeight: 700,
+  letterSpacing: "0",
   marginBottom: "12px",
 });
 
@@ -442,14 +383,8 @@ const card = css({
   gap: "8px",
   padding: "20px",
   borderRadius: "var(--radius-card)",
-  background: "var(--md-sys-color-surface-container)",
+  background: "var(--md-sys-color-surface)",
   border: "1px solid var(--md-sys-color-outline-variant)",
-  transition:
-    "transform var(--motion-med) var(--ease-emph), border-color var(--motion-fast) var(--ease-standard)",
-  "&:hover": {
-    transform: "translateY(-3px)",
-    borderColor: "var(--md-sys-color-primary)",
-  },
   "& h3": { fontSize: "17px", fontWeight: 700 },
   "& p": {
     fontSize: "14px",
@@ -464,8 +399,8 @@ const cardIcon = css({
   display: "grid",
   placeItems: "center",
   borderRadius: "var(--radius-control)",
-  color: "var(--md-sys-color-on-primary-container)",
-  background: "var(--md-sys-color-primary-container)",
+  color: "#ffffff",
+  background: "#5865f2",
 });
 
 const openSource = css({
@@ -475,8 +410,7 @@ const openSource = css({
   gap: "16px",
   padding: "40px",
   borderRadius: "var(--radius-modal)",
-  background:
-    "radial-gradient(ellipse 70% 120% at 0% 0%, rgb(200 244 60 / 0.16), transparent 70%), var(--md-sys-color-surface-container)",
+  background: "var(--md-sys-color-surface)",
   border: "1px solid var(--md-sys-color-outline-variant)",
   "@media (max-width: 560px)": { padding: "24px" },
 });
@@ -484,17 +418,19 @@ const openSource = css({
 const footer = css({
   marginTop: "32px",
   paddingBlock: "32px",
-  borderTop: "1px solid var(--md-sys-color-outline-variant)",
+  background: "#1e1f22",
+  boxShadow: "0 0 0 100vmax #1e1f22",
+  clipPath: "inset(0 -100vmax)",
   display: "flex",
   flexWrap: "wrap",
   gap: "16px 32px",
   alignItems: "center",
   justifyContent: "space-between",
   fontSize: "14px",
-  color: "var(--md-sys-color-on-surface-variant)",
+  color: "#b5bac1",
   "& nav": { display: "flex", gap: "20px" },
   "& nav a": { color: "inherit", textDecoration: "none" },
-  "& nav a:hover": { color: "var(--md-sys-color-primary)" },
+  "& nav a:hover": { color: "#ffffff", textDecoration: "underline" },
 });
 
 function Up(props: { delay?: number; children: JSX.Element; class?: string }) {
@@ -601,19 +537,14 @@ export function Landing() {
       <div class={wrap}>
         <header class={nav}>
           <Wordmark class={brand} aria-label="Yappio" />
-          <a href="/login/auth" class={`${btnGhost} ${btnSmall}`}>
+          <a href="/login/auth" class={`${btnHeroGhost} ${btnSmall}`}>
             <Trans>Log in</Trans>
           </a>
         </header>
 
         <main>
           <section class={hero}>
-            <div class={heroBg} aria-hidden="true">
-              <div class={`${blobLime} yl-blob`} />
-              <div class={`${blobTeal} yl-blob`} />
-              <div class={`${blobViolet} yl-blob`} />
-            </div>
-            <div class={glow} aria-hidden="true" />
+            <div class={heroBg} aria-hidden="true" />
             <div class={heroText} style={{ position: "relative", "z-index": 1 }}>
               <Up>
                 <h1 class={h1}>
@@ -632,10 +563,10 @@ export function Landing() {
                 </p>
               </Up>
               <Up delay={0.2} class={ctas}>
-                <a href="/login/auth" class={btnPrimary}>
+                <a href="/login/auth" class={btnHero}>
                   <Trans>Open Yappio</Trans>
                 </a>
-                <a href="/login/create" class={btnGhost}>
+                <a href="/login/create" class={btnHeroGhost}>
                   <Trans>Create account</Trans>
                 </a>
               </Up>
@@ -677,7 +608,7 @@ export function Landing() {
                     <span
                       class={avatar}
                       style={{
-                        background: "linear-gradient(135deg, #7aa2ff, #b07aff)",
+                        background: "#5865f2",
                       }}
                     />
                     <div class={bubble}>
@@ -693,7 +624,7 @@ export function Landing() {
                     <span
                       class={avatar}
                       style={{
-                        background: "linear-gradient(135deg, #ff9a7a, #ffd36b)",
+                        background: "#eb459e",
                       }}
                     />
                     <div class={bubble}>
@@ -784,16 +715,16 @@ export function Landing() {
             <div class={teaserRow}>
               <For
                 each={[
-                  ["Gaming", "#7aa2ff", "#b07aff"],
-                  ["Music", "#ff9a7a", "#ffd36b"],
-                  ["Art", "#c8f43c", "#5bd4a0"],
-                  ["Coding", "#5bd4a0", "#7aa2ff"],
-                  ["Study", "#ffd36b", "#ff7ab0"],
+                  ["Gaming", "#5865f2", "#5865f2"],
+                  ["Music", "#f23f43", "#f23f43"],
+                  ["Art", "#eb459e", "#eb459e"],
+                  ["Coding", "#23a55a", "#23a55a"],
+                  ["Study", "#f0b232", "#f0b232"],
                 ]}
               >
-                {([name, a, b]) => (
+                {([name, a]) => (
                   <div class={teaser}>
-                    <div style={{ background: `linear-gradient(135deg, ${a}, ${b})` }} />
+                    <div style={{ background: a }} />
                     <p>{name}</p>
                     <small>
                       <Trans>Public servers</Trans>

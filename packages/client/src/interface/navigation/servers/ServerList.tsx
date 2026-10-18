@@ -125,7 +125,7 @@ export const ServerList = (props: Props) => {
           >
             <TileWrap>
               <Tile data-tile="" selected={!props.selectedServer()} brand>
-                <LogoImage src="/assets/web/yappio-192.png" />
+                <LogoImage src="/assets/web/monochrome.svg" />
               </Tile>
               <Show when={homeNotifications()}>
                 <Badge>{homeNotifications() > 99 ? "99+" : homeNotifications()}</Badge>
@@ -330,11 +330,11 @@ const entryContainer = cva({
         "height var(--motion-med) var(--ease-emph), opacity var(--motion-fast)",
       left: 0,
       borderRadius: "0 4px 4px 0",
-      background: "var(--md-sys-color-primary)",
+      background: "var(--md-sys-color-on-surface)",
     },
 
     "&:hover:before": {
-      height: "20px",
+      height: "8px",
     },
 
     "&:hover [data-tile]": {
@@ -350,7 +350,7 @@ const entryContainer = cva({
       },
       alert: {
         "&:before": {
-          height: "8px",
+          height: "4px",
         },
       },
     },
@@ -379,55 +379,36 @@ const Tile = styled("div", {
     borderRadius: "50%",
     transition:
       "border-radius var(--motion-med) var(--ease-emph), background var(--motion-med) var(--ease-standard), color var(--motion-fast)",
-    color: "#1a2200",
-    fontWeight: 700,
-    background:
-      "linear-gradient(145deg, #dfff7a 0%, #c8f43c 55%, #a9d12a 100%)",
-    boxShadow: "0 0 0 1px rgb(255 255 255 / 0.12)",
+    color: "var(--md-sys-color-on-surface)",
+    background: "var(--md-sys-color-surface)",
   },
   variants: {
     selected: {
       true: {
         borderRadius: "var(--radius-server)",
-        boxShadow:
-          "0 0 0 2px var(--md-sys-color-surface-container-lowest), 0 0 0 4px var(--md-sys-color-primary)",
       },
       false: {},
     },
     brand: {
       true: {
-        background: "var(--md-sys-color-surface-container-high)",
-        boxShadow:
-          "0 0 0 2px rgb(200 244 60 / 0.55), 0 0 16px rgb(200 244 60 / 0.35)",
+        background: "#5865f2",
+        color: "#ffffff",
       },
       false: {},
     },
     action: {
       true: {
-        color: "var(--md-sys-color-primary)",
-        background: "var(--md-sys-color-surface-container-high)",
-        boxShadow:
-          "0 0 0 1px rgb(200 244 60 / 0.5), 0 0 12px rgb(200 244 60 / 0.25)",
+        color: "#23a55a",
+        background: "var(--md-sys-color-surface)",
 
         "&:hover": {
-          color: "var(--md-sys-color-on-primary)",
-          background: "var(--md-sys-color-primary)",
+          color: "#ffffff",
+          background: "#23a55a",
         },
       },
       false: {},
     },
   },
-  compoundVariants: [
-    {
-      brand: true,
-      selected: true,
-      css: {
-        background: "var(--md-sys-color-primary)",
-        boxShadow:
-          "0 0 0 2px var(--md-sys-color-surface-container-lowest), 0 0 0 4px var(--md-sys-color-primary), 0 0 20px rgb(200 244 60 / 0.5)",
-      },
-    },
-  ],
 });
 
 const TileImage = styled("img", {
@@ -440,9 +421,10 @@ const TileImage = styled("img", {
 
 const LogoImage = styled("img", {
   base: {
-    width: "100%",
-    height: "100%",
-    objectFit: "cover",
+    width: "30px",
+    height: "30px",
+    objectFit: "contain",
+    filter: "invert(1)",
   },
 });
 

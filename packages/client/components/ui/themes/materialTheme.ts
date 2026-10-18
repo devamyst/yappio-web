@@ -128,56 +128,82 @@ type MaterialColours = {
   shadow: string;
 };
 
-export const YAPPIO_ACCENT = "#c8f43c";
+export const YAPPIO_ACCENT = "#5865f2";
+
+const YAPPIO_LIGHT_SURFACES: Partial<MaterialColours> = {
+  "surface-dim": "#ebedef",
+  surface: "#ffffff",
+  "surface-bright": "#ffffff",
+  "surface-container-lowest": "#e3e5e8",
+  "surface-container-low": "#f2f3f5",
+  "surface-container": "#f2f3f5",
+  "surface-container-high": "#e3e5e8",
+  "surface-container-highest": "#d7d9dc",
+  "on-surface": "#313338",
+  "on-surface-variant": "#5c5e66",
+  outline: "#80848e",
+  "outline-variant": "#e3e5e8",
+  scrim: "#000000",
+  shadow: "#000000",
+};
+
+const YAPPIO_DARK_SURFACES: Partial<MaterialColours> = {
+  "surface-dim": "#232428",
+  surface: "#313338",
+  "surface-bright": "#404249",
+  "surface-container-lowest": "#1e1f22",
+  "surface-container-low": "#2b2d31",
+  "surface-container": "#2b2d31",
+  "surface-container-high": "#35373c",
+  "surface-container-highest": "#404249",
+  "on-surface": "#dbdee1",
+  "on-surface-variant": "#949ba4",
+  outline: "#80848e",
+  "outline-variant": "#3f4147",
+  "inverse-surface": "#f2f3f5",
+  "inverse-on-surface": "#313338",
+  scrim: "#000000",
+  shadow: "#000000",
+};
 
 const YAPPIO_LIGHT: Partial<MaterialColours> = {
-  primary: "#4d6400",
+  primary: "#5865f2",
   "on-primary": "#ffffff",
-  "primary-container": "#c8f43c",
-  "on-primary-container": "#1a2200",
-  "surface-dim": "#dbe1c6",
-  surface: "#fcfdf5",
-  "surface-bright": "#fcfdf5",
-  "surface-container-lowest": "#e6ecd0",
-  "surface-container-low": "#eef2de",
-  "surface-container": "#f8faef",
-  "surface-container-high": "#eaefd8",
-  "surface-container-highest": "#dfe6c8",
-  "on-surface": "#1a1d12",
-  "on-surface-variant": "#444a35",
-  outline: "#6c7358",
-  "outline-variant": "#c3cca8",
-  "inverse-primary": "#c8f43c",
+  "primary-container": "#e0e3ff",
+  "on-primary-container": "#2d36a8",
+  secondary: "#4e5058",
+  "on-secondary": "#ffffff",
+  "secondary-container": "#e3e5e8",
+  "on-secondary-container": "#313338",
+  tertiary: "#006ce7",
+  "on-tertiary": "#ffffff",
+  "tertiary-container": "#d6e6ff",
+  "on-tertiary-container": "#003a80",
+  error: "#da373c",
+  "on-error": "#ffffff",
+  "error-container": "#fbd9da",
+  "on-error-container": "#5c0c0f",
+  "inverse-primary": "#a5acfa",
 };
 
 const YAPPIO_DARK: Partial<MaterialColours> = {
-  primary: "#c8f43c",
-  "on-primary": "#1a2200",
-  "primary-container": "#46570a",
-  "on-primary-container": "#dfff7a",
-  secondary: "#cfd4b4",
-  "on-secondary": "#242810",
-  "secondary-container": "#3c402b",
-  "on-secondary-container": "#e4e9c8",
-  tertiary: "#a8b5ff",
-  "on-tertiary": "#14195c",
-  "tertiary-container": "#2f3369",
-  "on-tertiary-container": "#dde1ff",
-  "surface-dim": "#13111f",
-  surface: "#1b1830",
-  "surface-bright": "#363160",
-  "surface-container-lowest": "#100e1a",
-  "surface-container-low": "#1b1830",
-  "surface-container": "#221f3a",
-  "surface-container-high": "#2c2850",
-  "surface-container-highest": "#363160",
-  "on-surface": "#f1eefc",
-  "on-surface-variant": "#c3bfe0",
-  outline: "#9b96bd",
-  "outline-variant": "#4a4578",
-  "inverse-surface": "#e6e1ec",
-  "inverse-on-surface": "#312f3b",
-  "inverse-primary": "#5b7000",
+  primary: "#5865f2",
+  "on-primary": "#ffffff",
+  "primary-container": "#4752c4",
+  "on-primary-container": "#ffffff",
+  secondary: "#4e5058",
+  "on-secondary": "#ffffff",
+  "secondary-container": "#4e5058",
+  "on-secondary-container": "#f2f3f5",
+  tertiary: "#00a8fc",
+  "on-tertiary": "#00263d",
+  "tertiary-container": "#0b4a6e",
+  "on-tertiary-container": "#d0ecff",
+  error: "#f23f43",
+  "on-error": "#ffffff",
+  "error-container": "#da373c",
+  "on-error-container": "#ffffff",
+  "inverse-primary": "#4752c4",
 };
 
 /**
@@ -281,13 +307,15 @@ function generateMaterialYouScheme(
     shadow: hexFromArgb(scheme.shadow),
   };
 
-  if (darkMode && accent.toLowerCase() === YAPPIO_ACCENT) {
-    return { ...colours, ...YAPPIO_DARK };
+  const surfaces = darkMode ? YAPPIO_DARK_SURFACES : YAPPIO_LIGHT_SURFACES;
+
+  if (accent.toLowerCase() === YAPPIO_ACCENT) {
+    return {
+      ...colours,
+      ...surfaces,
+      ...(darkMode ? YAPPIO_DARK : YAPPIO_LIGHT),
+    };
   }
 
-  if (!darkMode && accent.toLowerCase() === YAPPIO_ACCENT) {
-    return { ...colours, ...YAPPIO_LIGHT };
-  }
-
-  return colours;
+  return { ...colours, ...surfaces };
 }
