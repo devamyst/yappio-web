@@ -14,7 +14,12 @@ import { useLocation, useParams, useSmartParams } from "@revolt/routing";
 import { useState } from "@revolt/state";
 import { LAYOUT_SECTIONS } from "@revolt/state/stores/Layout";
 
-import { HomeSidebar, ServerList, ServerSidebar } from "./navigation";
+import {
+  HomeSidebar,
+  ServerList,
+  ServerSidebar,
+  UserPanel,
+} from "./navigation";
 
 const MainBar = styled("div", {
   base: {
@@ -26,6 +31,21 @@ const MainBar = styled("div", {
       position: "absolute",
       width: "100vw",
       height: "100%",
+    },
+  },
+});
+
+const SidebarColumn = styled("div", {
+  base: {
+    display: "flex",
+    flexDirection: "column",
+    flexShrink: 0,
+    minHeight: 0,
+    width: "var(--layout-width-channel-sidebar)",
+    background: "var(--md-sys-color-surface-container-low)",
+
+    _phone: {
+      flexGrow: 1,
     },
   },
 });
@@ -74,11 +94,14 @@ export const Sidebar = (props: {
           !location.pathname.startsWith("/discover")
         }
       >
-        <Switch fallback={<Home />}>
-          <Match when={params.server}>
-            <Server />
-          </Match>
-        </Switch>
+        <SidebarColumn>
+          <Switch fallback={<Home />}>
+            <Match when={params.server}>
+              <Server />
+            </Match>
+          </Switch>
+          <UserPanel />
+        </SidebarColumn>
       </Show>
     </MainBar>
   );

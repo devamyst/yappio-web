@@ -6,14 +6,11 @@ import { styled } from "styled-system/jsx";
 export const SidebarBase = styled("div", {
   base: {
     display: "flex",
-    flexShrink: 0,
     flexDirection: "column",
+    flexGrow: 1,
+    minHeight: 0,
     overflow: "hidden",
-    borderTopLeftRadius: "var(--borderRadius-lg)",
-    borderBottomLeftRadius: "var(--borderRadius-lg)",
-    // borderRadius: "var(--borderRadius-lg)",
-    // margin: "var(--gap-md) var(--gap-md) var(--gap-md) 0",
-    width: "var(--layout-width-channel-sidebar)",
+    width: "100%",
 
     fill: "var(--md-sys-color-on-surface)",
     color: "var(--md-sys-color-on-surface)",
@@ -23,8 +20,5 @@ export const SidebarBase = styled("div", {
       textDecoration: "none",
     },
 
-    _phone: {
-      flexGrow: 1,
-    },
   },
 });
