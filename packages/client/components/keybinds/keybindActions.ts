@@ -60,6 +60,11 @@ export enum KeybindAction {
    * Close the open and ephemeral sidebar
    */
   CLOSE_SIDEBAR = "close_sidebar",
+
+  /**
+   * Open the quick switcher
+   */
+  OPEN_QUICK_SWITCHER = "open_quick_switcher",
 }
 
 /**
@@ -82,6 +87,7 @@ export const ACTION_PRIORITY: KeybindAction[] = [
   KeybindAction.NAVIGATION_CHANNEL_DOWN,
 
   // ... all others
+  KeybindAction.OPEN_QUICK_SWITCHER,
   KeybindAction.CHAT_FOCUS_COMPOSITION,
 ];
 

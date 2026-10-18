@@ -37,6 +37,10 @@ export type Modals =
       client: Client;
     }
   | {
+      type: "quick_switcher";
+      client: Client;
+    }
+  | {
       type: "add_members_to_group";
       client: Client;
       group: Channel;

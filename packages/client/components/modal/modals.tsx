@@ -46,6 +46,7 @@ import { MFAFlowModal } from "./modals/MFAFlow";
 import { MFARecoveryModal } from "./modals/MFARecovery";
 import { OnboardingModal } from "./modals/Onboarding";
 import { PinMessageModal } from "./modals/PinMessage";
+import { QuickSwitcherModal } from "./modals/QuickSwitcher";
 import { PolicyChangeModal } from "./modals/PolicyChange";
 import { RemoveMemberModal } from "./modals/RemoveMember";
 import { RenameSessionModal } from "./modals/RenameSession";
@@ -84,6 +85,8 @@ export function RenderModal(props: ActiveModal & { onClose: () => void }) {
       return <AddBotModal {...modalProps} />;
     case "add_friend":
       return <AddFriendModal {...modalProps} />;
+    case "quick_switcher":
+      return <QuickSwitcherModal {...modalProps} />;
     case "ban_member":
       return <BanMemberModal {...modalProps} />;
     case "ban_non_member":

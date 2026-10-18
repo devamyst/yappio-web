@@ -9,10 +9,12 @@ import { styled } from "styled-system/jsx";
 import { ChannelContextMenu, UserContextMenu } from "@revolt/app";
 import { useClient } from "@revolt/client";
 import { useDevice } from "@revolt/common";
+import { useInstance } from "@revolt/instance";
 import Instance from "@revolt/instance/Instance";
 import { TextWithEmoji } from "@revolt/markdown";
 import { useModals } from "@revolt/modal";
 import { useLocation, useNavigate } from "@revolt/routing";
+import { useState } from "@revolt/state";
 import {
   Avatar,
   Deferred,
@@ -58,6 +60,8 @@ export const HomeSidebar = (props: Props) => {
   const location = useLocation();
   const { openModal } = useModals();
   const { isMobile } = useDevice();
+  const state = useState();
+  const instance = useInstance();
 
   const savedNotesChannelId = createMemo(() => props.openSavedNotes());
 
@@ -70,29 +74,20 @@ export const HomeSidebar = (props: Props) => {
 
   return (
     <SidebarBase class="channel_bar home">
-      <div ref={scrollTargetElement} use:invisibleScrollable>
+      <SearchHeader>
+        <SearchButton
+          type="button"
+          onClick={() => openModal({ type: "quick_switcher", client: client() })}
+        >
+          <Trans>Find or start a conversation</Trans>
+        </SearchButton>
+      </SearchHeader>
+      <div
+        ref={scrollTargetElement}
+        use:invisibleScrollable
+        style={{ "flex-grow": 1 }}
+      >
         <List>
-          <SidebarTitle>
-            <Trans>Conversations</Trans>
-          </SidebarTitle>
-
-          <MenuButton
-            href="/app"
-            size="normal"
-            icon={<Symbol>home</Symbol>}
-            attention={
-              Instance.relPath(location.pathname) === "/app"
-                ? "selected"
-                : "normal"
-            }
-          >
-            <ButtonTitle>
-              <Trans>Home</Trans>
-            </ButtonTitle>
-          </MenuButton>
-
-          <div style={{ height: "5px" }} />
-
           <MenuButton
             href="/friends"
             size="normal"
@@ -107,12 +102,27 @@ export const HomeSidebar = (props: Props) => {
               <Trans>Friends</Trans>
               <div style={{ flex: "1 1 auto" }} />
               <Show when={pendingRequests()}>
-                <PendingBadge>{pendingRequests()} requests</PendingBadge>
+                <PendingBadge>{pendingRequests()}</PendingBadge>
               </Show>
             </ButtonTitle>
           </MenuButton>
 
-          <div style={{ height: "5px" }} />
+          <Show when={instance.isStoat}>
+            <MenuButton
+              href={state.layout.getLastActiveDiscoverPath()}
+              size="normal"
+              icon={<Symbol>explore</Symbol>}
+              attention={
+                Instance.relPath(location.pathname).startsWith("/discover")
+                  ? "selected"
+                  : "normal"
+              }
+            >
+              <ButtonTitle>
+                <Trans>Discover</Trans>
+              </ButtonTitle>
+            </MenuButton>
+          </Show>
 
           <Switch
             fallback={
@@ -147,7 +157,7 @@ export const HomeSidebar = (props: Props) => {
           </Switch>
 
           <Category>
-            Direct Messages
+            <Trans>Direct messages</Trans>
             <a
               class={css({ cursor: "pointer" })}
               onClick={() =>
@@ -201,15 +211,36 @@ export const HomeSidebar = (props: Props) => {
   );
 };
 
-/**
- * Sidebar title
- */
-const SidebarTitle = styled("p", {
+const SearchHeader = styled("div", {
   base: {
-    paddingBlock: "calc(var(--gap-md) + 15px)",
-    paddingInline: "var(--gap-md)",
+    height: "var(--layout-height-header)",
+    flexShrink: 0,
+    display: "flex",
+    alignItems: "center",
+    padding: "0 var(--space-2)",
+    borderBottom: "var(--hairline)",
+  },
+});
 
-    ...typography.raw({ class: "title" }),
+const SearchButton = styled("button", {
+  base: {
+    width: "100%",
+    height: "32px",
+    padding: "0 var(--space-2)",
+    textAlign: "left",
+    cursor: "pointer",
+    overflow: "hidden",
+    whiteSpace: "nowrap",
+    textOverflow: "ellipsis",
+    fontSize: "13px",
+    color: "var(--md-sys-color-on-surface-variant)",
+    borderRadius: "var(--radius-control)",
+    background: "var(--md-sys-color-surface-container-lowest)",
+    transition: "color var(--motion-fast) var(--ease-standard)",
+
+    "&:hover": {
+      color: "var(--md-sys-color-on-surface)",
+    },
   },
 });
 
@@ -228,24 +259,31 @@ const ButtonTitle = styled("div", {
 const PendingBadge = styled("div", {
   base: {
     ...typography.raw({ class: "label", size: "small" }),
-    padding: "var(--gap-sm) var(--gap-md)",
+    minWidth: "18px",
+    padding: "1px 6px",
+    textAlign: "center",
+    fontWeight: 700,
     color: "var(--md-sys-color-on-error)",
     background: "var(--md-sys-color-error)",
-    borderRadius: "var(--borderRadius-md)",
+    borderRadius: "var(--radius-pill)",
   },
 });
 
 const Category = styled("div", {
   base: {
     display: "flex",
-    paddingInline: "var(--gap-lg)",
+    paddingInline: "var(--space-3) var(--space-1)",
     alignItems: "center",
     justifyContent: "space-between",
-    paddingTop: "calc(var(--gap-xl) - 5px)",
-    paddingBottom: "var(--gap-md)",
+    paddingTop: "var(--space-4)",
+    paddingBottom: "var(--space-1)",
+    color: "var(--md-sys-color-on-surface-variant)",
 
     ...typography.raw({ class: "label", size: "small" }),
-    fontSize: "13px",
+    fontSize: "12px",
+    fontWeight: 700,
+    letterSpacing: "0.02em",
+    textTransform: "uppercase",
   },
 });
 
@@ -406,7 +444,7 @@ function Entry(
  */
 const List = styled("div", {
   base: {
-    paddingLeft: "var(--gap-md)",
-    width: "var(--layout-width-channel-sidebar)",
+    paddingInline: "var(--space-2)",
+    width: "100%",
   },
 });

@@ -3,7 +3,7 @@ import { cva } from "styled-system/css";
 /**
  * Styles for the main content of a page
  *
- * This creates a surface on the lowest level with appropriate padding and separation.
+ * Flat chat surface that sits directly under the header.
  */
 export const main = cva({
   base: {
@@ -15,22 +15,7 @@ export const main = cva({
     overflow: "hidden",
     flexDirection: "column",
 
-    paddingInline: "var(--gap-md)",
-    marginInline: "var(--gap-md)",
-    marginBlockEnd: "var(--gap-md)",
-    borderRadius: "var(--borderRadius-xl)",
-    background: "var(--md-sys-color-surface-container-lowest)",
+    background: "var(--md-sys-color-surface-container)",
     paddingBottom: "env(keyboard-inset-height)",
-
-    _tablet: {
-      margin: 0,
-      borderBottomRightRadius: 0,
-      borderBottomLeftRadius: 0,
-    },
-
-    _phone: {
-      margin: 0,
-      borderRadius: 0,
-    },
   },
 });

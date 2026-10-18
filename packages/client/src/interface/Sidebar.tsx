@@ -1,4 +1,13 @@
-import { Component, JSX, Match, Show, Switch, createMemo } from "solid-js";
+import {
+  Component,
+  JSX,
+  Match,
+  Show,
+  Switch,
+  createMemo,
+  onCleanup,
+  onMount,
+} from "solid-js";
 import { styled } from "styled-system/jsx";
 
 import { Channel, Server as ServerI } from "stoat.js";
@@ -9,6 +18,7 @@ import {
   ServerSidebarContextMenu,
 } from "@revolt/app";
 import { useClient, useUser } from "@revolt/client";
+import { KeybindAction, createKeybind } from "@revolt/keybinds";
 import { useModals } from "@revolt/modal";
 import { useLocation, useParams, useSmartParams } from "@revolt/routing";
 import { useState } from "@revolt/state";
@@ -66,6 +76,18 @@ export const Sidebar = (props: {
 
   const params = useParams<{ server: string }>();
   const location = useLocation();
+
+  createKeybind(KeybindAction.OPEN_QUICK_SWITCHER, () =>
+    openModal({ type: "quick_switcher", client: client() }),
+  );
+
+  function blockBrowserShortcut(event: KeyboardEvent) {
+    if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "k") {
+      event.preventDefault();
+    }
+  }
+  onMount(() => window.addEventListener("keydown", blockBrowserShortcut));
+  onCleanup(() => window.removeEventListener("keydown", blockBrowserShortcut));
 
   return (
     <MainBar class="main_bar">

@@ -16,13 +16,13 @@ export const Header = styled("div", {
     flex: "0 auto",
     display: "flex",
     flexShrink: 0,
-    padding: "0 16px",
+    padding: "0 var(--space-4)",
     alignItems: "center",
     fontWeight: 600,
     userSelect: "none",
     overflow: "hidden",
-    height: "48px",
-    borderRadius: "var(--borderRadius-lg)",
+    height: "var(--layout-height-header)",
+    borderBottom: "var(--hairline)",
 
     color: "var(--md-sys-color-on-surface)",
     fill: "var(--md-sys-color-on-surface)",
@@ -40,11 +40,10 @@ export const Header = styled("div", {
   variants: {
     placement: {
       primary: {
-        margin: "var(--gap-md) var(--gap-md) var(--gap-md) 0",
+        background: "var(--md-sys-color-surface-container)",
       },
       secondary: {
-        margin: "var(--gap-md)",
-        backgroundColor: "var(--md-sys-color-surface-variant)",
+        background: "var(--md-sys-color-surface-container-low)",
       },
     },
     image: {
@@ -68,7 +67,7 @@ export const Header = styled("div", {
     },
     transparent: {
       true: {
-        width: "calc(100% - var(--gap-md))",
+        width: "100%",
         zIndex: "10",
       },
       false: {},
@@ -95,7 +94,7 @@ export const BelowFloatingHeader = styled("div", {
     "& > div > div": {
       width: "100%",
       position: "absolute",
-      top: "var(--gap-md)",
+      top: "var(--space-2)",
     },
   },
 });

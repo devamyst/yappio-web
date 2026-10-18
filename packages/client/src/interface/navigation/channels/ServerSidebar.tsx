@@ -23,7 +23,6 @@ import { useState } from "@revolt/state";
 import {
   Column,
   Draggable,
-  Header,
   IconButton,
   MenuButton,
   OverflowingText,
@@ -193,38 +192,22 @@ export const ServerSidebar = (props: Props) => {
       class="channel_bar server"
       use:floating={props.menuGenerator(props.server)}
     >
-      <Switch
-        fallback={
-          <Header placement="secondary">
-            <ServerInfo
-              server={props.server}
-              canManageServer={canManageServer()}
-              openServerInfo={props.openServerInfo}
-              openServerSettings={props.openServerSettings}
-            />
-          </Header>
-        }
-      >
-        <Match when={props.server.banner}>
-          <Header
-            image
-            placement="secondary"
-            style={{
-              background: `url('${props.server.bannerURL}')`,
-            }}
-          >
-            <ServerInfo
-              server={props.server}
-              canManageServer={canManageServer()}
-              openServerInfo={props.openServerInfo}
-              openServerSettings={props.openServerSettings}
-            />
-          </Header>
-        </Match>
-      </Switch>
+      <ServerHeader banner={!!props.server.banner}>
+        <Show when={props.server.banner}>
+          <Banner
+            style={{ "background-image": `url('${props.server.bannerURL}')` }}
+          />
+        </Show>
+        <ServerInfo
+          server={props.server}
+          canManageServer={canManageServer()}
+          openServerInfo={props.openServerInfo}
+          openServerSettings={props.openServerSettings}
+        />
+      </ServerHeader>
       <div
         use:invisibleScrollable
-        style={{ "flex-grow": 1, "margin-bottom": "var(--gap-md)" }}
+        style={{ "flex-grow": 1, "padding-bottom": "var(--space-2)" }}
         use:floating={props.menuGenerator(props.server)}
       >
         <Draggable
@@ -267,6 +250,7 @@ function ServerInfo(
       <ServerBadge flags={props.server.flags} />
       <ServerName onClick={props.openServerInfo}>
         <TextWithEmoji content={props.server.name} />
+        <Symbol size={20}>expand_more</Symbol>
       </ServerName>
       <Show when={props.canManageServer}>
         <IconButton
@@ -289,10 +273,69 @@ const ServerName = styled("a", {
   base: {
     flexGrow: 1,
     minWidth: 0,
+    display: "flex",
+    alignItems: "center",
+    gap: "var(--space-1)",
+    cursor: "pointer",
+    fontWeight: 700,
+    letterSpacing: "-0.01em",
 
     overflow: "hidden",
     whiteSpace: "nowrap",
     textOverflow: "ellipsis",
+  },
+});
+
+const ServerHeader = styled("div", {
+  base: {
+    position: "relative",
+    flexShrink: 0,
+    height: "var(--layout-height-header)",
+    padding: "0 var(--space-3) 0 var(--space-4)",
+    display: "flex",
+    alignItems: "center",
+    overflow: "hidden",
+    userSelect: "none",
+    borderBottom: "var(--hairline)",
+    color: "var(--md-sys-color-on-surface)",
+    background: "var(--md-sys-color-surface-container-low)",
+    transition: "background var(--motion-fast) var(--ease-standard)",
+
+    "&:hover": {
+      background: "var(--md-sys-color-surface-container)",
+    },
+
+    "& > *": {
+      position: "relative",
+    },
+  },
+  variants: {
+    banner: {
+      true: {
+        color: "white",
+        fill: "white",
+        textShadow: "0 1px 2px rgb(0 0 0 / 0.6)",
+      },
+      false: {},
+    },
+  },
+});
+
+const Banner = styled("div", {
+  base: {
+    position: "absolute !important",
+    inset: 0,
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+    opacity: 0.6,
+    animation: "fadeIn var(--motion-slow) var(--ease-standard)",
+    maskImage: "linear-gradient(to bottom, black, rgb(0 0 0 / 0.55))",
+    "&:after": {
+      content: "' '",
+      position: "absolute",
+      inset: 0,
+      background: "rgb(0 0 0 / 0.35)",
+    },
   },
 });
 
@@ -395,11 +438,9 @@ function Category(
 const CategorySection = styled("div", {
   base: {
     display: "flex",
-    gap: "var(--gap-md)",
+    gap: "2px",
     flexDirection: "column",
-    paddingBlock: "var(--gap-sm)",
-    borderRadius: "var(--borderRadius-sm)",
-    background: "var(--md-sys-color-surface-container-low)",
+    paddingBlock: "var(--space-1)",
   },
 });
 
@@ -412,27 +453,28 @@ const CategoryBase = styled("div", {
     alignItems: "center",
     gap: "var(--gap-sm)",
 
-    padding: "0 var(--gap-sm)",
-    paddingLeft: "calc(var(--gap-lg) + 5px)",
-    paddingTop: "10px",
+    padding: "var(--space-3) var(--space-2) var(--space-1) var(--space-3)",
 
     cursor: "pointer",
     userSelect: "none",
     transition: "var(--transitions-fast) all",
 
-    "--color": "var(--md-sys-color-on-surface)",
+    "--color": "var(--md-sys-color-on-surface-variant)",
     color: "var(--color)",
     fill: "var(--color)",
 
     ...typography.raw({ class: "label", size: "small" }),
-    fontSize: "13px",
+    fontSize: "12px",
+    fontWeight: 700,
+    letterSpacing: "0.02em",
+    textTransform: "uppercase",
 
     "&:hover": {
-      "--color": "var(--md-sys-color-on-surface-variant)",
+      "--color": "var(--md-sys-color-on-surface)",
     },
 
     "& svg": {
-      transition: "var(--transitions-fast) transform",
+      transition: "transform var(--motion-med) var(--ease-standard)",
     },
   },
   variants: {
