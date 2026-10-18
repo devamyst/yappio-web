@@ -25,6 +25,11 @@ export default defineConfig({
           "0%": { opacity: "0" },
           "100%": { opacity: "1" },
         },
+        yappioPulse: {
+          "0%": { opacity: "0.55" },
+          "50%": { opacity: "1" },
+          "100%": { opacity: "0.55" },
+        },
         popIn: {
           "0%": { opacity: "0", transform: "scale(.96)" },
           "100%": { opacity: "1", transform: "scale(1)" },
