@@ -67,4 +67,15 @@ const container = css({
   display: "flex",
   cursor: "pointer",
   alignItems: "center",
+  color: "var(--md-sys-color-on-surface-variant)",
+  transition: "color var(--motion-fast) var(--ease-standard)",
+
+  "&:hover": {
+    color: "var(--md-sys-color-on-surface)",
+  },
+
+  _phone: {
+    minWidth: "40px",
+    minHeight: "40px",
+  },
 });

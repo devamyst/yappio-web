@@ -205,7 +205,7 @@ export function ServerMemberSidebar(props: Props) {
                     </Show>
                     <span>{(item.item as { name: string }).name}</span>
                     <span>
-                      {" – "}
+                      {" — "}
                       {(item.item as { count: number }).count}
                     </span>
                   </CategoryTitle>
@@ -264,8 +264,10 @@ export function GroupMemberSidebar(props: Props) {
  */
 const Container = styled("div", {
   base: {
-    paddingRight: "var(--gap-md)",
-    width: "var(--layout-width-channel-sidebar)",
+    paddingInline: "var(--space-2)",
+    width: "var(--layout-width-member-list)",
+    minHeight: "100%",
+    background: "var(--md-sys-color-surface-container-low)",
   },
 });
 
@@ -274,13 +276,17 @@ const Container = styled("div", {
  */
 const CategoryTitle = styled("div", {
   base: {
-    padding: "28px 14px 0",
-    color: "var(--md-sys-color-on-surface)",
+    padding: "var(--space-5) var(--space-2) 0",
+    color: "var(--md-sys-color-on-surface-variant)",
     display: "flex",
     alignItems: "center",
     gap: "6px",
 
     ...typography.raw({ class: "label", size: "small" }),
+    fontSize: "12px",
+    fontWeight: 700,
+    letterSpacing: "0.02em",
+    textTransform: "uppercase",
   },
 });
 
@@ -298,9 +304,9 @@ const RoleIcon = styled("img", {
  */
 const MemberTitle = styled("div", {
   base: {
-    marginTop: "12px",
-    marginLeft: "14px",
-    color: "var(--md-sys-color-on-surface)",
+    marginTop: "var(--space-3)",
+    marginLeft: "var(--space-2)",
+    color: "var(--md-sys-color-on-surface-variant)",
 
     ...typography.raw({ class: "label", size: "small" }),
   },
@@ -360,6 +366,9 @@ function Member(props: {
 
   return (
     <div
+      style={{
+        opacity: (props.user ?? props.member?.user)?.online ? 1 : 0.5,
+      }}
       use:floating={floatingUserMenus(
         (props.user ?? props.member?.user)!,
         props.member,

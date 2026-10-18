@@ -1,8 +1,10 @@
+import { createSignal } from "solid-js";
+
 import { createFormControl, createFormGroup } from "solid-forms";
 
 import { Trans, useLingui } from "@lingui/solid/macro";
 
-import { Dialog, DialogProps, Form2 } from "@revolt/ui";
+import { Dialog, DialogProps, Form2, Text } from "@revolt/ui";
 
 import { useModals } from "..";
 import { Modals } from "../types";
@@ -20,15 +22,36 @@ export function AddFriendModal(
     username: createFormControl("", { required: true }),
   });
 
+  const [hint, setHint] = createSignal<string>();
+
+  const tagHelp = () =>
+    t`Usernames have a 4-digit tag, like yapper#1234. Find it on their profile.`;
+
   async function onSubmit() {
+    const username = group.controls.username.value.trim();
+
+    if (!/^.+#\d{4}$/.test(username)) {
+      setHint(tagHelp());
+      return;
+    }
+
+    setHint(undefined);
+
     try {
-      await props.client.api.post(`/users/friend`, {
-        username: group.controls.username.value,
-      });
+      await props.client.api.post(`/users/friend`, { username });
 
       props.onClose();
     } catch (error) {
-      showError(error);
+      const info = error as { type?: string; status?: number; message?: string };
+      const text = `${info?.type ?? ""} ${info?.message ?? ""}`;
+      if (
+        info?.status === 400 ||
+        /FailedValidation|InvalidUsername|NotFound/.test(text)
+      ) {
+        setHint(tagHelp());
+      } else {
+        showError(error);
+      }
     }
   }
 
@@ -59,6 +82,9 @@ export function AddFriendModal(
           label={t`Username`}
           placeholder={t`username#1234`}
         />
+        <Text class="label" size="small">
+          {hint() ?? tagHelp()}
+        </Text>
       </form>
     </Dialog>
   );

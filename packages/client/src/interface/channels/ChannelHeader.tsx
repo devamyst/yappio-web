@@ -78,7 +78,7 @@ export function ChannelHeader(props: Props) {
           }
         >
           <HeaderIcon>
-            <Symbol>grid_3x3</Symbol>
+            <Symbol>tag</Symbol>
           </HeaderIcon>
           <NonBreakingText
             class={
@@ -277,7 +277,7 @@ export function ChannelHeader(props: Props) {
           }
         >
           <SearchBox
-            placeholder="Search messages..."
+            placeholder={t`Search`}
             value={searchValue()!}
             onChange={(e) =>
               e.currentTarget.value
@@ -298,11 +298,26 @@ export function ChannelHeader(props: Props) {
 
 const SearchBox = styled("input", {
   base: {
-    height: "40px",
-    width: "240px",
-    paddingInline: "16px",
-    borderRadius: "var(--borderRadius-full)",
-    background: "var(--md-sys-color-surface-container-high)",
+    height: "32px",
+    width: "160px",
+    paddingInline: "var(--space-2)",
+    fontSize: "14px",
+    color: "var(--md-sys-color-on-surface)",
+    borderRadius: "var(--radius-control)",
+    background: "var(--md-sys-color-surface-container-lowest)",
+    transition: "width var(--motion-med) var(--ease-standard)",
+
+    "&:focus": {
+      width: "240px",
+    },
+
+    _phone: {
+      width: "100%",
+      minWidth: 0,
+      "&:focus": {
+        width: "100%",
+      },
+    },
   },
 });
 
@@ -312,8 +327,9 @@ const SearchBox = styled("input", {
 const Divider = styled("div", {
   base: {
     height: "20px",
-    margin: "0px 5px",
-    paddingLeft: "1px",
+    flexShrink: 0,
+    margin: "0 var(--space-1)",
+    width: "1px",
     backgroundColor: "var(--md-sys-color-outline-variant)",
   },
 });
