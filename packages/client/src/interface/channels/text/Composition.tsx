@@ -429,6 +429,7 @@ export function MessageComposition(props: Props) {
               _compositionSendMessage
               size="sm"
               variant={canSend() ? "filled" : "tonal"}
+              style={{ opacity: canSend() ? 1 : 0.55 }}
               shape="square"
               isDisabled={!canSend()}
               onPress={sendMessage}

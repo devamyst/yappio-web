@@ -174,8 +174,9 @@ const Bar = styled("div", {
     width: "100%",
     minHeight: "26px",
 
-    padding: "0 var(--gap-lg)",
-    borderRadius: "var(--borderRadius-lg)",
+    padding: "0 var(--space-4)",
+    borderRadius: "var(--radius-pill)",
+    fontWeight: 500,
 
     display: "flex",
     gap: "var(--gap-md)",
@@ -184,7 +185,8 @@ const Bar = styled("div", {
     alignItems: "center",
     flexDirection: "row",
 
-    color: "var(--md-sys-color-on-surface)",
+    color: "var(--md-sys-color-on-surface-variant)",
+    fill: "var(--md-sys-color-primary)",
   },
 });
 

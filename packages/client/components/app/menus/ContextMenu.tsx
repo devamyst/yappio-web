@@ -23,7 +23,8 @@ const Base = styled("div", {
     flexDirection: "column",
     padding: "6px",
     overflow: "hidden",
-    borderRadius: "var(--radius-control)",
+    minWidth: "200px",
+    borderRadius: "12px",
     background: "var(--md-sys-color-surface-container-lowest)",
     border: "var(--hairline)",
     animation: "popIn var(--motion-fast) var(--ease-standard)",
@@ -48,8 +49,8 @@ export function ContextMenu(props: ComponentProps<typeof Base>) {
 export const ContextMenuDivider = styled("div", {
   base: {
     height: "1px",
-    margin: "4px 0",
-    background: "var(--md-sys-color-outline-variant)",
+    margin: "4px 6px",
+    background: "color-mix(in srgb, var(--md-sys-color-outline-variant) 70%, transparent)",
   },
 });
 
@@ -60,7 +61,7 @@ export const ContextMenuItem = styled("a", {
     alignItems: "center",
     minHeight: "32px",
     padding: "6px 10px",
-    borderRadius: "var(--radius-xs)",
+    borderRadius: "var(--radius-control)",
     transition: "background var(--motion-fast) var(--ease-standard)",
 
     "&:hover": {
@@ -70,6 +71,12 @@ export const ContextMenuItem = styled("a", {
 
     "& span": {
       flexGrow: 1,
+    },
+
+    "& svg": {
+      flexShrink: 0,
+      width: "18px",
+      height: "18px",
     },
   },
   variants: {

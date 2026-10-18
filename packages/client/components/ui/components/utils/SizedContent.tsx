@@ -110,7 +110,8 @@ const Container = styled("div", {
     // aspectRatio: "var(--width) / var(--height)",
 
     overflow: "hidden",
-    borderRadius: "var(--borderRadius-md)",
+    borderRadius: "var(--radius-card)",
+    border: "var(--hairline)",
 
     gridTemplateColumns: "1fr",
     gridTemplateRows: "1fr",

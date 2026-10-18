@@ -24,7 +24,8 @@ const Base = styled("div", {
       fontWeight: 600,
       userSelect: "none",
       boxShadow: "0 0 8px #00000044",
-      borderRadius: "var(--borderRadius-lg)",
+      borderRadius: "var(--radius-pill)",
+      padding: "0.5em 1em",
 
       color: "var(--md-sys-color-inverse-on-surface)",
       background: "var(--md-sys-color-inverse-surface)",

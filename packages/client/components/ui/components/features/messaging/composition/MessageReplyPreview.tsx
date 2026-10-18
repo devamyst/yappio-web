@@ -87,11 +87,12 @@ const Base = styled(Row, {
     userSelect: "none",
 
     marginBlockEnd: "var(--gap-md)",
-    padding: "var(--gap-md) var(--gap-lg)",
-    borderRadius: "var(--borderRadius-lg)",
+    padding: "var(--space-2) var(--space-4)",
+    borderRadius: "var(--radius-card)",
+    borderInlineStart: "3px solid var(--md-sys-color-primary)",
 
-    background: "var(--md-sys-color-primary-container)",
-    color: "var(--md-sys-color-on-primary-container)",
+    background: "var(--md-sys-color-surface-container-high)",
+    color: "var(--md-sys-color-on-surface)",
 
     "& a:hover": {
       filter: "brightness(1.2)",

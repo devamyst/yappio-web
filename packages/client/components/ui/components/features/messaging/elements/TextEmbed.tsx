@@ -23,7 +23,8 @@ const Base = styled("div", {
     flexDirection: "row",
     gap: "var(--gap-md)",
     padding: "var(--gap-md)",
-    borderRadius: "var(--radius-control)",
+    borderRadius: "var(--radius-card)",
+    border: "var(--hairline)",
     color: "var(--md-sys-color-on-surface)",
     background: "var(--md-sys-color-surface-container-high)",
     borderInlineStart: "4px solid var(--md-sys-color-primary)",
@@ -51,7 +52,7 @@ const PreviewImage = styled("img", {
   base: {
     maxWidth: "120px",
     maxHeight: "120px",
-    borderRadius: "var(--borderRadius-md)",
+    borderRadius: "var(--radius-control)",
   },
 });
 

@@ -105,7 +105,7 @@ export function FileCarousel(props: Props) {
                         </Match>
                       </Switch>
                       <Overlay>
-                        <MdCancel {...iconSize(36)} />
+                        <MdCancel {...iconSize(18)} />
                       </Overlay>
                     </PreviewBox>
                     <FileName>
@@ -137,8 +137,10 @@ const PreviewBox = styled("div", {
     gridTemplate: `"main" var(--preview-size) / minmax(var(--preview-size), 1fr)`,
 
     cursor: "pointer",
+    position: "relative",
     overflow: "hidden",
-    borderRadius: "var(--gap-md)",
+    borderRadius: "var(--radius-card)",
+    border: "var(--hairline)",
 
     fill: "white",
     background: "var(--md-sys-color-surface-variant)",
@@ -161,7 +163,6 @@ const Image = styled("img", {
   base: {
     width: "100%",
     objectFit: "cover",
-    marginBottom: "var(--gap-md)",
     height: "var(--preview-size)",
   },
 });
@@ -174,19 +175,22 @@ const Overlay = styled("div", {
     zIndex: 1,
 
     display: "grid",
-    alignItems: "center",
-    justifyContent: "center",
+    placeItems: "center",
+    alignSelf: "start",
+    justifySelf: "end",
 
-    width: "100%",
-    height: "100%",
+    width: "28px",
+    height: "28px",
+    margin: "6px",
+    borderRadius: "var(--radius-pill)",
 
-    opacity: 0,
     color: "white",
-    background: "rgba(0, 0, 0, 0.8)",
-    transition: "var(--transitions-fast) opacity",
+    background: "rgba(0, 0, 0, 0.7)",
+    transition: "var(--transitions-fast) all",
 
     "&:hover": {
-      opacity: 1,
+      background: "var(--md-sys-color-error)",
+      color: "var(--md-sys-color-on-error)",
     },
   },
 });
@@ -205,7 +209,7 @@ const EmptyEntry = styled("div", {
     height: "var(--preview-size)",
 
     cursor: "pointer",
-    borderRadius: "var(--gap-md)",
+    borderRadius: "var(--radius-card)",
     fill: "var(--md-sys-color-on-surface-variant)",
     background: "var(--md-sys-color-surface-variant)",
   },
@@ -287,12 +291,13 @@ const Container = styled("div", {
     flexDirection: "column",
 
     gap: "var(--gap-md)",
-    padding: "var(--gap-md)",
-    margin: "var(--gap-md) 0",
-    borderRadius: "var(--borderRadius-lg)",
+    padding: "var(--space-3)",
+    margin: "var(--space-2) 0",
+    borderRadius: "var(--radius-card)",
+    border: "var(--hairline)",
 
-    background: "var(--md-sys-color-primary-container)",
-    color: "var(--md-sys-color-on-primary-container)",
+    background: "var(--md-sys-color-surface-container-high)",
+    color: "var(--md-sys-color-on-surface)",
 
     "--preview-size": "100px",
   },

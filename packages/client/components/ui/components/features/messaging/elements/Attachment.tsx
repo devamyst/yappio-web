@@ -20,6 +20,7 @@ export const AttachmentContainer = styled(Column, {
     padding: "var(--gap-md)",
     maxWidth: "400px",
     borderRadius: "var(--radius-card)",
+    border: "var(--hairline)",
     color: "var(--md-sys-color-on-surface)",
     background: "var(--md-sys-color-surface-container-high)",
   },
