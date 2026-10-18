@@ -175,7 +175,7 @@ const ActionCard = styled("button", {
     color: "var(--md-sys-color-on-surface)",
     borderRadius: "var(--radius-card)",
     background: "var(--md-sys-color-surface-container-high)",
-    border: "1px solid rgb(255 255 255 / 0.08)",
+    border: "1px solid var(--md-sys-color-outline-variant)",
     boxShadow: "var(--elev-1)",
     transition:
       "background var(--motion-fast) var(--ease-standard), transform var(--motion-med) var(--ease-emph)",
